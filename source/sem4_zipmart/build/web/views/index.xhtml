@@ -6,7 +6,8 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>     
-        <title>Cart | Zipmart - Supermarket</title>
+        <title>Index | Zipmart - Supermarket</title>
+        <link rel="shortcut icon" type="image/png" href="#{request.contextPath}/resources/assets/img/logo/zmicon.png" />
     </h:head>
     <h:body>
         <ui:composition template="/layouts/_layoutClient.xhtml">
@@ -93,12 +94,12 @@
                                             </div>
                                         </div>
                                         <div class="card-body">
-                                            <h4 class="card-title">Straight from the Farm</h4>
+                                            <h4 class="card-title">Straight from the Us</h4>
                                             <p class="card-text">
-                                                Our farm-to-table concept emphasizes on getting the fresh
-                                                produce directly from local farms to your tables within one
+                                                Our us-to-home concept emphasizes on getting the fresh
+                                                produce directly from us to your home within one
                                                 day, hence you know you get the freshest produce straight
-                                                from harvest.
+                                                from ordering.
                                             </p>
                                         </div>
                                     </div>
@@ -111,12 +112,11 @@
                                             </div>
                                         </div>
                                         <div class="card-body">
-                                            <h4 class="card-title">Know Your Farmers</h4>
+                                            <h4 class="card-title">Know Your Want</h4>
                                             <p class="card-text">
-                                                We want you to know exactly who is growing your food by
-                                                having the farmers profile on each item and farmers page.
-                                                You’re welcome to visit the farms and see the love they put
-                                                into growing your food.
+                                                We want you to know exactly that we are always ready to provide
+                                                enough products to suit your needs, a variety of products to help you
+                                                choose products according to your requirements.
                                             </p>
                                         </div>
                                     </div>
@@ -129,18 +129,18 @@
                                             </div>
                                         </div>
                                         <div class="card-body">
-                                            <h4 class="card-title">Improving Farmers’ Livelihood</h4>
+                                            <h4 class="card-title">Improving Services</h4>
                                             <p class="card-text">
-                                                Slowly but sure, by cutting the complex supply chain and
-                                                food system, we hope to improve the welfare of farmers by
-                                                giving them the returns they deserve for their hard work.
+                                                We always pay special attention and appreciate your feedback 
+                                                when you shopping in our system. 
+                                                From there, we'll improve our services and customer care based on your feedback.
                                             </p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 mt-5 text-center">
-                                    <a href="shop.html" class="btn btn-primary btn-lg">SHOP NOW</a>
+                                    <h:link outcome="/views/shop.xhtml" class="btn btn-primary btn-lg">SHOP NOW</h:link>
                                 </div>
                             </div>
                         </div>
