@@ -10,6 +10,7 @@
         <link rel="shortcut icon" type="image/png" href="#{request.contextPath}/resources/assets/img/logo/zmicon.png" />
         <!-- Font Website-->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
         <h:outputStylesheet name="assets/fonts/sb-bistro/sb-bistro.css" />
         <h:outputStylesheet name="assets/fonts/font-awesome/font-awesome.css"/>
 
@@ -54,6 +55,9 @@
                         <!-- Navbar Menu -->
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
+                                <h:link outcome="/admin_views/index.xhtml" class="nav-link">Admin</h:link>
+                            </li>
+                            <li class="nav-item">
                                 <h:link outcome="/views/shop.xhtml" class="nav-link">Shop</h:link>
                             </li>
                             <li class="nav-item">
@@ -78,10 +82,8 @@
                                     John Doe
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="transaction.html"
-                                       >Transactions History</a
-                                    >
-                                    <a class="dropdown-item" href="setting.html">Settings</a>
+                                    <h:link class="dropdown-item" outcome="/views/orderhistory.xhtml">Order History</h:link>
+                                    <h:link class="dropdown-item" outcome="/views/profile.xhtml">My Profile</h:link>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
@@ -216,13 +218,13 @@
                         </p>
                     </div>
                     <div class="col-md-3">
-                        <h5>Links</h5>
+                        <h5>Pages</h5>
                         <ul>
                             <li>
-                                <a href="about.html">About</a>
+                                <h:link outcome="/views/about.xhtml">About Us</h:link>
                             </li>
                             <li>
-                                <a href="contact.html">Contact Us</a>
+                                <h:link outcome="/views/contact.xhtml">Contact Us</h:link>
                             </li>
                             <li>
                                 <a href="faq.html">FAQ</a>
@@ -242,30 +244,23 @@
                         <h5>Contact</h5>
                         <ul>
                             <li>
-                                <a href="tel:+84123456789"
-                                   ><i class="fa fa-phone"></i>0123456789</a
-                                >
+                                <a href="tel:+84123456789"><i class="fa fa-phone"></i> 02923731072 </a>                                   
                             </li>
                             <li>
-                                <a href="mailto:zipmart.services@gmail.com"
-                                   ><i class="fa fa-envelope"></i> zipmart.services@gmail.com</a
-                                >
+                                <a href="mailto:zipmart.services@gmail.com"><i class="fa fa-envelope"></i> zipmart.services@gmail.com</a>
                             </li>
                         </ul>
 
                         <h5>Follow Us</h5>
                         <ul class="social">
                             <li>
-                                <a href="javascript:void(0)" target="_blank"
-                                   ><i class="fab fa-facebook-f"></i></a>               
+                                <a href="javascript:void(0)" target="_blank"><i class="fab fa-facebook-f"></i></a>
                             </li>
                             <li>
-                                <a href="javascript:void(0)" target="_blank"
-                                   ><i class="fab fa-instagram"></i></a>          
+                                <a href="javascript:void(0)" target="_blank"><i class="fab fa-instagram"></i></a>
                             </li>
                             <li>
-                                <a href="javascript:void(0)" target="_blank"
-                                   ><i class="fab fa-youtube"></i></a>              
+                                <a href="javascript:void(0)" target="_blank"><i class="fab fa-youtube"></i></a>
                             </li>
                         </ul>
                     </div>
@@ -297,6 +292,6 @@
         <h:outputScript name="assets/packages/cloudzoom/cloudzoom.js"/>    
         <h:outputScript name="assets/packages/thumbelina/thumbelina.js"/>      
         <h:outputScript name="assets/packages/bootstrap-touchspin/bootstrap-touchspin.js"/>      
-        <h:outputScript name="assets/js/theme.js"/>
+        <h:outputScript name="assets/js/theme.js"/>    
     </h:body>
 </html>
