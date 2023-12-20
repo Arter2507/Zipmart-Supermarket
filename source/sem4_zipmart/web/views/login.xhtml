@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
         <title>Login | Zipmart - Supermarket</title>
         <link rel="shortcut icon" type="image/png" href="#{request.contextPath}/resources/assets/img/logo/zmicon.png" />
@@ -23,32 +24,36 @@
 
                                 <div class="card card-login mb-5">
                                     <div class="card-body">
-                                        <form class="form-horizontal" action="index.html">
+                                        <h:form styleClass="form-horizontal">
                                             <div class="form-group row mt-3">
                                                 <div class="col-md-12">
-                                                    <input class="form-control" type="text" required="" placeholder="Username"/>
+                                                    <h:inputText class="form-control" id="username" value="#{loginCusMB.username}" required="true" a:placeholder="Username" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-md-12">
-                                                    <input class="form-control" type="password" required="" placeholder="Password"/>
+                                                    <h:inputSecret class="form-control" id="password" value="#{loginCusMB.password}" required="true" a:placeholder="Password" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-md-12 d-flex justify-content-between align-items-center">
                                                     <div class="checkbox">
-                                                        <input id="checkbox0" type="checkbox" name="remember"/>
-                                                            <label for="checkbox0" class="mb-0"> Remember Me? </label>
+                                                        <h:selectBooleanCheckbox id="remember"/>
+                                                        <label for="remember" class="mb-0"> Remember Me? </label>
                                                     </div>
-                                                    <a href="login.html" class="text-light"><i class="fa fa-bell"></i> Forgot password?</a>
+                                                    <h:outputLink value="forgot-password.xhtml" styleClass="text-light">
+                                                        <i class="fa fa-bell"></i> Forgot password?
+                                                    </h:outputLink>
                                                 </div>
                                             </div>
                                             <div class="form-group row text-center mt-4">
                                                 <div class="col-md-12">
-                                                    <button type="submit" class="btn btn-primary btn-block text-uppercase">Log In</button>
+                                                    <h:commandButton type="submit" value="Log In" styleClass="btn btn-primary btn-block text-uppercase"
+                                                                     action="#{loginCusMB.login()}" />
                                                 </div>
                                             </div>
-                                        </form>
+                                        </h:form>
+
                                     </div>
                                 </div>
                             </div>

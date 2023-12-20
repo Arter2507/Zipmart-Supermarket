@@ -259,7 +259,7 @@ CREATE TABLE [dbo].[Accounts](
 	[userName] [nvarchar](50) NULL,
 	[password] [nvarchar](50) NULL,
 	[hashedPassword] [VARBINARY](MAX),
-	[permissionID] [int] NULL,
+	[permissionID] [int] NULL CONSTRAINT "DF_Perr" DEFAULT (3),
 	[description] [nvarchar](255) NULL,
 	CONSTRAINT "PK_Accounts" PRIMARY KEY  CLUSTERED 
 	(
