@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+*{
+    font-family: 'Montserrat', sans-serif;
+}
+
+body{
+    background-color: #020410;
+}
+
+.container{
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    transform: translate(-50%, -50%);
+    width: 75%;
+    height: 550px;
+    background: url('../../images/logo/zip-mart-high-resolution-logo.png') no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.container .content{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 58%;
+    height: 100%;
+    background: transparent;
+    padding: 80px;
+    color: #e4e4e4;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.content .logo{
+    font-size: 30px;
+}
+
+.content h2{
+    font-size: 40px;
+}
+
+.content h2 span{
+font-size: 25px;        
+}
+
+.text-sci p{
+    font-size: 16px;
+    margin: 20px 0;
+}
+
+.social-icons a i{
+    font-size: 22px;
+    color: #e4e4e4;
+    margin-right: 10px;
+    transition: .5s ease;
+}
+
+.social-icons a:hover i{
+    transform: scale(1.2);
+}
+
+.container .logreg-box{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 58%);
+    height: 100%;
+}
