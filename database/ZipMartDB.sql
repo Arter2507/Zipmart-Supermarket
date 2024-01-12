@@ -102,102 +102,103 @@ GO
 IF exists (select * from sysobjects where id = object_id('dbo.Sales by Year') and sysstat & 0xf = 4)
 	drop procedure [dbo].[Sales by Year]
 GO
-IF exists (select * from sysobjects where id = object_id('dbo.UpdateTotalProductQuantities') and sysstat & 0xf = 4)
-	drop procedure [dbo].[UpdateTotalProductQuantities]
-GO
-IF exists (select * from sysobjects where id = object_id('dbo.Ten Most Expensive Products') and sysstat & 0xf = 4)
-	drop procedure [dbo].[Ten Most Expensive Products]
-GO
-IF exists (select * from sysobjects where id = object_id('dbo.Ten Best Seller Products') and sysstat & 0xf = 4)
-	drop procedure [dbo].[Ten Best Seller Products]
-GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.OrderByQuarter') and sysstat & 0xf = 2)
 	drop view [dbo].[OrderByQuarter]
 GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.Sales Totals by Amount') and sysstat & 0xf = 2)
 	drop view [dbo].[Sales Totals by Amount]
 GO
-IF exists (select * from sysobjects where id = object_id('dbo.Summary of Sales by Quarter') and sysstat & 0xf = 2)
-	drop view [dbo].[Summary of Sales by Quarter]
-GO
-IF exists (select * from sysobjects where id = object_id('dbo.Summary of Sales by Year') and sysstat & 0xf = 2)
-	drop view [dbo].[Summary of Sales by Year]
-GO
-IF exists (select * from sysobjects where id = object_id('dbo.InvoiceView') and sysstat & 0xf = 2)
+
+IF exists (select * from sysobjects where id = object_id('dbo.Invoice') and sysstat & 0xf = 2)
 	drop view [dbo].[InvoiceView]
 GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.Order Subtotals') and sysstat & 0xf = 2)
 	drop view [dbo].[Order Subtotals]
 GO
-IF exists (select * from sysobjects where id = object_id('dbo.Orders Qry') and sysstat & 0xf = 2)
-	drop view [dbo].[Orders Qry]
-GO
-IF exists (select * from sysobjects where id = object_id('dbo.Products Above Average Price') and sysstat & 0xf = 2)
-	drop view [dbo].[Products Above Average Price]
-GO
-IF exists (select * from sysobjects where id = object_id('dbo.Products by Category') and sysstat & 0xf = 2)
-	drop view [dbo].[Products by Category]
-GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.BlogFeedBacks') and sysstat & 0xf = 3)
 	drop table [dbo].[BlogFeedBacks]
 GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.Blogs') and sysstat & 0xf = 3)
 	drop table [dbo].[Blogs]
 GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.Branch') and sysstat & 0xf = 3)
 	drop table [dbo].[Branch]
 GO
-IF exists (select * from sysobjects where id = object_id('dbo.Import') and sysstat & 0xf = 3)
-	drop table [dbo].[Import]
+
+IF exists (select * from sysobjects where id = object_id('dbo.ImportOrder') and sysstat & 0xf = 3)
+	drop table [dbo].[ImportOrder]
 GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.ThresholdAdjustment') and sysstat & 0xf = 3)
 	drop table [dbo].[ThresholdAdjustment]
 GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.Orders') and sysstat & 0xf = 3)
 	drop table [dbo].[Orders]
 GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.OrdersDetails') and sysstat & 0xf = 3)
 	drop table [dbo].[OrdersDetails]
 GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.SalesTarget') and sysstat & 0xf = 3)
 	drop table [dbo].[SalesTarget]
 GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.Managers') and sysstat & 0xf = 3)
 	drop table [dbo].[Managers]
 GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.Employees') and sysstat & 0xf = 3)
 	drop table [dbo].[Employees]
 GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.Products') and sysstat & 0xf = 3)
 	drop table [dbo].[Products]
 GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.Feedbacks') and sysstat & 0xf = 3)
 	drop table [dbo].[Feedbacks]
 GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.Customers') and sysstat & 0xf = 3)
 	drop table [dbo].[Customers]
 GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.CreditCard') and sysstat & 0xf = 3)
 	drop table [dbo].[CreditCard]
 GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.Accounts') and sysstat & 0xf = 3)
 	drop table [dbo].[Accounts]
 GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.Permission') and sysstat & 0xf = 3)
 	drop table [dbo].[Permission]
 GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.Suppliers') and sysstat & 0xf = 3)
 	drop table [dbo].[Suppliers]
 GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.Brand') and sysstat & 0xf = 3)
 	drop table [dbo].[Brand]
 GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.Warehouse') and sysstat & 0xf = 3)
 	drop table [dbo].[Warehouse]
 GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.Categories') and sysstat & 0xf = 3)
 	drop table [dbo].[Categories]
 GO
+
 IF exists (select * from sysobjects where id = object_id('dbo.InventoryStatus') and sysstat & 0xf = 3)
 	drop table [dbo].[InventoryStatus]
 GO
@@ -219,9 +220,7 @@ CREATE TABLE [dbo].[Permission](
 )ON [Primary]
 
 GO
- CREATE  INDEX "PermissionName" ON "dbo"."Permission"("permissionName") 
-GO
-GO
+
 
 SET ANSI_NULLS ON
 GO
@@ -245,9 +244,6 @@ CREATE TABLE [dbo].[CreditCard](
 )ON [Primary]
 
 GO 
- CREATE INDEX "CardNumber" ON "dbo"."CreditCard"("cardNumber")
-GO
-GO
 
 SET ANSI_NULLS ON
 GO
@@ -256,9 +252,8 @@ GO
 --Create Table Account--
 CREATE TABLE [dbo].[Accounts](
 	[accountID] [int] IDENTITY(1,1) NOT NULL,
-	[userName] [nvarchar](50) NULL,
+	[username] [nvarchar](50) NULL,
 	[password] [nvarchar](50) NULL,
-	[hashedPassword] [VARBINARY](MAX),
 	[permissionID] [int] NULL CONSTRAINT "DF_Perr" DEFAULT (3),
 	[description] [nvarchar](255) NULL,
 	CONSTRAINT "PK_Accounts" PRIMARY KEY  CLUSTERED 
@@ -274,13 +269,6 @@ CREATE TABLE [dbo].[Accounts](
 	),
 )ON [Primary]
 
-GO
- CREATE INDEX "Username" ON "dbo"."Accounts"("userName")
-GO
- CREATE INDEX "Password" ON "dbo"."Accounts"("password")
-GO
- CREATE INDEX "PermissionID" ON "dbo"."Accounts"("permissionID")
-GO
 GO
 
 SET ANSI_NULLS ON
@@ -308,13 +296,6 @@ CREATE TABLE [dbo].[Managers](
 	),
 )ON [Primary]
 
-GO
- CREATE INDEX "FullName" ON "dbo"."Managers"("fullname")
-GO
- CREATE INDEX "Address" ON "dbo"."Managers"("address")
-GO
- CREATE INDEX "Email" ON "dbo"."Managers"("email")
-GO
 GO
 
 SET ANSI_NULLS ON
@@ -349,13 +330,7 @@ CREATE TABLE [dbo].[Employees](
 )ON [Primary]
 
 GO
- CREATE INDEX "FullName" ON "dbo"."Employees"("fullname")
-GO
- CREATE INDEX "Address" ON "dbo"."Employees"("address")
-GO
- CREATE INDEX "Email" ON "dbo"."Employees"("email")
-GO
-GO
+
 
 SET ANSI_NULLS ON
 GO
@@ -399,15 +374,6 @@ CREATE TABLE [dbo].[Customers](
 )ON [Primary]
 
 GO
- CREATE INDEX "FullName" ON "dbo"."Customers"("fullname")
-GO
- CREATE INDEX "Address" ON "dbo"."Customers"("address")
-GO
- CREATE INDEX "Email" ON "dbo"."Customers"("email")
-GO
- CREATE INDEX "Rank" ON "dbo"."Customers"("rank")
-GO
-GO
 
 SET ANSI_NULLS ON
 GO
@@ -433,9 +399,6 @@ CREATE TABLE [dbo].[BlogFeedBacks](
 	),
 )ON [Primary]
 
-GO
- CREATE INDEX "Title" ON "dbo"."blogFeedBacks"("title")
-GO
 GO
 
 SET ANSI_NULLS ON
@@ -464,11 +427,7 @@ CREATE TABLE [dbo].[Blogs](
 )ON [Primary]
 
 GO
- CREATE INDEX "Title_Blog" ON "dbo"."Blogs"("title")
-GO
- CREATE INDEX "ViewCount" ON "dbo"."Blogs"("viewCount")
-GO
-GO
+
 
 SET ANSI_NULLS ON
 GO
@@ -496,11 +455,7 @@ CREATE TABLE [dbo].[Feedbacks](
 )ON [Primary]
 
 GO
- CREATE INDEX "Title_Feedback" ON "dbo"."Feedbacks"("title")
-GO
- CREATE INDEX "Rate" ON "dbo"."Feedbacks"("rate")
-GO
-GO
+
 
 SET ANSI_NULLS ON
 GO
@@ -526,15 +481,7 @@ CREATE TABLE [dbo].[Suppliers](
 )ON [Primary]
 
 GO
- CREATE  INDEX "CompanyName" ON "dbo"."Suppliers"("companyName")
-GO
- CREATE  INDEX "ContactName" ON "dbo"."Suppliers"("contactName")
-GO
- CREATE  INDEX "Address" ON "dbo"."Suppliers"("address")
-GO
- CREATE  INDEX "PostalCode" ON "dbo"."Suppliers"("postalCode")
-GO
-GO
+
 
 SET ANSI_NULLS ON
 GO
@@ -559,9 +506,6 @@ CREATE TABLE [dbo].[Brand](
 )ON [Primary]
 
 GO
- CREATE INDEX "BrandName" ON "dbo"."Brand"("brandName")
-GO
-GO
 
 SET ANSI_NULLS ON
 GO
@@ -585,15 +529,7 @@ CREATE TABLE [dbo].[Warehouse](
 )ON [Primary]
 
 GO
- CREATE INDEX "CompanyName" ON "dbo"."Warehouse"("companyName")
-GO
- CREATE INDEX "WarehouseName" ON "dbo"."Warehouse"("warehouseName")
-GO
-CREATE INDEX "Address" ON "dbo"."Warehouse"("address")
-GO
- CREATE INDEX "PostalCode" ON "dbo"."Warehouse"("postalCode")
-GO
-GO
+
 
 SET ANSI_NULLS ON
 GO
@@ -617,15 +553,7 @@ CONSTRAINT "PK_Branch" PRIMARY KEY CLUSTERED
 )ON [Primary]
 
 GO
- CREATE INDEX "CompanyName" ON "dbo"."Branch"("companyName")
-GO
- CREATE INDEX "BranchName" ON "dbo"."Branch"("branchName")
-GO
-CREATE INDEX "Address" ON "dbo"."Branch"("address")
-GO
- CREATE INDEX "PostalCode" ON "dbo"."Branch"("postalCode")
-GO
-GO
+ 
 
 SET ANSI_NULLS ON
 GO
@@ -636,6 +564,7 @@ CREATE TABLE [dbo].[Categories](
 	[categoryID] [int] IDENTITY(1,1) NOT NULL,
 	[categoryName] [nvarchar](50) NULL,
 	[restockThreshold] [int] NULL,
+	[newAdjustment] [int]NULL CONSTRAINT "DF_Products_AdjustmentThreshold" DEFAULT (0),
 	[description] [nvarchar](255) NULL,
 	CONSTRAINT "PK_Category" PRIMARY KEY CLUSTERED
 	(
@@ -644,21 +573,17 @@ CREATE TABLE [dbo].[Categories](
 )ON [Primary]
 
 GO
- CREATE INDEX "CategoryName" ON "dbo"."Categories"("categoryName")
-GO
-GO
 
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 --Create Table Import--
-	CREATE TABLE [dbo].[Import](
+	CREATE TABLE [dbo].[ImportOrder](
 		[importID] [int] IDENTITY(1,1) NOT NULL,
 		[supplierID] [int] NOT NULL,
-		[brandID] [int] NOT NULL,
-		[branchID] [int] NOT NULL,
 		[categoryID] [int] NOT NULL,
+		[branchID] [int] NOT NULL,
 		[companyName] [nvarchar] (40) NULL,
 		[dateImport] [datetime] NULL,
 		[hsCode] [int] NULL,
@@ -684,13 +609,12 @@ GO
 			"supplierID"
 		),
 
-		CONSTRAINT "FK_Import_Brand" FOREIGN KEY 
+		CONSTRAINT "FK_Import_Category" FOREIGN KEY 
 		(
-			"brandID"
-		) REFERENCES "dbo"."Brand" (
-			"brandID"
+			"categoryID"
+		) REFERENCES "dbo"."Categories" (
+			"categoryID"
 		),
-
 		CONSTRAINT "FK_Import_Branch" FOREIGN KEY 
 		(
 			"branchID"
@@ -698,24 +622,8 @@ GO
 			"branchID"
 		),
 
-		CONSTRAINT "FK_Import_Category" FOREIGN KEY 
-		(
-			"categoryID"
-		) REFERENCES "dbo"."Categories" (
-			"categoryID"
-		),
-
 	)ON [Primary]
 
-GO
- CREATE INDEX "Branch" ON "dbo"."Import"("branchID")
-GO
- CREATE INDEX "CompanyName" ON "dbo"."Import"("companyName")
-GO
-CREATE INDEX "Address" ON "dbo"."Import"("address")
-GO
- CREATE INDEX "PostalCode" ON "dbo"."Import"("postalCode")
-GO
 GO
 
 SET ANSI_NULLS ON
@@ -733,7 +641,6 @@ CREATE TABLE InventoryStatus
 	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
 
 )ON [Primary]
-GO
 GO
 
 SET ANSI_NULLS ON
@@ -754,7 +661,6 @@ CREATE TABLE [dbo].[Products](
 	[quantitySold] [int] NULL,
 	[quantityInStock] [int] NULL,
 	[unit] [nvarchar](50) NULL,
-	[newAdjustment] [int]NULL CONSTRAINT "DF_Products_AdjustmentThreshold" DEFAULT (0),
 	[description] [nvarchar](max) NULL,
 	[viewCount] [int] NULL,
 	[discount] [int] NULL,
@@ -800,21 +706,7 @@ CREATE TABLE [dbo].[Products](
 )On [Primary]
 
 GO
- CREATE  INDEX "CategoriesProducts" ON "dbo"."Products"("categoryID")
-GO
- CREATE  INDEX "CategoryID" ON "dbo"."Products"("categoryID")
-GO
- CREATE  INDEX "BrandProducts" ON "dbo"."Products"("brandID")
-GO
- CREATE  INDEX "Brand" ON "dbo"."Products"("brandID")
-GO
- CREATE  INDEX "ProductName" ON "dbo"."Products"("productName")
-GO
- CREATE  INDEX "SupplierID" ON "dbo"."Products"("supplierID")
-GO
- CREATE  INDEX "SuppliersProducts" ON "dbo"."Products"("supplierID")
-GO
-GO
+
 
 SET ANSI_NULLS ON
 GO
@@ -823,7 +715,7 @@ GO
 --Create Table ThAdj--
 CREATE TABLE [dbo].[ThresholdAdjustment](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[productID] [int] NOT NULL,
+	[categoryID] [int] NOT NULL,
 	[reasonAdjustment] [nvarchar](50) NULL,
 	[new_restockThreshold] [int] NULL,
 	[dateAdjusted] [datetime] NULL,
@@ -835,16 +727,14 @@ CREATE TABLE [dbo].[ThresholdAdjustment](
 
 	CONSTRAINT "FK_Adjustment_WP" FOREIGN KEY 
 	(
-		"productID"
-	) REFERENCES "dbo"."Products" (
-		"productID"
+		"categoryID"
+	) REFERENCES "dbo"."Categories" (
+		"categoryID"
 	),
 )On [Primary]
 
 GO
- CREATE  INDEX "Status" ON "dbo"."ThresholdAdjustment"("statusThresholdAdjustments")
-GO
-GO
+
 
 SET ANSI_NULLS ON
 GO
@@ -859,7 +749,7 @@ CREATE TABLE dbo.Orders (
     [shipDate] [DATETIME] NULL,
 	[shipAddress] [nvarchar](255) NULL,
 	[note] [nvarchar](max) NULL,
-    [status] [NVARCHAR](50) NULL,
+    [status] [NVARCHAR](50) NULL DEFAULT 'Successful',
 	CONSTRAINT "PK_Orders" PRIMARY KEY CLUSTERED 
 	(
 	orderID ASC
@@ -870,9 +760,7 @@ CREATE TABLE dbo.Orders (
 )ON [Primary]
 
 GO
- CREATE INDEX "CustomerID" ON "dbo"."Orders"("customerID")
-GO
-GO
+
 
 SET ANSI_NULLS ON
 GO
@@ -912,43 +800,6 @@ CREATE TABLE [dbo].[OrdersDetails](
 )
 
 GO
- CREATE  INDEX "OrderID" ON "dbo"."OrdersDetails"("orderID")
-GO
- CREATE  INDEX "OrdersOrder_Details" ON "dbo"."OrdersDetails"("orderID")
-GO
- CREATE  INDEX "ProID" ON "dbo"."OrdersDetails"("productID")
-GO
- CREATE  INDEX "CartOrder_Details" ON "dbo"."OrdersDetails"("productID")
-GO
-GO
-
-
-create view "Orders Qry" AS
-SELECT Orders.OrderID, Orders.CustomerID, Orders.EmployeeID, Orders.OrderDate, Orders.ShipDate, 
-	Orders.ShipAddress, Orders.note, Orders.status,  
-	Customers.fullname, Customers.Address, Customers.phone, Customers.email,
-	CreditCard.cardName, CreditCard.cardNumber,CreditCard.cvvNumber,CreditCard.valueFrom,CreditCard.expirationDate,
-	Customers.point,
-	customers.rank
-FROM Customers INNER JOIN Orders ON Customers.CustomerID = Orders.CustomerID 
-INNER JOIN CreditCard ON Customers.cardID = CreditCard.cardID
-GO
-GO
-
-create view "Products Above Average Price" AS
-SELECT Products.ProductName, Products.UnitPrice
-FROM Products
-WHERE Products.UnitPrice>(SELECT AVG(UnitPrice) From Products)
---ORDER BY Products.UnitPrice DESC
-GO
-GO
-
-create view "Products by Category" AS
-SELECT Categories.CategoryName, Products.ProductName, Products.quantity, Products.quantityInStock, Products.quantitySold, Categories.restockThreshold
-FROM Categories INNER JOIN Products ON Categories.CategoryID = Products.CategoryID
---ORDER BY Categories.CategoryName, Products.ProductName
-GO
-GO
 
 CREATE VIEW OrderByQuarter AS
 SELECT
@@ -964,7 +815,6 @@ SELECT
     Address,
     Phone,
     Email,
-    CardID,
     Point,
     Rank,
     CASE
@@ -990,42 +840,42 @@ FROM
             Customers.Address,
             Customers.Phone,
             Customers.Email,
-            Customers.CardID,
             Customers.Point,
             Customers.Rank
         FROM
             Customers
         INNER JOIN Orders ON Customers.CustomerID = Orders.CustomerID
-        INNER JOIN CreditCard ON Customers.CardID = CreditCard.CardID
     ) AS Subquery;
 
 GO
 GO
 
-CREATE VIEW InvoiceView AS
-SELECT
-    O.orderID,
-    O.customerID,
-    O.employeeID,
-    O.orderDate,
-    O.shipDate,
-    O.shipAddress,
-    O.note,
-    O.status,
-    OD.productID,
-	OD.unitPrice,
-    OD.quantity,
-    OD.discount,
-    OD.totalPrice,
-    OD.paymentMethod,
-	C.cardName,
-	C.cardNumber
-FROM
-    dbo.Orders AS O
-JOIN
-    dbo.OrdersDetails AS OD ON O.orderID = OD.orderID
-INNER JOIN Customers AS C ON O.customerID = C.customerID;
-GO
+CREATE VIEW Invoices AS
+SELECT 
+    o.orderID AS 'Invoice Number',
+    o.orderDate AS 'Order Date',
+    c.fullName AS 'Customer Name',
+    c.address AS 'Customer Address',
+    c.phone AS 'Customer Phone',
+    od.productID AS 'Product ID',
+    p.productName AS 'Product Name',
+    od.unitPrice AS 'Unit Price',
+    od.quantity AS 'Quantity',
+    od.discount AS 'Discount (%)',
+    od.totalPrice AS 'Line Total',
+    o.shipAddress AS 'Shipping Address',
+    o.note AS 'Notes',
+    o.status AS 'Order Status',
+    od.paymentMethod AS 'Payment Method',
+    od.cardName AS 'Card Name',
+    od.cardNumber AS 'Card Number (last 4 digits)',
+    (SELECT SUM(totalPrice) FROM OrdersDetails WHERE orderID = o.orderID) AS 'Invoice Total'
+FROM Orders o
+INNER JOIN Customers c ON o.customerID = c.customerID
+INNER JOIN OrdersDetails od ON o.orderID = od.orderID
+INNER JOIN Products p ON od.productID = p.productID
+WHERE o.status = 'Successful';
+
 GO
 
 CREATE VIEW "Order Subtotals" AS
@@ -1062,45 +912,7 @@ GROUP BY
 GO
 GO
 
-create view "Summary of Sales by Quarter" AS
-SELECT Orders.ShipDate, Orders.OrderID, "Order Subtotals".Subtotal
-FROM Orders INNER JOIN "Order Subtotals" ON Orders.OrderID = "Order Subtotals".OrderID
-WHERE Orders.ShipDate IS NOT NULL
---ORDER BY Orders.ShippedDate
-GO
-GO
 
-create view "Summary of Sales by Year" AS
-SELECT Orders.ShipDate, Orders.OrderID, "Order Subtotals".Subtotal
-FROM Orders INNER JOIN "Order Subtotals" ON Orders.OrderID = "Order Subtotals".OrderID
-WHERE Orders.ShipDate IS NOT NULL
---ORDER BY Orders.ShippedDate
-GO
-GO
-
-create procedure "Ten Most Expensive Products" AS
-SET ROWCOUNT 10
-SELECT Products.ProductName AS TenMostExpensiveProducts, Products.UnitPrice
-FROM Products
-ORDER BY Products.UnitPrice DESC
-GO
-GO
-
-CREATE PROCEDURE "TenBestSellerProducts"
-AS
-BEGIN
-    SET ROWCOUNT 10;
-
-    SELECT TOP 10
-        Products.ProductName AS TenBestSellerProducts,
-        Products.quantity
-    FROM
-        Products
-    ORDER BY
-        Products.quantity DESC;
-END;
-GO
-GO
 
 create procedure "Sales by Year" 
 	@Beginning_Date DateTime, @Ending_Date DateTime AS
@@ -1110,19 +922,37 @@ WHERE Orders.ShipDate Between @Beginning_Date And @Ending_Date
 GO
 GO
 
-CREATE PROCEDURE UpdateTotalProductQuantities
+------Enforce quantity <= quantityInStock------
+CREATE TRIGGER trg_Products_UpdateQuantityInStock
+ON Products
+AFTER INSERT, UPDATE
 AS
 BEGIN
-    UPDATE P
-    SET P.quantity = 
-        CASE 
-            WHEN (P.quantity + P.quantityInStock) > C.restockThreshold THEN C.restockThreshold - P.quantityInStock
-            ELSE CASE WHEN P.quantity > P.quantityInStock THEN P.quantityInStock ELSE P.quantity END
-        END
-    FROM dbo.Products P
-    INNER JOIN dbo.Categories C ON P.categoryID = C.categoryID;
-END
+    IF UPDATE(quantity)
+    BEGIN
+        UPDATE Products
+        SET quantityInStock = quantity
+        WHERE productID IN (SELECT productID FROM inserted);
+    END
+END;
 GO
+ 
+ -----------Enforce restockThreshold in Categories table----------
+CREATE TRIGGER trg_UpdateRestockThreshold
+ON ThresholdAdjustment
+AFTER INSERT
+AS
+BEGIN
+    IF UPDATE(statusThresholdAdjustments)
+        AND EXISTS (SELECT 1 FROM inserted WHERE statusThresholdAdjustments = 'Accept')
+    BEGIN
+        UPDATE Categories
+        SET restockThreshold = newAdjustment,  -- Update restockThreshold using newAdjustment
+            newAdjustment = i.new_restockThreshold  -- Capture new_restockThreshold for future reference
+        FROM inserted i
+        WHERE Categories.categoryID = i.categoryID;
+    END
+END;
 GO
 
 --=======================INSERT DATA=====================--
@@ -1184,31 +1014,31 @@ go
 ALTER TABLE "Accounts" NOCHECK CONSTRAINT ALL
 go
 ---User with permission 1-----
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword","permissionID", "description") VALUES (1,'Admin', 'Admin', HASHBYTES('SHA2_256', 'Admin'),1, 'Manager');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (1,'Admin', 'Admin', 1, 'Manager');
 ---User with permission 2-----
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (2,'quangtuong', 'Admin', HASHBYTES('SHA2_256', 'Admin'), 2, 'Employee');
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (3,'hieutho', 'Admin', HASHBYTES('SHA2_256', 'Admin'), 2, 'Employee');
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (4,'huunhan', 'Admin', HASHBYTES('SHA2_256', 'Admin'), 2, 'Employee');
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (5,'minhnghia', 'Admin', HASHBYTES('SHA2_256', 'Admin'), 2, 'Employee');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (2,'quangtuong', 'Admin', 2, 'Employee');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (3,'hieutho', 'Admin', 2, 'Employee');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (4,'huunhan', 'Admin', 2, 'Employee');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (5,'minhnghia', 'Admin', 2, 'Employee');
 ---User with permission 3-----
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (6,'hieutho', 'user', HASHBYTES('SHA2_256', 'user'), 3, 'Customer');
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (7,'huunhan', 'user', HASHBYTES('SHA2_256', 'user'), 3, 'Customer');
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (8,'minhnghia', 'user', HASHBYTES('SHA2_256', 'user'), 3, 'Customer');
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (9,'minhtuan', 'user', HASHBYTES('SHA2_256', 'user'), 3, 'Customer');
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (10,'myhao', 'user', HASHBYTES('SHA2_256', 'user'), 3, 'Customer');
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (11,'kimthanh', 'user', HASHBYTES('SHA2_256', 'user'), 3, 'Customer');
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (12,'trongtri', 'user', HASHBYTES('SHA2_256', 'user'), 3, 'Customer');
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (13,'tanphat', 'user', HASHBYTES('SHA2_256', 'user'), 3, 'Customer');
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (14,'ngocanh', 'user', HASHBYTES('SHA2_256', 'user'), 3, 'Customer');
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (15,'anhthu', 'user', HASHBYTES('SHA2_256', 'user'), 3, 'Customer');
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (16,'vanhien', 'user', HASHBYTES('SHA2_256', 'user'), 3, 'Customer');
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (17,'ngoclan', 'user', HASHBYTES('SHA2_256', 'user'), 3, 'Customer');
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (18,'ngoctrang', 'user', HASHBYTES('SHA2_256', 'user'), 3, 'Customer');
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (19,'ngochien', 'user', HASHBYTES('SHA2_256', 'user'), 3, 'Customer');
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (20,'thanhdat', 'user', HASHBYTES('SHA2_256', 'user'), 3, 'Customer');
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (22,'minhdat', 'user', HASHBYTES('SHA2_256', 'user'), 3, 'Customer');
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (23,'thuthao', 'user', HASHBYTES('SHA2_256', 'user'), 3, 'Customer');
-INSERT INTO "Accounts" ("accountID","userName", "password", "hashedPassword", "permissionID", "description") VALUES (24,'kimtuyen', 'user', HASHBYTES('SHA2_256', 'user'), 3, 'Customer');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (6,'hieutho', 'user', 3, 'Customer');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (7,'huunhan', 'user', 3, 'Customer');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (8,'minhnghia', 'user', 3, 'Customer');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (9,'minhtuan', 'user', 3, 'Customer');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (10,'myhao', 'user', 3, 'Customer');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (11,'kimthanh', 'user', 3, 'Customer');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (12,'trongtri', 'user', 3, 'Customer');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (13,'tanphat', 'user', 3, 'Customer');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (14,'ngocanh', 'user', 3, 'Customer');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (15,'anhthu', 'user', 3, 'Customer');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (16,'vanhien', 'user', 3, 'Customer');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (17,'ngoclan', 'user', 3, 'Customer');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (18,'ngoctrang', 'user', 3, 'Customer');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (19,'ngochien', 'user', 3, 'Customer');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (20,'thanhdat', 'user', 3, 'Customer');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (22,'minhdat', 'user', 3, 'Customer');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (23,'thuthao', 'user', 3, 'Customer');
+INSERT INTO "Accounts" ("accountID","userName", "password", "permissionID", "description") VALUES (24,'kimtuyen', 'user', 3, 'Customer');
 GO
 set identity_insert "Accounts" off
 go
@@ -1238,10 +1068,10 @@ set identity_insert "Employees" on
 go
 ALTER TABLE "Employees" NOCHECK CONSTRAINT ALL
 go
-INSERT INTO "Employees" ("employeeID","fullname","accountID","imageURL","birthDate","address","email","phone","Notes") VALUES (1,'To Quang Tuong',2,'img\uploads\emp\man.jpg','07-25-2003','Can Tho','qtuong.257@gmail.com','0917895327','My note');
-INSERT INTO "Employees" ("employeeID","fullname","accountID","imageURL","birthDate","address","email","phone","Notes") VALUES (2,'Pham Hieu Tho',2,'img\uploads\emp\woman.jpg','07-04-2003','Can Tho','hieutho1510@gmail.com','0938973817','My note');
-INSERT INTO "Employees" ("employeeID","fullname","accountID","imageURL","birthDate","address","email","phone","Notes") VALUES (3,'Pham Huu Nhan',2,'img\uploads\emp\man.jpg','07-25-2003','Can Tho','huunhan.service@gmail.com','0123456789','Off');
-INSERT INTO "Employees" ("employeeID","fullname","accountID","imageURL","birthDate","address","email","phone","Notes") VALUES (4,'Ly Minh Nghia',2,'img\uploads\emp\man.jpg','07-25-2003','Can Tho','minhnghia.service@gmail.com','0123456789','Off');
+INSERT INTO "Employees" ("employeeID","fullname","accountID","imageURL","birthDate","address","email","phone","Notes") VALUES (1,'To Quang Tuong',2,'images\user\man.jpg','07-25-2003','Can Tho','qtuong.257@gmail.com','0917895327','My note');
+INSERT INTO "Employees" ("employeeID","fullname","accountID","imageURL","birthDate","address","email","phone","Notes") VALUES (2,'Pham Hieu Tho',3,'images\user\woman.jpg','07-04-2003','Can Tho','hieutho1510@gmail.com','0938973817','My note');
+INSERT INTO "Employees" ("employeeID","fullname","accountID","imageURL","birthDate","address","email","phone","Notes") VALUES (3,'Pham Huu Nhan',4,'images\user\man.jpg','07-25-2003','Can Tho','huunhan.service@gmail.com','0123456789','Off');
+INSERT INTO "Employees" ("employeeID","fullname","accountID","imageURL","birthDate","address","email","phone","Notes") VALUES (4,'Ly Minh Nghia',5,'images\user\man.jpg','07-25-2003','Can Tho','minhnghia.service@gmail.com','0123456789','Off');
 GO
 set identity_insert "Employees" off
 go
@@ -1256,24 +1086,24 @@ set identity_insert "Customers" on
 go
 ALTER TABLE "Customers" NOCHECK CONSTRAINT ALL
 go
-INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (1, 1, 6, 'Pham Hieu Tho', 'Can Tho', '0938973817', 'hieutho1510@gmail.com', '07-04-2003', 'img\uploads\cus\woman.jpg', 'Pham Hieu Tho', '1234567890123456', 100, 'Gold');
-INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (2, 2, 7, 'Ly Minh Nghia', 'Can Tho', '0123456781', 'minhnghia.cus@gmail.com', '07-04-2003', 'img\uploads\cus\woman.jpg', 'Ly Minh Nghia', '2345678901234567', 100, 'Gold');
-INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (3, 3, 8, 'Pham Huu Nhan', 'Can Tho', '0123456782', 'huunhan.cus@gmail.com', '07-04-2003', 'img\uploads\cus\woman.jpg', 'Pham Huu Nhan', '3456789012345678', 100, 'Gold');
-INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (4, 4, 9, 'Nguyen Minhh Tuan', 'Can Tho', '0123436789', 'minhtuan.cus@gmail.com', '07-04-2003', 'img\uploads\cus\woman.jpg', 'Nguyen Minhh Tuan', '4567890123456789', 100, 'Gold');
-INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (5, 5, 10, 'Nguyen Thi My Hao', 'Can Tho', '0123456789', 'myhao.cus@gmail.com', '07-04-2003', 'img\uploads\cus\woman.jpg', 'Nguyen Thi My Hao', '5678901234567890', 100, 'Gold');
-INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (6, 6, 11, 'Ong Kim Thanh', 'Can Tho', '0123456759', 'kimthanh.cus@gmail.com', '07-04-2003', 'img\uploads\cus\woman.jpg', 'Ong Kim Thanh', '6789012345678901', 100, 'Gold');
-INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (7, 7, 12, 'Nguyen Trong Tri', 'Can Tho', '0123466789', 'trongtri.cus0@gmail.com', '07-04-2003', 'img\uploads\cus\woman.jpg', 'Nguyen Trong Tri', '7890123456789012', 100, 'Gold');
-INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (8, 8, 13, 'Nguyen Tan Phat', 'Can Tho', '0123457789', 'tanphat.cus@gmail.com', '07-04-2003', 'img\uploads\cus\woman.jpg', 'Nguyen Tan Phat', '8901234567890123', 100, 'Gold');
-INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (9, 9, 14, 'Truong Ngoc Anh', 'Can Tho', '0123458789', 'ngocanh.cus@gmail.com', '07-04-2003', 'img\uploads\cus\woman.jpg', 'Truong Ngoc Anh', '9012345678901234', 100, 'Gold');
-INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (10, 10, 15, 'Nguyen Thi Anh Thu', 'Can Tho', '0923456789', 'anhthu.cus@gmail.com', '07-04-2003', 'img\uploads\cus\woman.jpg', 'Nguyen Thi Anh Thu', '0123456789012345', 100, 'Gold');
-INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (11, 11, 16, 'Pham Van Hien', 'Can Tho', '0123423789', 'vanhien.cus@gmail.com', '07-04-2003', 'img\uploads\cus\woman.jpg', 'Pham Van Hien', '1234567890123456', 100, 'Gold');
-INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (12, 12, 17, 'To Ngoc Lan', 'Can Tho', '0123456119', 'ngoclan.cus@gmail.com', '07-04-2003', 'img\uploads\cus\woman.jpg', 'To Ngoc Lan', '2345678901234567', 100, 'Gold');
-INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (13, 13, 18, 'Truong Thi Ngoc Trang', 'Can Tho', '0123456789', 'ngoctrang.cus@gmail.com', '07-04-2003', 'img\uploads\cus\woman.jpg', 'Truong Thi Ngoc Trang', '3456789012345678', 100, 'Gold');
-INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (14, 14, 19, 'Nguyen Ngoc Hien', 'Can Tho', '0123453189', 'ngochien.cus@gmail.com', '07-04-2003', 'img\uploads\cus\woman.jpg', 'Nguyen Ngoc Hien', '4567890123456789', 100, 'Gold');
-INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (15, 15, 20, 'Nguyen Thanh Dat', 'Can Tho', '0125356789', 'thanhdat.cus@gmail.com', '07-04-2003', 'img\uploads\cus\woman.jpg', 'Nguyen Thanh Dat', '5678901234567890', 100, 'Gold');
-INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (16, 16, 21, 'Dang Minh Dat', 'Can Tho', '0123453589', 'minhdat.cus@gmail.com', '07-04-2003', 'img\uploads\cus\woman.jpg', 'Dang Minh Dat', '6789012345678901', 100, 'Gold');
-INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (17, 17, 22, 'Tran Thi Thu Thao', 'Can Tho', '0112456789', 'thuthao.cus@gmail.com', '07-04-2003', 'img\uploads\cus\woman.jpg', 'Tran Thi Thu Thao', '7890123456789012', 100, 'Gold');
-INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (18, 18, 23, 'Vuong Nguyen Kim Tuyen', 'Can Tho', '0753456789', 'kimtuyen.cus@gmail.com', '07-04-2003', 'img\uploads\cus\woman.jpg', 'Vuong Nguyen Kim Tuyen', '8901234567890123', 100, 'Gold');
+INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (1, 1, 6, 'Pham Hieu Tho', 'Can Tho', '0938973817', 'hieutho1510@gmail.com', '07-04-2003', 'images\user\cus\woman.jpg', 'Pham Hieu Tho', '1234567890123456', 100, 'Gold');
+INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (2, 2, 7, 'Ly Minh Nghia', 'Can Tho', '0123456781', 'minhnghia.cus@gmail.com', '07-04-2003', 'images\user\cus\woman.jpg', 'Ly Minh Nghia', '2345678901234567', 100, 'Gold');
+INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (3, 3, 8, 'Pham Huu Nhan', 'Can Tho', '0123456782', 'huunhan.cus@gmail.com', '07-04-2003', 'images\user\cus\woman.jpg', 'Pham Huu Nhan', '3456789012345678', 100, 'Gold');
+INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (4, 4, 9, 'Nguyen Minhh Tuan', 'Can Tho', '0123436789', 'minhtuan.cus@gmail.com', '07-04-2003', 'images\user\cus\woman.jpg', 'Nguyen Minhh Tuan', '4567890123456789', 100, 'Gold');
+INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (5, 5, 10, 'Nguyen Thi My Hao', 'Can Tho', '0123456789', 'myhao.cus@gmail.com', '07-04-2003', 'images\user\cus\woman.jpg', 'Nguyen Thi My Hao', '5678901234567890', 100, 'Gold');
+INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (6, 6, 11, 'Ong Kim Thanh', 'Can Tho', '0123456759', 'kimthanh.cus@gmail.com', '07-04-2003', 'images\user\cus\woman.jpg', 'Ong Kim Thanh', '6789012345678901', 100, 'Gold');
+INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (7, 7, 12, 'Nguyen Trong Tri', 'Can Tho', '0123466789', 'trongtri.cus0@gmail.com', '07-04-2003', 'images\user\cus\woman.jpg', 'Nguyen Trong Tri', '7890123456789012', 100, 'Gold');
+INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (8, 8, 13, 'Nguyen Tan Phat', 'Can Tho', '0123457789', 'tanphat.cus@gmail.com', '07-04-2003', 'images\user\cus\woman.jpg', 'Nguyen Tan Phat', '8901234567890123', 100, 'Gold');
+INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (9, 9, 14, 'Truong Ngoc Anh', 'Can Tho', '0123458789', 'ngocanh.cus@gmail.com', '07-04-2003', 'images\user\cus\woman.jpg', 'Truong Ngoc Anh', '9012345678901234', 100, 'Gold');
+INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (10, 10, 15, 'Nguyen Thi Anh Thu', 'Can Tho', '0923456789', 'anhthu.cus@gmail.com', '07-04-2003', 'images\user\cus\woman.jpg', 'Nguyen Thi Anh Thu', '0123456789012345', 100, 'Gold');
+INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (11, 11, 16, 'Pham Van Hien', 'Can Tho', '0123423789', 'vanhien.cus@gmail.com', '07-04-2003', 'images\user\cus\woman.jpg', 'Pham Van Hien', '1234567890123456', 100, 'Gold');
+INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (12, 12, 17, 'To Ngoc Lan', 'Can Tho', '0123456119', 'ngoclan.cus@gmail.com', '07-04-2003', 'images\user\cus\woman.jpg', 'To Ngoc Lan', '2345678901234567', 100, 'Gold');
+INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (13, 13, 18, 'Truong Thi Ngoc Trang', 'Can Tho', '0123456789', 'ngoctrang.cus@gmail.com', '07-04-2003', 'images\user\cus\woman.jpg', 'Truong Thi Ngoc Trang', '3456789012345678', 100, 'Gold');
+INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (14, 14, 19, 'Nguyen Ngoc Hien', 'Can Tho', '0123453189', 'ngochien.cus@gmail.com', '07-04-2003', 'images\user\cus\woman.jpg', 'Nguyen Ngoc Hien', '4567890123456789', 100, 'Gold');
+INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (15, 15, 20, 'Nguyen Thanh Dat', 'Can Tho', '0125356789', 'thanhdat.cus@gmail.com', '07-04-2003', 'images\user\cus\woman.jpg', 'Nguyen Thanh Dat', '5678901234567890', 100, 'Gold');
+INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (16, 16, 21, 'Dang Minh Dat', 'Can Tho', '0123453589', 'minhdat.cus@gmail.com', '07-04-2003', 'images\user\cus\woman.jpg', 'Dang Minh Dat', '6789012345678901', 100, 'Gold');
+INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (17, 17, 22, 'Tran Thi Thu Thao', 'Can Tho', '0112456789', 'thuthao.cus@gmail.com', '07-04-2003', 'images\user\cus\woman.jpg', 'Tran Thi Thu Thao', '7890123456789012', 100, 'Gold');
+INSERT INTO "Customers" ("customerID","cardID", "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","point", "rank"	) VALUES (18, 18, 23, 'Vuong Nguyen Kim Tuyen', 'Can Tho', '0753456789', 'kimtuyen.cus@gmail.com', '07-04-2003', 'images\user\cus\woman.jpg', 'Vuong Nguyen Kim Tuyen', '8901234567890123', 100, 'Gold');
 
 GO
 set identity_insert "Customers" off
@@ -1761,14 +1591,14 @@ set identity_insert "Categories" on
 go
 ALTER TABLE "Categories" NOCHECK CONSTRAINT ALL
 go
-INSERT INTO "Categories" ("categoryID","CategoryName", "Description", "restockThreshold") VALUES (1,'Household Appliances', 'Home electronic devices', 500);
-INSERT INTO "Categories" ("categoryID","CategoryName", "Description", "restockThreshold") VALUES (2,'Spices', 'Various cooking spices', 500);
-INSERT INTO "Categories" ("categoryID","CategoryName", "Description", "restockThreshold") VALUES (3,'Meat', 'Various meat products', 500);
-INSERT INTO "Categories" ("categoryID","CategoryName", "Description", "restockThreshold") VALUES (4,'Seafood', 'Various seafood products', 500);
-INSERT INTO "Categories" ("categoryID","CategoryName", "Description", "restockThreshold") VALUES (5,'Vegetables', 'Fresh vegetables', 500);
-INSERT INTO "Categories" ("categoryID","CategoryName", "Description", "restockThreshold") VALUES (6,'Convenience Products', 'Convenient and ready-to-use products', 500);
-INSERT INTO "Categories" ("categoryID","CategoryName", "Description", "restockThreshold") VALUES (7,'Fashion', 'Clothing and accessories', 500);
-INSERT INTO "Categories" ("categoryID","CategoryName", "Description", "restockThreshold") VALUES (8,'Fruits', 'Fresh fruits', 500);
+INSERT INTO "Categories" ("categoryID","CategoryName", "Description", "restockThreshold", "newAdjustment") VALUES (1,'Household Appliances', 'Home electronic devices', 500,0);
+INSERT INTO "Categories" ("categoryID","CategoryName", "Description", "restockThreshold", "newAdjustment") VALUES (2,'Spices', 'Various cooking spices', 500,0);
+INSERT INTO "Categories" ("categoryID","CategoryName", "Description", "restockThreshold", "newAdjustment") VALUES (3,'Meat', 'Various meat products', 500,0);
+INSERT INTO "Categories" ("categoryID","CategoryName", "Description", "restockThreshold", "newAdjustment") VALUES (4,'Seafood', 'Various seafood products', 500,0);
+INSERT INTO "Categories" ("categoryID","CategoryName", "Description", "restockThreshold", "newAdjustment") VALUES (5,'Vegetables', 'Fresh vegetables', 500,0);
+INSERT INTO "Categories" ("categoryID","CategoryName", "Description", "restockThreshold", "newAdjustment") VALUES (6,'Convenience Products', 'Convenient and ready-to-use products', 500,0);
+INSERT INTO "Categories" ("categoryID","CategoryName", "Description", "restockThreshold", "newAdjustment") VALUES (7,'Fashion', 'Clothing and accessories', 500,0);
+INSERT INTO "Categories" ("categoryID","CategoryName", "Description", "restockThreshold", "newAdjustment") VALUES (8,'Fruits', 'Fresh fruits', 500,0);
 GO
 set identity_insert "Categories" off
 go
@@ -1779,23 +1609,23 @@ GO
 ------------------------------------
 set quoted_identifier on
 go
-set identity_insert "Import" on
+set identity_insert "ImportOrder" on
 go
-ALTER TABLE "Import" NOCHECK CONSTRAINT ALL
+ALTER TABLE "ImportOrder" NOCHECK CONSTRAINT ALL
 go
-INSERT INTO dbo.Import (importID,supplierID, brandID, branchID, categoryID, companyName, dateImport, hsCode, nameProduct, amountDelivery, address, city, phone, fax, postalCode, description, status, leadtime)
-VALUES (1, 1, 1, 3, 1, 'ZipMart co.', '2023-01-15', 85166090, 'Kitchen infrared', 100, 'Ninh Kieu', 'Can Tho', '555-1111', '555-2222', '900000', 'Import of Kitchen infrared', 'Pending', 4);
-INSERT INTO dbo.Import (importID,supplierID, brandID, branchID, categoryID, companyName, dateImport, hsCode, nameProduct, amountDelivery, address, city, phone, fax, postalCode, description, status, leadtime)
-VALUES (2, 1, 2, 3, 6, 'ZipMart co.', '2023-01-15', 73239390, 'Stainless Steel Pot', 30, 'Ninh Kieu', 'Can Tho', '555-4321', '555-2334', '900000', 'Import of Stainless Steel Pot', 'In Progress', 2);
-INSERT INTO dbo.Import (importID,supplierID, brandID, branchID, categoryID, companyName, dateImport, hsCode, nameProduct, amountDelivery, address, city, phone, fax, postalCode, description, status, leadtime)
-VALUES (3, 1, 1, 3, 1, 'ZipMart co.', '2023-01-15', 85166090, 'oil-free fryer', 50, 'Ninh Kieu', 'Can Tho', '555-2123', '555-4442', '900000', 'Import of Kitchen infrared', 'Pending', 6);
-INSERT INTO dbo.Import (importID,supplierID, brandID, branchID, categoryID, companyName, dateImport, hsCode, nameProduct, amountDelivery, address, city, phone, fax, postalCode, description, status, leadtime)
-VALUES (4, 1, 2, 3, 6, 'ZipMart co.', '2023-01-15', 70133700, 'Glass Bowl', 90, 'Ninh Kieu', 'Can Tho', '555-6123', '555-5213', '900000', 'Import of Glass Bowl', 'Completed', 4);
+INSERT INTO dbo.ImportOrder (importID,supplierID, categoryID, branchID, companyName, dateImport, hsCode, nameProduct, amountDelivery, address, city, phone, fax, postalCode, description, status, leadtime)
+VALUES (1, 1, 1, 1, 'ZipMart co.', '2023-01-15', 85166090, 'Kitchen infrared', 100, 'Ninh Kieu', 'Can Tho', '555-1111', '555-2222', '900000', 'Import of Kitchen infrared', 'Pending', 4);
+INSERT INTO dbo.ImportOrder (importID,supplierID, categoryID, branchID, companyName, dateImport, hsCode, nameProduct, amountDelivery, address, city, phone, fax, postalCode, description, status, leadtime)
+VALUES (2, 1, 2, 6, 'ZipMart co.', '2023-01-15', 73239390, 'Stainless Steel Pot', 30, 'Ninh Kieu', 'Can Tho', '555-4321', '555-2334', '900000', 'Import of Stainless Steel Pot', 'In Progress', 2);
+INSERT INTO dbo.ImportOrder (importID,supplierID, categoryID, branchID, companyName, dateImport, hsCode, nameProduct, amountDelivery, address, city, phone, fax, postalCode, description, status, leadtime)
+VALUES (3, 1, 3, 1, 'ZipMart co.', '2023-01-15', 85166090, 'oil-free fryer', 50, 'Ninh Kieu', 'Can Tho', '555-2123', '555-4442', '900000', 'Import of Kitchen infrared', 'Pending', 6);
+INSERT INTO dbo.ImportOrder (importID,supplierID, categoryID, branchID, companyName, dateImport, hsCode, nameProduct, amountDelivery, address, city, phone, fax, postalCode, description, status, leadtime)
+VALUES (4, 1, 1, 6, 'ZipMart co.', '2023-01-15', 70133700, 'Glass Bowl', 90, 'Ninh Kieu', 'Can Tho', '555-6123', '555-5213', '900000', 'Import of Glass Bowl', 'Completed', 4);
 
 GO
-set identity_insert "Import" off
+set identity_insert "ImportOrder" off
 go
-ALTER TABLE "Import" CHECK CONSTRAINT ALL
+ALTER TABLE "ImportOrder" CHECK CONSTRAINT ALL
 go
 GO
 
@@ -1824,8 +1654,8 @@ set identity_insert "Products" on
 go
 ALTER TABLE "Products" NOCHECK CONSTRAINT ALL
 go
-INSERT INTO dbo.Products (productID, warehouseID, categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (1, 3, 1, 1, 1,'Iron', 'img\products\homeelectric\banuikho.jpg',15.00,50,150,20,'unit',20,
+INSERT INTO dbo.Products (productID, warehouseID, categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, quantitySold, unit ,description,viewCount,discount,avaliable)
+VALUES (1, 3, 1, 1, 1,'Iron', 'images\products\homeelectric\banuikho.jpg',15.00,50,150,20,'unit',
 '<p>
 	<span style="font-weight: 400">Goldsun Gir2202 Dry Iron will be an indispensable device in the family, considered a modern iron, helping to iron clothes quickly, saving time and effort for the user.</span>
 </p>' +
@@ -1838,8 +1668,8 @@ VALUES (1, 3, 1, 1, 1,'Iron', 'img\products\homeelectric\banuikho.jpg',15.00,50,
 '<p>
 	<span style="font-weight: 400">Note when using: Low temperature for synthetic fibers/silk. Average temperature used for fabrics. High temperature for linen and cotton. Place of production: Vietnam.</span>
 </p>', 200, 15, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (2, 3, 1, 1, 1,'Mini Gas Stove', 'img\products\homeelectric\bepgasmini.jpg',8.43,50,150,20,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (2, 3, 1, 1, 1,'Mini Gas Stove', 'images\products\homeelectric\bepgasmini.jpg',8.43,50,150,20,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>NaMilux Mini gas stove NH-P3031PF</strong> is a convenient gas stove model with new improvements in extremely strong capacity, shortening cooking time and minimizing gas waste.
@@ -1852,8 +1682,8 @@ VALUES (2, 3, 1, 1, 1,'Mini Gas Stove', 'img\products\homeelectric\bepgasmini.jp
         <li aria-level="1" style="font-weight: 400">The product uses eyelid rolling technology <i class="fa-thin fa-arrow-right"></i> creates sturdiness and easy cleaning.</li>
 		<li aria-level="1" style="font-weight: 400">Heat-resistant electroplated brackets (3500 degrees Celsius), bracket trays to prevent water from spilling into gas cans.</li>
 </ul>', 200, 15, 3);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (3, 3, 1, 1, 1,'Kitchen infrared', 'img\products\homeelectric\bephongngoai.jpg',17.5,20,100,15,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (3, 3, 1, 1, 1,'Kitchen infrared', 'images\products\homeelectric\bephongngoai.jpg',17.5,20,100,15,'unit',
 '<p>
 	<span style="font-weight: 400">Sunhouse SHD6014 Infrared Stove is simply designed, super thin with a weight of 2kg, you can move it anywhere conveniently. The product is designed with two eye-catching main colors: black and white, the kitchen surface is made from a super durable material that is heat-resistant and durable, easy to observe.</span>
 </p>' +
@@ -1866,8 +1696,8 @@ VALUES (3, 3, 1, 1, 1,'Kitchen infrared', 'img\products\homeelectric\bephongngoa
 '<p>
 	<span style="font-weight: 400">Using electronic chips to control, many different cooking modes such as stir-frying, stewing, hot pot, frying,... make cooking easier and simpler.</span>
 </p>', 100, 27, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (4, 3, 1, 2, 1,'Lock&Lock Grill EJG232 - Black', 'img\products\homeelectric\noichienkhongdau.jpg',15.00,50,150,20,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (4, 3, 1, 2, 1,'Lock&Lock Grill EJG232 - Black', 'images\products\homeelectric\noichienkhongdau.jpg',15.00,50,150,20,'unit',
 '<p>
 	<span style="font-weight: 400">Lock&Lock Grill EJG232 Black has a compact, simple but modern design, suitable for your kitchen space.</span>
 </p>' +
@@ -1881,8 +1711,8 @@ VALUES (4, 3, 1, 2, 1,'Lock&Lock Grill EJG232 - Black', 'img\products\homeelectr
 	<span style="font-weight: 400">Notes when using: - Keep out of reach of children. Do not leave the product near places containing water or humid air, and avoid direct sunlight. - Avoid strong impacts, dropping the product and pay attention to electrical leakage incidents. - Only use the product for basic purposes, do not use it for other commercial purposes.</span>
 </p>', 50, 0, 2);
 ----------------------------------------
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (5, 1, 2	, 3, 3,'Simply Pure 100% Soybean Oil Bottle', 'img\products\spice\dauanhatcaiSimply.jpg',0.53,50,150,45,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (5, 1, 2	, 3, 3,'Simply Pure 100% Soybean Oil Bottle', 'images\products\spice\dauanhatcaiSimply.jpg',0.53,50,150,45,'unit',
 '<p>
 	<span style="font-weight: 400">Simply Pure 100% Canola Oil 1L Bottle is produced from premium imported ingredients, retaining high levels of unsaturated fat (> 88%) to help protect heart health. The product also adds a rich source of vitamin A in sunflower oil that can prevent cataracts.</span>
 </p>' +
@@ -1895,8 +1725,8 @@ VALUES (5, 1, 2	, 3, 3,'Simply Pure 100% Soybean Oil Bottle', 'img\products\spic
 '<p>
 	<span style="font-weight: 400">Instructions for use: Fry, stir-fry, mix salad, make cakes, cook vegetarian dishes. Store in a cool and dry place, away from direct sunlight. Close the lid tightly after use.</span>
 </p>', 500, 0, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (6, 1, 2, 4, 5,'Cholimex Char Siu Sauce', 'img\products\spice\sotxaxiuCholimex.jpg',2.21,97,234,59,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (6, 1, 2, 4, 5,'Cholimex Char Siu Sauce', 'images\products\spice\sotxaxiuCholimex.jpg',2.21,97,234,59,'unit',
 '<p>
 	<span style="font-weight: 400">Cholimex Char Xiu Sauce 200G is packaged beautifully, neatly, and is easy to preserve. The product helps housewives save a lot of time when cooking.</span>
 </p>' +
@@ -1906,8 +1736,8 @@ VALUES (6, 1, 2, 4, 5,'Cholimex Char Siu Sauce', 'img\products\spice\sotxaxiuCho
 '<p>
 	<span style="font-weight: 400">Cholimex sauce is produced using modern, closed technology under strict supervision and inspection, helping to cook char siu meat faster and more convenient.</span>
 </p>' , 434, 0, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (7, 1, 2, 4, 5,'Fuji Soy Sauce Chai', 'img\products\spice\nuoctuongPhuSi.jpg',0.69,100,543,90,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (7, 1, 2, 4, 5,'Fuji Soy Sauce Chai', 'images\products\spice\nuoctuongPhuSi.jpg',0.69,100,543,90,'unit',
 '<p>
 	<span style="font-weight: 400">Fuji Soy Sauce is extracted from soybeans, bringing a delicious, attractive taste to your family meals.</span>
 </p>' +
@@ -1917,8 +1747,8 @@ VALUES (7, 1, 2, 4, 5,'Fuji Soy Sauce Chai', 'img\products\spice\nuoctuongPhuSi.
 '<p>
 	<span style="font-weight: 400">Storage: Dry, cool place, avoid direct sunlight, cover tightly after use. Made in Viet Nam.</span>
 </p>' , 234, 5, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (8, 1, 2, 4, 5,'Chinsu Chili Sauce', 'img\products\spice\tuongotChinsu.jpg',1.56,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (8, 1, 2, 4, 5,'Chinsu Chili Sauce', 'images\products\spice\tuongotChinsu.jpg',1.56,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>NaMilux Mini gas stove NH-P3031PF</strong> Chili sauce is made from ripe red chili peppers with the strong aroma of garlic and subtle variations of spices to fill each chili sauce line of the Chinsu chili sauce brand.
@@ -1928,8 +1758,8 @@ VALUES (8, 1, 2, 4, 5,'Chinsu Chili Sauce', 'img\products\spice\tuongotChinsu.jp
         </li>
 </ul>', 223, 0, 1);
 --------------------------
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (9, 2, 3, 5, 9,'Tam Nong whole chicken', 'img\products\meat\gatanguyenconTamNong.jpg',0.22,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (9, 2, 3, 5, 9,'Tam Nong whole chicken', 'images\products\meat\gatanguyenconTamNong.jpg',0.22,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>Tam Nong whole chicken 1.4kg is raised according to strict standards, under the supervision of experts.
@@ -1937,8 +1767,8 @@ VALUES (9, 2, 3, 5, 9,'Tam Nong whole chicken', 'img\products\meat\gatanguyencon
         <li aria-level="1" style="font-weight: 400">Chickens are healthy, guaranteed not to be infected with flu or disease. Closed and safe livestock farming system. Raising livestock safely, using clean, high-quality food sources. Do not use weight gain substances or stimulants to help chickens grow bigger. The finished chicken processing factory system is clean, using modern technology, ensuring food hygiene and safety requirements.</li>
 		<li aria-level="1" style="font-weight: 400">Chicken is carefully packaged and preserved to deliver to consumers, keeping product quality always the best. Tam Nong chicken can be used to prepare many delicious dishes such as: boiled chicken, stewed chicken, grilled chicken, fried chicken, fried chicken.</li>
 </ul>', 223, 0, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (10, 2, 3, 5, 9,'Imported beef shoulder core', 'img\products\meat\loivaibo.jpg',0.23,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (10, 2, 3, 5, 9,'Imported beef shoulder core', 'images\products\meat\loivaibo.jpg',0.23,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>The shoulder core is cut from the meat area between the shoulder and neck of the cow. In the middle of the tenderloin there is a thin, crispy and not tough tendon.
@@ -1948,8 +1778,8 @@ VALUES (10, 2, 3, 5, 9,'Imported beef shoulder core', 'img\products\meat\loivaib
         </li>
         <li aria-level="1" style="font-weight: 400">Beef shoulder steak contains several essential nutrients including protein, iron, zinc, selenium, riboflavin, niacin, vitamin B6, vitamin B12, phosphorus, pantothenate, magnesium and potassium.</li>
 </ul>', 223, 0, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (11, 2, 3, 5, 9,'CP chicken fillet', 'img\products\meat\philega.jpg',0.24,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (11, 2, 3, 5, 9,'CP chicken fillet', 'images\products\meat\philega.jpg',0.24,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>CP Chicken Fillet 500g (ea) is made from clean chicken sources, raised in a farm system that meets strict standards.</li>
@@ -1959,8 +1789,8 @@ VALUES (11, 2, 3, 5, 9,'CP chicken fillet', 'img\products\meat\philega.jpg',0.24
         <li aria-level="1" style="font-weight: 400">Chicken is rich in vitamins A, B1, B2, C, E, acid, calcium, phosphorus, iron that the human body easily absorbs and digests. Good for the heart, fights depression, supports teeth and bones, promotes eye health.</li>
 		<li aria-level="1" style="font-weight: 400">The nutritional content of chicken breast is high and the amount of fat is low. Suitable for people who are in the process of losing weight and babies who are weaning.</li>
 </ul>', 223, 0, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (12, 2, 3, 5, 9,'Pork Ribs', 'img\products\meat\suonnonheo.jpg',0.25,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (12, 2, 3, 5, 9,'Pork Ribs', 'images\products\meat\suonnonheo.jpg',0.25,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>Pork ribs are a very popular cut of meat with soft meat, balanced with fat, keeping the meat from drying out. In particular, the cartilage is both soft and crunchy, bringing a pleasant feeling when eating.</li>
@@ -1971,8 +1801,8 @@ VALUES (12, 2, 3, 5, 9,'Pork Ribs', 'img\products\meat\suonnonheo.jpg',0.25,89,1
 		<li aria-level="1" style="font-weight: 400">Pigs are raised using advanced technology and a closed meat collection process, ensuring food safety and hygiene. The product is packaged in a convenient, hygienic tray when it reaches the consumer.</li>
 </ul>', 223, 0, 1);
 ------------------------------
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (13, 2, 4, 5, 9,'Fresh Octopus', 'img\products\aquaticproducts\bachtuoctuoi.jpg',0.26,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (13, 2, 4, 5, 9,'Fresh Octopus', 'images\products\aquaticproducts\bachtuoctuoi.jpg',0.26,89,132,60,'unit',
 '<p>
 	<span style="font-weight: 400">Fresh octopus meat provides essential vitamins for the body such as: A, B1, B2, PP, C and some other minerals such as calcium, phosphorus...</span>
 </p>' +
@@ -1982,16 +1812,16 @@ VALUES (13, 2, 4, 5, 9,'Fresh Octopus', 'img\products\aquaticproducts\bachtuoctu
 '<p>
 	<span style="font-weight: 400">Octopus meat has almost no fat and is very beneficial for muscles. This type of seafood is also rich in nutrients and has the effect of strengthening physical strength.</span>
 </p>', 223, 0, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (14, 2, 4, 5, 9,'Tuna fillet', 'img\products\aquaticproducts\cangudaiduongphile.jpg',0.27,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (14, 2, 4, 5, 9,'Tuna fillet', 'images\products\aquaticproducts\cangudaiduongphile.jpg',0.27,89,132,60,'unit',
 '<p>
 	<span style="font-weight: 400">Ocean tuna is prepared from fresh ocean tuna, going through a careful selection process, closed processing and packaging process, ensuring all food hygiene and safety standards, safe for health.</span>
 </p>' +
 '<p>
 	<span style="font-weight: 400">Ocean tuna has high protein content, contains a lot of magnesium minerals, a mixture of B vitamins, potassium, a source of omega 3,... bringing great health benefits such as helping to: lose weight; eye health; prevent atherosclerosis; Activate brain cells and promote brain activities;....</span>
 </p>' , 223, 0, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (15, 2, 4, 5, 9,'Saury', 'img\products\aquaticproducts\cathudao.jpg',0.30,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (15, 2, 4, 5, 9,'Saury', 'images\products\aquaticproducts\cathudao.jpg',0.30,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>Saury (sanma) caught mainly in September-October contains many healthy oils and is considered a famous specialty of Japanese autumn. During the Edo period (1603 - 1868), this shiny green-skinned fish was considered a low-grade food, while white fish were much more popular.</li>
@@ -2001,8 +1831,8 @@ VALUES (15, 2, 4, 5, 9,'Saury', 'img\products\aquaticproducts\cathudao.jpg',0.30
         <li aria-level="1" style="font-weight: 400">How to prepare saury: After buying saury, clean the fish belly. However, mackerel has the characteristic of having firm meat (a lot of meat), so the intestines are not much, making it very easy to clean. Soak the fish in diluted salt water, use a knife to gently scrape the fish skin to remove plaque. Then, cut the mackerel gills into bite-sized pieces or chop them to suit your cooking needs. Delicious dishes from saury: Mackerel in tomato sauce, fragrant braised mackerel, braised mackerel with tomatoes, grilled mackerel...</li>
 		<li aria-level="1" style="font-weight: 400">How to preserve fresh saury: Saury should be prepared immediately to maintain its freshness, but if you can use it in time, you can store it in the refrigerator.</li>
 </ul>', 223, 0, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (16, 2, 4, 5, 9,'Red tilapia', 'img\products\aquaticproducts\cadieuhong.jpg',0.98,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (16, 2, 4, 5, 9,'Red tilapia', 'images\products\aquaticproducts\cadieuhong.jpg',0.98,89,132,60,'unit',
 '<p>
 	<span style="font-weight: 400">Red tilapia or red tilapia, also known as red tilapia, is a freshwater fish belonging to the tilapia family. As a type of fish with delicious meat quality, red tilapia meat is white, clean, the meat fibers are firmly structured and especially the meat does not have too many bones.</span>
 </p>' +
@@ -2013,8 +1843,8 @@ VALUES (16, 2, 4, 5, 9,'Red tilapia', 'img\products\aquaticproducts\cadieuhong.j
 	<span style="font-weight: 400">Red tilapia meat contains selenium content that helps enhance the function of white blood cells. Supports the thyroid gland and increases antioxidants to help prevent cancer, rheumatism and cardiovascular disease. Potassium reduces the risk of stroke, osteoporosis, kidney stones and high blood pressure. Selenium is a compound that helps reduce pain and prevent disease. In addition, red tilapia meat also contains vitamins, especially Vitamin A supports beauty and enhances vision.</span>
 </p>', 223, 0, 1);
 -----------------------------
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (17, 4, 5, 6, 2,'Broccoli', 'img\products\vegetable\bongcaixanh.jpg',0.54,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (17, 4, 5, 6, 2,'Broccoli', 'images\products\vegetable\bongcaixanh.jpg',0.54,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>Broccoli (also known as broccoli) is a vegetable belonging to the cruciferous family with the scientific name Brassica Oleracea. Broccoli is a green vegetable shaped like a miniature tree, along with kale and cauliflower and are both cruciferous vegetables.</li>
@@ -2022,31 +1852,31 @@ VALUES (17, 4, 5, 6, 2,'Broccoli', 'img\products\vegetable\bongcaixanh.jpg',0.54
           Broccoli is high in nutrients, including fiber, vitamin C, vitamin K, iron and potassium. Broccoli also contains more protein than most other vegetables.</li>
         <li aria-level="1" style="font-weight: 400">The product does not contain harmful chemicals or growth stimulants, ensuring safety for consumers health. Therefore, you can completely feel secure when choosing this product for every meal your family has, making meals more delicious.</li>
 </ul>', 223, 0, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (18, 4, 5, 6, 2,'Da Lat Beets', 'img\products\vegetable\cudenDaLat.jpg',0.56,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (18, 4, 5, 6, 2,'Da Lat Beets', 'images\products\vegetable\cudenDaLat.jpg',0.56,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>Dalat Beetroot is a clean food, containing many nutrients such as fiber, vitamin A, potassium... good for the body. The active ingredients in fresh beets have the effect of nourishing the blood, strengthening the body immune components, helping to detect and eliminate abnormal cells before they can transform into cancer cells.</li>
         <li aria-level="1" style="font-weight: 400">Products are grown using modern technology, ensuring freshness and food hygiene and safety.</li>
 </ul>', 223, 0, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (19, 4, 5, 7, 2,'Iceberg Lettuce', 'img\products\vegetable\xalachIceberg.jpg',3.43,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (19, 4, 5, 7, 2,'Iceberg Lettuce', 'images\products\vegetable\xalachIceberg.jpg',3.43,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>Iceberg Lettuce (also known as head lettuce) is a type of lettuce originating from America. Ice Berg Lettuce is tightly rolled into large, heavy heads, similar to cabbage buds.</li>
         <li aria-level="1" style="font-weight: 400">Lettuce is considered one of the healthiest vegetables, rich in vitamins C, K and anthocyanin polyphenols, which help prevent oxidation, reduce the risk of cardiovascular disease, diabetes and some cancers.</li>
 		<li aria-level="1" style="font-weight: 400">Thanks to being rich in antioxidants, regular use of the product also makes your skin softer and brighter.</li>
 </ul>', 223, 0, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (20, 4, 5, 7, 2,'Da Lat Beef Tomatoes', 'img\products\vegetable\cachuaBeefDaLat.jpg',2.31,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (20, 4, 5, 7, 2,'Da Lat Beef Tomatoes', 'images\products\vegetable\cachuaBeefDaLat.jpg',2.31,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>Beef tomatoes are large fruits, with an average fruit weight of 110-200 grams. The fruit is red, ripens early, and has a dense flesh. This type of tomato has won and won the American AAS (All-Amer Selections) award.</li>
         <li aria-level="1" style="font-weight: 400">Beef tomatoes are thick, firm, have few seeds, and have few gaps when slicing. Beef tomatoes weigh more than regular tomatoes. Tomatoes are grown using modern technology, ensuring freshness and food hygiene and safety.</li>
 </ul>', 223, 10, 1);
 ---------------------------
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (21, 1, 6, 8, 4,'Happycook HEK-180PW 1.8L Electric Kettle', 'img\products\convenientproduct\amdunsieutoc.jpg',5.98,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (21, 1, 6, 8, 4,'Happycook HEK-180PW 1.8L Electric Kettle', 'images\products\convenientproduct\amdunsieutoc.jpg',5.98,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>Compact design, light weight, a familiar household appliance in every Vietnamese family today. Capacity of 1.8 liters is suitable for families of 2 - 4 members or in offices, companies,...</li>
@@ -2054,8 +1884,8 @@ VALUES (21, 1, 6, 8, 4,'Happycook HEK-180PW 1.8L Electric Kettle', 'img\products
           The device is simply constructed and made from highly durable 201 stainless steel inside. The device will automatically shut off when it reaches a certain boiling point, ensuring anti-overheating and safety when boiling. The kettle shell is multi-layered with a hard, shiny plastic outer shell.</li>
         <li aria-level="1" style="font-weight: 400">Large capacity heating plate: The Happy Cook kettle electric heating plate operates stably with a capacity of up to 1,500W, allowing water heating time to be shortened, meeting hot water needs in just a few minutes.</li>
 </ul>', 223, 15, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (22, 1, 6, 9, 6,'Nano Cyclone Wet Towels 20 Pieces', 'img\products\convenientproduct\khanuotnano.jpg',4.32,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (22, 1, 6, 9, 6,'Nano Cyclone Wet Towels 20 Pieces', 'images\products\convenientproduct\khanuotnano.jpg',4.32,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>Nano Popular Premium Wet Towels 20 Pieces are soft, smooth wet towels and are a useful product for your life, helping you save time and shopping costs.</li>
@@ -2063,8 +1893,8 @@ VALUES (22, 1, 6, 9, 6,'Nano Cyclone Wet Towels 20 Pieces', 'img\products\conven
           The product does not contain alcohol and does not cause skin sensitivity but has a gentle fragrance that creates a feeling of coolness, comfort and confidence.</li>
         <li aria-level="1" style="font-weight: 400">The product is made from non-woven fabric, purified water, natural fragrances, and humectants that help keep and provide necessary moisture to the skin, keeping the skin fresh, clean, and not dry after wiping.</li>
 </ul>', 223, 0, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (23, 1, 6, 9, 6,'Nestlé Milo Breakfast Cereal Box', 'img\products\convenientproduct\ngucocansang.jpg',2.11,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (23, 1, 6, 9, 6,'Nestlé Milo Breakfast Cereal Box', 'images\products\convenientproduct\ngucocansang.jpg',2.11,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>Nestlé MILO breakfast cereal 300g box is extracted from barley germ and grains containing many minerals, iron, vitamins, calcium and iodized salt to give your baby abundant energy to start a new day.</li>
@@ -2072,8 +1902,8 @@ VALUES (23, 1, 6, 9, 6,'Nestlé Milo Breakfast Cereal Box', 'img\products\conven
           The cake has the familiar Milo flavor, is crispy and fragrant and is loved by children. It is easy to eat and not boring. It can be used with milk to increase appetite and create an attractive breakfast.</li>
         <li aria-level="1" style="font-weight: 400">The product is conveniently packaged, mothers can easily prepare it for their children to take to school or on family picnics. Ingredients: Cereal flour, oatmeal, rice flour, sugar, glucose syrup, palm oil, honey, minerals...</li>
 </ul>', 223, 20, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (24, 1, 6, 10, 6,'Lipton Lemon Honey Lemon Tea Box', 'img\products\convenientproduct\trachanhLipton.jpg',1.89,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (24, 1, 6, 10, 6,'Lipton Lemon Honey Lemon Tea Box', 'images\products\convenientproduct\trachanhLipton.jpg',1.89,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>Lipton Lemon Honey Lemon Tea Box of 16 Packs 12G is made from natural ingredients with a great combination of black tea leaves and natural lemon flavor to bring a refreshing feeling when enjoying.</li>
@@ -2081,30 +1911,30 @@ VALUES (24, 1, 6, 10, 6,'Lipton Lemon Honey Lemon Tea Box', 'img\products\conven
         <li aria-level="1" style="font-weight: 400">The product is produced using a closed technology to help preserve the full flavor of the leaves as well as the cool taste of lemon.</li>
 </ul>', 223, 5, 1);
 --------------------------------------
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (25, 1, 7, 12, 8,'Boys Short-Sleeved T-shirt with 2-sided Print in Light Blue Size 11-14', 'img\products\fashion\aothuntayngan.jpg',3.42,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (25, 1, 7, 12, 8,'Boys Short-Sleeved T-shirt with 2-sided Print in Light Blue Size 11-14', 'images\products\fashion\aothuntayngan.jpg',3.42,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>Baby Boy T-shirt with 2-sided Print in Light Blue Size 11-14 is a simple short-sleeved, round-neck shirt, but the print on the front and back of the shirt makes your baby look very stylish, the fabric Breathable and absorbent cotton provides comfort when outdoors, helping your baby feel comfortable and confident when moving.</li>
         <li aria-level="1" style="font-weight: 400">Mothers can combine the shirt with jeans, boy shorts, etc. with children sports shoes and sandals to give the baby a unique personality.</li>  
 </ul>', 223, 5, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (26, 1, 7, 12, 8,'Automatic Folding Umbrella (Random Color Delivery)', 'img\products\fashion\ogap3Ocean.jpg',0.21,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (26, 1, 7, 12, 8,'Automatic Folding Umbrella (Random Color Delivery)', 'images\products\fashion\ogap3Ocean.jpg',0.21,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>Automatic Folding Umbrella (Random Color) has a sturdy, durable metal frame, durable and water-resistant umbrella material. The Automatic Folding Umbrella is designed to be compact and lightweight, easy to install quickly, and easy to carry with you.</li>
         <li aria-level="1" style="font-weight: 400">The product has a 2-way automatic folding and opening design that is convenient for users. The product comes in many colors and is delivered randomly. Made in Viet Nam.</li>  
 </ul>', 223, 0, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (27, 1, 7, 13, 8,'Women Onoff Collarless Socks with Star Floral Pattern 146-Sw01 (Random Color)', 'img\products\fashion\vonukhongco.jpg',0.21,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (27, 1, 7, 13, 8,'Women Onoff Collarless Socks with Star Floral Pattern 146-Sw01 (Random Color)', 'images\products\fashion\vonukhongco.jpg',0.21,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>Women OnOff Collarless Socks with Star Floral Pattern 146-SW01 use natural Cotton material with OEKO-Tex safety material certification, the socks are soft and sweat-absorbent, keeping feet dry and comfortable.</li>
         <li aria-level="1" style="font-weight: 400">Y-shaped heel design keeps the socks close to the feet, soft elastic collar, light hug, antibacterial and deodorizing. Freesize socks; Colors include: white with gray collar, pink collar, white with pink collar, blue with gray collar, pink with gray collar, black delivered randomly.</li>  
         <li aria-level="1" style="font-weight: 400">Care instructions: Wash with water below 40 degrees Celsius, do not dry at high temperatures, do not iron, do not use strong detergents. Made in Viet Nam.</li>  
 </ul>', 223, 0, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (28, 1, 7, 14, 8,'Women Double Striped Elastic Shorts Size L (Random Color Delivery)', 'img\products\fashion\quanshortthun.jpg',0.21,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (28, 1, 7, 14, 8,'Women Double Striped Elastic Shorts Size L (Random Color Delivery)', 'images\products\fashion\quanshortthun.jpg',0.21,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>Women double-striped elastic shorts use soft, smooth fish skin elastic material, with air holes created by overlapping layers of fish skin, giving the wearer a cool, sweat-absorbing feeling. Besides, the pants have meticulous seams, providing standard form, high durability as well as a dynamic and comfortable feeling for girls to wear.</li>
@@ -2112,31 +1942,31 @@ VALUES (28, 1, 7, 14, 8,'Women Double Striped Elastic Shorts Size L (Random Colo
         <li aria-level="1" style="font-weight: 400">Many fashionable, youthful colors, allowing women to easily mix & match with different types of shirts. Care instructions: Wash at normal temperature, do not use bleach, dry in the shade. Made in Viet Nam.</li>  
 </ul>', 223, 0, 1);
 ------------------------------
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (29, 4, 8, 15, 9,'Chinese Soft Red Pomegranate', 'img\products\fruit\luuhatdoTrungQuoc.jpg',0.21,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (29, 4, 8, 15, 9,'Chinese Soft Red Pomegranate', 'images\products\fruit\luuhatdoTrungQuoc.jpg',0.21,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>The Chinese soft red pomegranate is a fruit rich in antioxidants and has a delicious flavor, so it is very popular. It has red flesh, thick, succulent flesh, soft edible seeds, and a pink-yellow skin.</li>
         <li aria-level="1" style="font-weight: 400">Pomegranate contains many nutrients, especially high fiber content that is good for the digestive system. Calcium, vitamin A, vitamin E and folic acid in pomegranates are very beneficial in strengthening the body resistance.</li>  
         <li aria-level="1" style="font-weight: 400">Plant compounds in pomegranates have anti-inflammatory effects. Studies show that pomegranate extract can block enzymes that cause joint damage in people with osteoarthritis.</li>  
 </ul>', 223, 0, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (30, 4, 8, 15, 9,'Cantaloupes of the Dutch variety', 'img\products\fruit\dualuoiHaLan.jpg',5.32,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (30, 4, 8, 15, 9,'Cantaloupes of the Dutch variety', 'images\products\fruit\dualuoiHaLan.jpg',5.32,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>Dutch Cantaloupes are grown using Israeli technology with strict supervision, creating cantaloupe varieties with high sugar content, firm flesh, green flesh, round fruit, and longer-lasting sweetness.</li>
         <li aria-level="1" style="font-weight: 400">Cantaloupe is a source of polyphenol antioxidants, which are beneficial for health in preventing cancer and strengthening the immune system.
 Besides, cantaloupe contains a lot of fiber so it has a laxative effect and prevents constipation. Melon contains the largest amount of digestive enzymes among fresh fruits, more than papaya and mango. In addition, cantaloupe is also a rich source of beta-carotene, folic acid, potassium and vitamins C and A.</li>  
 </ul>', 223, 20, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (31, 4, 8, 11, 7,'Cripps Red apples imported from South Africa', 'img\products\fruit\taoNamPhi.jpg',0.21,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (31, 4, 8, 11, 7,'Cripps Red apples imported from South Africa', 'images\products\fruit\taoNamPhi.jpg',0.21,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>South African Cripps Red apples are one of the imported South African apple varieties that are loved by many consumers with unique characteristics. Cripps Red apples are crunchy, sweet imported fruits with a mildly sour taste.</li>
         <li aria-level="1" style="font-weight: 400">Apples contain many important nutrients, including fiber, vitamins, minerals and antioxidants. In addition, apples contain a lot of vitamin A, vitamin B, vitamin D, etc.</li>  
 </ul>', 223, 0, 1);
-INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit,newAdjustment,description,viewCount,discount,avaliable)
-VALUES (32, 4, 8, 11, 7,'Guava variety from Taiwan', 'img\products\fruit\oiDaiLoan.jpg',0.21,89,132,60,'unit',0,
+INSERT INTO dbo.Products (productID,warehouseID,categoryID,brandID,supplierID,productName,imageURL,unitPrice,quantity,quantityInStock,quantitySold,unit ,description,viewCount,discount,avaliable)
+VALUES (32, 4, 8, 11, 7,'Guava variety from Taiwan', 'images\products\fruit\oiDaiLoan.jpg',0.21,89,132,60,'unit',
 '<ul>
         <li aria-level="1" style="font-weight: 400">
           <strong>Taiwanese guava is also known as Taiwanese pear guava because the fruit is large like a pear. Taiwanese guavas have large, shiny fruits that are very crunchy, sweet and have very few seeds, so they are very popular.</li>
@@ -2158,8 +1988,8 @@ set identity_insert "ThresholdAdjustment" on
 go
 ALTER TABLE "ThresholdAdjustment" NOCHECK CONSTRAINT ALL
 go
-INSERT INTO "ThresholdAdjustment" (ID, productID, reasonAdjustment, new_restockThreshold, dateAdjusted, statusThresholdAdjustments) VALUES (1, 1, 'Low Inventory', 20, '2023-01-15 08:30:00', 'Accept');
-INSERT INTO "ThresholdAdjustment" (ID, productID, reasonAdjustment, new_restockThreshold, dateAdjusted, statusThresholdAdjustments) VALUES (2, 2, 'Excess Inventory', 20, '2023-02-20 10:45:00', 'Pending');
+INSERT INTO "ThresholdAdjustment" (ID, categoryID, reasonAdjustment, new_restockThreshold, dateAdjusted, statusThresholdAdjustments) VALUES (1, 1, 'Low Inventory', 700, '2023-01-15 08:30:00', 'Accept');
+INSERT INTO "ThresholdAdjustment" (ID, categoryID, reasonAdjustment, new_restockThreshold, dateAdjusted, statusThresholdAdjustments) VALUES (2, 2, 'Excess Inventory', 500, '2023-02-20 10:45:00', 'Pending');
 GO
 set identity_insert "ThresholdAdjustment" off
 go

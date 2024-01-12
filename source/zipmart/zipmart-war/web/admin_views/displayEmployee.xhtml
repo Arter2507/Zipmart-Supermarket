@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <title>Admin | Employee Management</title>
+        <link rel="shortcut icon" type="image/png" href="#{request.contextPath}/resources/assets/img/logo/zmicon.png" />
+    </h:head>
+    <h:body>
+        <ui:composition template="/layouts/_layoutAdmin.xhtml">
+            <ui:define name="content">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">
+                            Employee Management
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <div id="toolbar">
+                                <button id="Add" class="btn btn-info">
+                                    <i class="fa fa-plus"></i> Add new
+                                </button>
+                            </div>
+
+                            <table id="table" class="table table-bordered" width="100%" cellspacing="0" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true"
+                                   data-show-pagination-switch="true"
+                                   data-show-refresh="true"
+                                   data-key-events="true"
+                                   data-show-toggle="true"
+                                   data-resizable="true"
+                                   data-show-export="true"
+                                   data-click-to-select="true"
+                                   data-show-fullscreen="true"
+                                   data-show-print="true"
+                                   data-toolbar="#toolbar">   
+                                <thead>
+                                    <tr>
+                                        <th data-sortable="true" data-field="id">ID</th>
+                                        <th data-sortable="true" data-field="name">Fullname</th>
+                                        <th data-sortable="true" data-field="birthDate">
+                                            Birthday
+                                        </th>
+                                        <th data-sortable="true" data-field="address">Address</th>
+                                        <th data-sortable="true" data-field="phone">Phone</th>
+                                        <th data-sortable="true" data-field="email">Email</th>
+                                        <th data-sortable="true" data-field="note">Notes</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ui:repeat var="emp" value="#{employeeMB.showListEmp()}">
+                                        <tr>
+                                            <td><h:outputText value="#{emp.employeeID}" /></td>
+                                            <td><h:outputText value="#{emp.fullname}" /></td>
+                                            <td>
+                                                <h:outputText value="#{emp.birthDate}">
+                                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                                </h:outputText>
+                                            </td>
+                                            <td><h:outputText value="#{emp.address}" /></td>
+                                            <td><h:outputText value="#{emp.phone}" /></td>
+                                            <td><h:outputText value="#{emp.email}" /></td>
+                                            <td><h:outputText value="#{emp.notes}" /></td>
+                                            <h:form>
+                                                <td>
+                                                    <h:commandButton id="editEmp" value="Edit" action="#{employeeMB.test()}" styleClass="btn btn-primary"/>                                                
+                                                </td>
+
+                                                <td>
+                                                    <h:commandButton style="color: white;" action="#{employeeMB.deleteEmployees(emp.employeeID)}" styleClass="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" value="Delete" />
+                                                </td>
+                                            </h:form>
+                                        </tr>
+                                    </ui:repeat>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>               
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
