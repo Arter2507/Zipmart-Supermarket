@@ -22,9 +22,9 @@
                         <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="mailto:tqtuonga21123@cusc.ctu.edu.vn" class="text-white">tqtuonga21123@cusc.ctu.edu.vn</a></small>
                     </div>
                     <div class="top-link pe-2">
-                        <h:link class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</h:link>
-                        <h:link class="text-white"><small class="text-white mx-2">Terms of Use</small>/</h:link>
-                        <h:link class="text-white"><small class="text-white ms-2">Sales and Refunds</small></h:link>
+                        <h:link class="text-white" outcome="/webapp/webapp.client/pages-misc-under-maintenance.xhtml"><small class="text-white mx-2">Privacy Policy</small>/</h:link>
+                        <h:link class="text-white" outcome="/webapp/webapp.client/pages-misc-under-maintenance.xhtml"><small class="text-white mx-2">Terms of Use</small>/</h:link>
+                        <h:link class="text-white" outcome="/webapp/webapp.client/pages-misc-under-maintenance.xhtml"><small class="text-white ms-2">Sales and Refunds</small></h:link>
                     </div>
                 </div>
             </div>
@@ -38,17 +38,29 @@
                         <div class="navbar-nav mx-auto">
                             <h:link outcome="/webapp/webapp.client/index.xhtml" styleClass="nav-item nav-link active">Home</h:link>
                             <h:link outcome="/webapp/webapp.client/shop.xhtml" styleClass="nav-item nav-link">Shop</h:link>                            
-                            <h:link styleClass="nav-item nav-link">Blog</h:link>                           
+                            <h:link outcome="/webapp/webapp.client/blog.xhtml" styleClass="nav-item nav-link">Blog</h:link>                           
                         </div>
                         <div class="d-flex m-3 me-0">
                             <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
-                            <a href="#" class="position-relative me-4 my-auto">
+                            <h:link outcome="/webapp/webapp.client/cart.xhtml" class="position-relative me-4 my-auto">
                                 <i class="fa fa-shopping-bag fa-2x"></i>
                                 <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
-                            </a>
+                            </h:link>
                             <h:link outcome="/webapp/webapp.client/login.xhtml" class="my-auto">
                                 <i class="fas fa-user fa-2x"></i>
-                            </h:link>                           
+                            </h:link>
+                            <div class="dropdown my-auto">
+                                <a class="btn btn-outline-secondary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user text-primary"></i> <span class="text-primary">Profile</span>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    <li><h:link class="dropdown-item" outcome="/webapp/webapp.client/profile.xhtml"><i class="fas fa-user text-primary"></i> Edit Profile</h:link></li>
+                                    <li><h:link class="dropdown-item" outcome="/webapp/webapp.client/pages-misc-under-maintenance.xhtml"><i class="fas fa-receipt text-primary"></i> Order History</h:link></li>
+                                    <li><h:link class="dropdown-item" outcome="/webapp/webapp.client/pages-misc-under-maintenance.xhtml"><i class="fas fa-lock text-primary"></i> Change Password</h:link></li>
+                                    <li><h:link class="dropdown-item" outcome="/webapp/webapp.client/pages-misc-under-maintenance.xhtml"><i class="fas fa-gear text-primary"></i> Log Out</h:link></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </nav>
@@ -73,7 +85,7 @@
                 </div>
             </div>
         </div>
-        <!-- Modal Search End -->        
+        <!-- Modal Search End -->             
 
         <!-- Content -->
         <div>
@@ -121,22 +133,22 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="d-flex flex-column text-start footer-item">
                             <h4 class="text-light mb-3">Shop Info</h4>
-                            <h:link class="btn-link">About Us</h:link>
-                            <h:link class="btn-link">Contact Us</h:link>
-                            <h:link class="btn-link">Privacy Policy</h:link>
-                            <h:link class="btn-link">Terms &amp; Condition</h:link>
-                            <h:link class="btn-link">Return Policy</h:link>
-                            <h:link class="btn-link">FAQs &amp; Help</h:link>
+                            <h:link outcome="/webapp/webapp.client/about.xhtml" class="btn-link">About Us</h:link>
+                            <h:link outcome="/webapp/webapp.client/contact.xhtml" class="btn-link">Contact Us</h:link>
+                            <h:link outcome="/webapp/webapp.client/404page.xhtml" class="btn-link">Privacy Policy</h:link>
+                            <h:link outcome="/webapp/webapp.client/404page.xhtml" class="btn-link">Terms &amp; Condition</h:link>
+                            <h:link outcome="/webapp/webapp.client/404page.xhtml" class="btn-link">Return Policy</h:link>
+                            <h:link outcome="/webapp/webapp.client/404page.xhtml" class="btn-link">FAQs &amp; Help</h:link>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="d-flex flex-column text-start footer-item">
                             <h4 class="text-light mb-3">Account</h4>
-                            <h:link class="btn-link">My Account</h:link>
+                            <h:link outcome="/webapp/webapp.client/404page.xhtml" class="btn-link">My Account</h:link>
                             <h:link outcome="/webapp/webapp.client/shop.xhtml" class="btn-link">Shop</h:link>
-                            <h:link class="btn-link">Shopping Cart</h:link>
-                            <h:link class="btn-link">Wishlist</h:link>
-                            <h:link class="btn-link">Order History</h:link>
+                            <h:link outcome="/webapp/webapp.client/cart.xhtml" class="btn-link">Shopping Cart</h:link>
+                            <h:link outcome="/webapp/webapp.client/pages-misc-under-maintenance.xhtml" class="btn-link">Wishlist</h:link>
+                            <h:link outcome="/webapp/webapp.client/404page.xhtml" class="btn-link">Order History</h:link>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
@@ -173,7 +185,7 @@
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a> 
-        
+
         <ui:include src="../../resources/includes.configlayouts/includes.client/js.xhtml"/>
     </h:body>
 </html>

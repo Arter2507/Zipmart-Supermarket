@@ -2,12 +2,63 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      lang="en"
+      class="light-style layout-wide"
+      dir="ltr"
+      data-theme="theme-default"
+      data-assets-path="#{request.contextPath}/resources/"
+      data-template="vertical-menu-template-free"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta charset="utf-8"/>
+        <title>Zip Mart | Supermarket System</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <meta content="" name="keywords"/>
+        <meta content="" name="description"/>
+
+        <!-- Shortcut Icon-->
+        <link rel="shortcut icon" type="image/png" href="#{request.contextPath}/resources/images/logo/zmicon.png" />
+        <link rel="icon" type="image/x-icon" href="#{request.contextPath}/resources/images/logo/zmicon.ico"></link>
+
+        <ui:include src="../../resources/includes.configlayouts/includes.admin/header.xhtml"/>
+    </h:head>
     <h:body>
-         <ui:composition template="/webapp/webapp.layout/_mainLayout.xhtml">
-            <ui:define name="content">
-                
-            </ui:define>
-        </ui:composition>
+        <!-- Content -->
+
+        <!-- Error -->
+    <div class="misc-wrapper">
+      <h1 class="mb-2 mx-2" style="font-size: 6rem">404</h1>
+      <h4 class="mb-2">Page Not Found ⚠️</h4>
+      <p class="mb-4 mx-2">We’re sorry, the page you have looked for does not exist in our website! Maybe go to our home page or try to contact us !!!</p>
+      <div class="d-flex justify-content-center mt-5">
+        <img
+          src="#{request.contextPath}/resources/images/admin/illustrations/tree.png"
+          alt="misc-tree"
+          class="img-fluid misc-object d-none d-lg-inline-block"
+          width="80" />
+        <img
+          src="#{request.contextPath}/resources/images/admin/illustrations/misc-mask-light.png"
+          alt="misc-error"
+          class="scaleX-n1-rtl misc-bg d-none d-lg-inline-block"
+          data-app-light-img="illustrations/misc-mask-light.png"
+          data-app-dark-img="illustrations/misc-mask-dark.png" />
+        <div class="d-flex flex-column align-items-center">
+          <img
+            src="#{request.contextPath}/resources/images/admin/illustrations/404.png"
+            alt="misc-error"
+            class="misc-model img-fluid z-1"
+            width="780" />
+          <div>
+                        <h:link outcome="/webapp/webapp.client/contact.xhtml" class="btn btn-primary text-center my-5 mx-3">Contact with us</h:link>
+                        <h:link outcome="/webapp/webapp.client/index.xhtml" class="btn btn-info text-center my-5">Back to home</h:link>
+                    </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Error -->
+
+        <!-- / Content -->      
+
+        <ui:include src="../../resources/includes.configlayouts/includes.admin/js.xhtml"/>
     </h:body>
 </html>
