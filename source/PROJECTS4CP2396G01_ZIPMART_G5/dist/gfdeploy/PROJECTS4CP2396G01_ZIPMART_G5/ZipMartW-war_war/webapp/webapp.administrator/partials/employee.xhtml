@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/webapp/webapp.layout/_adminLayout.xhtml">
+            <ui:define name="content">              
+                <!-- Page Heading -->
+                <h1 class="h3 mb-2 text-gray-800">Employee Management</h1>
+                <p class="mb-4">The <a href="javascript:void(0);">"Software Employee Management"</a> is a robust software solution meticulously crafted to streamline and automate the intricacies of employee-related processes within an organization.</p>
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <div class="m-0 font-weight-bold text-primary">
+                            <h:link class="btn btn-info btn-icon-split">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-user-plus"></i>
+                                </span>
+                                <span class="text">Add New Employee</span>
+                            </h:link>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <h:form>
+                                <table class="table table-bordered table-hover" 
+                                       id="dataTable"
+                                       data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Image</th>
+                                            <th class="text-center">Full Name</th>
+                                            <th class="text-center">UserName</th>
+                                            <th class="text-center">Password</th>
+                                            <th class="text-center">Phone</th>
+                                            <th class="text-center">Email</th>
+                                            <th class="text-center">Address</th>
+                                            <th class="text-center">Birth Date</th>
+                                            <th class="text-center">Note</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ui:repeat var="emp" value="#{empManagedBean.showEmpList()}">
+                                            <tr>
+                                                <td><h:graphicImage value="#{emp.imageURL}"/></td>
+                                                <td><h:outputText value="#{emp.fullname}"/></td>
+                                                <td><h:outputText value="#{emp.accountID.username}"/></td>
+                                                <td><h:outputText value="#{emp.accountID.password}"/></td>
+                                                <td><h:outputText value="#{emp.phone}"/></td>
+                                                <td><h:outputText value="#{emp.email}"/></td>
+                                                <td><h:outputText value="#{emp.address}"/></td>
+                                                <td><h:outputText value="#{emp.birthDate}">
+                                                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                                                    </h:outputText>
+                                                </td>
+                                                <td><h:outputText value="#{emp.notes}"/></td>
+                                                <td>
+                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-bg-secondary-400"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                                         aria-labelledby="dropdownMenuLink">
+                                                        <h:commandButton styleClass="dropdown-item" value="Edit"/>
+                                                        <h:commandButton styleClass="dropdown-item" value="Delete"/>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </ui:repeat>
+                                    </tbody>
+                                </table>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>               
+            </ui:define>
+        </ui:composition>       
+    </h:body>
+</html>
