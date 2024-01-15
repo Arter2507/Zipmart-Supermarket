@@ -46,6 +46,8 @@ public class EmpManagedBean {
         return employeesFacade.findAll();
     }
     
+    // Update Employee
+    
     public EmployeesFacadeLocal getEmployeesFacade() {
         return employeesFacade;
     }
