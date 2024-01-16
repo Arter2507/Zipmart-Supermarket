@@ -8,6 +8,10 @@ import com.group5.zipmart.entities.Employees;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -26,6 +30,17 @@ public class EmployeesFacade extends AbstractFacade<Employees> implements Employ
 
     public EmployeesFacade() {
         super(Employees.class);
+    }
+
+    @Override
+    public long getUserNameEx(String username) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery();
+        Root root = cq.from(Employees.class);
+        cq.select(cb.count(root.get("username")));
+        cq.where(cb.equal(root.get("username"), username));
+        Query query = em.createQuery(cq);
+        return (long) query.getSingleResult();
     }
     
 }

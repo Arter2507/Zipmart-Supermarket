@@ -9,18 +9,6 @@
                 <library dirs="100">
                     <file>${reference.ZipMartE-ejb.dist}</file>
                 </library>
-                <library dirs="200">
-                    <file>${file.reference.cloudinary-core-1.33.0.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.cloudinary-http44-1.33.0.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.cloudinary-taglib-1.33.0.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
             </web-module-libraries>
             <web-module-additional-libraries/>
             <source-roots>

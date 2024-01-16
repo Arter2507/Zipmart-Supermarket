@@ -1915,6 +1915,9 @@ ALTER TABLE "OrdersDetails" CHECK CONSTRAINT ALL
 go
 GO
 
+ALTER TABLE [dbo].[Accounts]
+ADD "status" BIT DEFAULT 1;
+GO
 -----------------------------------
 
 GO

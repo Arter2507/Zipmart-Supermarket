@@ -29,4 +29,6 @@ public interface EmployeesFacadeLocal {
 
     int count();
     
+    long getUserNameEx(String username);
+    
 }
