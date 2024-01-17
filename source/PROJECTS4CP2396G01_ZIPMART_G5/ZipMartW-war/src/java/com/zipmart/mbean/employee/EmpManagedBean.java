@@ -4,12 +4,10 @@
  */
 package com.zipmart.mbean.employee;
 
-import com.group5.zipmart.entities.Accounts;
 import com.group5.zipmart.entities.Employees;
-import com.group5.zipmart.entities.Permission;
-import com.group5.zipmart.sessionbeans.AccountsFacadeLocal;
+import com.group5.zipmart.entities.Permissions;
 import com.group5.zipmart.sessionbeans.EmployeesFacadeLocal;
-import com.group5.zipmart.sessionbeans.PermissionFacadeLocal;
+import com.group5.zipmart.sessionbeans.PermissionsFacadeLocal;
 import com.zipmart.util.FileUltil;
 import java.io.IOException;
 import java.util.Date;
@@ -30,16 +28,12 @@ import javax.servlet.http.Part;
 public class EmpManagedBean {
 
     @EJB
-    private PermissionFacadeLocal permissionFacade;
-
-    @EJB
-    private AccountsFacadeLocal accountsFacade;
+    private PermissionsFacadeLocal permissionFacade;
 
     @EJB
     private EmployeesFacadeLocal employeesFacade;
 
     private Employees employee;
-    private Accounts account;
 
     private long id;
     private long permissionID;
@@ -68,15 +62,8 @@ public class EmpManagedBean {
     private String addressMessage;
     private String phoneMessage;
 
-    @PostConstruct
-    public void init() {
-        employee.setAccountID(new Accounts());
-    }
-
     public EmpManagedBean() {
         employee = new Employees();
-        account = new Accounts();
-
     }
 
     // Get All Data
@@ -99,14 +86,13 @@ public class EmpManagedBean {
 //        } else {
         imgUrl = FileUltil.getInstance().uploadFile();
 
-        employee.getAccountID().setStatus(true);
         employeesFacade.create(employee);
         //}
         return "employee";
     }
 
     private boolean isUsernameExist() {
-        long checkUsername = employeesFacade.getUserNameEx(employee.getAccountID().getUsername());
+        long checkUsername = employeesFacade.getUserNameEx(employee.getUsername());
         if (checkUsername > 0) {
             usernameMessage = "Username already exists!";
             return true;
@@ -120,7 +106,6 @@ public class EmpManagedBean {
 //        account.setPassword(employee.getAccountID().getPassword());
 //        account.setPermissionID(employee.getAccountID().getPermissionID());
 
-        employee.getAccountID().setStatus(true);
 
     }
 
@@ -227,14 +212,6 @@ public class EmpManagedBean {
         this.dayOfBirth = new Date(birthday.getTime());
     }
 
-    public AccountsFacadeLocal getAccountsFacade() {
-        return accountsFacade;
-    }
-
-    public void setAccountsFacade(AccountsFacadeLocal accountsFacade) {
-        this.accountsFacade = accountsFacade;
-    }
-
     public Employees getEmployee() {
         return employee;
     }
@@ -251,16 +228,16 @@ public class EmpManagedBean {
         this.file = file;
     }
 
-    public PermissionFacadeLocal getPermissionFacade() {
+    public PermissionsFacadeLocal getPermissionFacade() {
         return permissionFacade;
     }
 
-    public void setPermissionFacade(PermissionFacadeLocal permissionFacade) {
+    public void setPermissionFacade(PermissionsFacadeLocal permissionFacade) {
         this.permissionFacade = permissionFacade;
     }
 
     public long getPermissionID() {
-        return permissionID = 2;
+        return permissionID;
     }
 
     public void setPermissionID(long permissionID) {
@@ -353,14 +330,6 @@ public class EmpManagedBean {
 
     public void setPhoneMessage(String phoneMessage) {
         this.phoneMessage = phoneMessage;
-    }
-
-    public Accounts getAccount() {
-        return account;
-    }
-
-    public void setAccount(Accounts account) {
-        this.account = account;
     }
 
     public Date getDayOfBirth() {

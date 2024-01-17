@@ -16,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -37,24 +38,20 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Customers.findAll", query = "SELECT c FROM Customers c"),
     @NamedQuery(name = "Customers.findById", query = "SELECT c FROM Customers c WHERE c.id = :id"),
+    @NamedQuery(name = "Customers.findByCustomerGender", query = "SELECT c FROM Customers c WHERE c.customerGender = :customerGender"),
+    @NamedQuery(name = "Customers.findByCustomerCard", query = "SELECT c FROM Customers c WHERE c.customerCard = :customerCard"),
+    @NamedQuery(name = "Customers.findByUsername", query = "SELECT c FROM Customers c WHERE c.username = :username"),
     @NamedQuery(name = "Customers.findByFullname", query = "SELECT c FROM Customers c WHERE c.fullname = :fullname"),
     @NamedQuery(name = "Customers.findByAddress", query = "SELECT c FROM Customers c WHERE c.address = :address"),
     @NamedQuery(name = "Customers.findByPhone", query = "SELECT c FROM Customers c WHERE c.phone = :phone"),
     @NamedQuery(name = "Customers.findByEmail", query = "SELECT c FROM Customers c WHERE c.email = :email"),
     @NamedQuery(name = "Customers.findByBirthDate", query = "SELECT c FROM Customers c WHERE c.birthDate = :birthDate"),
     @NamedQuery(name = "Customers.findByImageURL", query = "SELECT c FROM Customers c WHERE c.imageURL = :imageURL"),
-    @NamedQuery(name = "Customers.findByCardName", query = "SELECT c FROM Customers c WHERE c.cardName = :cardName"),
-    @NamedQuery(name = "Customers.findByCardNumber", query = "SELECT c FROM Customers c WHERE c.cardNumber = :cardNumber"),
-    @NamedQuery(name = "Customers.findByValueFrom", query = "SELECT c FROM Customers c WHERE c.valueFrom = :valueFrom"),
-    @NamedQuery(name = "Customers.findByExpirationDate", query = "SELECT c FROM Customers c WHERE c.expirationDate = :expirationDate"),
-    @NamedQuery(name = "Customers.findByCvvNumber", query = "SELECT c FROM Customers c WHERE c.cvvNumber = :cvvNumber"),
-    @NamedQuery(name = "Customers.findByCardType", query = "SELECT c FROM Customers c WHERE c.cardType = :cardType"),
-    @NamedQuery(name = "Customers.findByPoint", query = "SELECT c FROM Customers c WHERE c.point = :point"),
-    @NamedQuery(name = "Customers.findByRank", query = "SELECT c FROM Customers c WHERE c.rank = :rank"),
     @NamedQuery(name = "Customers.findByCreatedate", query = "SELECT c FROM Customers c WHERE c.createdate = :createdate"),
     @NamedQuery(name = "Customers.findByModifiedate", query = "SELECT c FROM Customers c WHERE c.modifiedate = :modifiedate"),
     @NamedQuery(name = "Customers.findByCreateby", query = "SELECT c FROM Customers c WHERE c.createby = :createby"),
-    @NamedQuery(name = "Customers.findByModifieby", query = "SELECT c FROM Customers c WHERE c.modifieby = :modifieby")})
+    @NamedQuery(name = "Customers.findByModifieby", query = "SELECT c FROM Customers c WHERE c.modifieby = :modifieby"),
+    @NamedQuery(name = "Customers.findByStatus", query = "SELECT c FROM Customers c WHERE c.status = :status")})
 public class Customers implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,6 +60,22 @@ public class Customers implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
+    @Column(name = "customer_gender")
+    private BigInteger customerGender;
+    @Column(name = "customer_card")
+    private BigInteger customerCard;
+    @Size(max = 50)
+    @Column(name = "username")
+    private String username;
+    @Lob
+    @Column(name = "password")
+    private byte[] password;
+    @Lob
+    @Column(name = "salt_password")
+    private byte[] saltPassword;
+    @Lob
+    @Column(name = "pepper_password")
+    private byte[] pepperPassword;
     @Size(max = 255)
     @Column(name = "fullname")
     private String fullname;
@@ -83,47 +96,33 @@ public class Customers implements Serializable {
     @Size(max = 255)
     @Column(name = "imageURL")
     private String imageURL;
-    @Size(max = 255)
-    @Column(name = "cardName")
-    private String cardName;
-    @Size(max = 16)
-    @Column(name = "cardNumber")
-    private String cardNumber;
-    @Column(name = "valueFrom")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date valueFrom;
-    @Column(name = "expirationDate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date expirationDate;
-    @Column(name = "cvvNumber")
-    private Integer cvvNumber;
-    @Size(max = 20)
-    @Column(name = "cardType")
-    private String cardType;
-    @Column(name = "point")
-    private BigInteger point;
-    @Size(max = 50)
-    @Column(name = "rank")
-    private String rank;
     @Column(name = "createdate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdate;
     @Column(name = "modifiedate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedate;
-    @Size(max = 255)
+    @Size(max = 50)
     @Column(name = "createby")
     private String createby;
-    @Size(max = 255)
+    @Size(max = 50)
     @Column(name = "modifieby")
     private String modifieby;
+    @Column(name = "status")
+    private Boolean status;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerID")
     private Collection<Orders> ordersCollection;
-    @JoinColumn(name = "accountID", referencedColumnName = "ID")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customers")
+    private Collection<CustomerCard> customerCardCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customers")
+    private Collection<CustomerFeedback> customerFeedbackCollection;
+    @JoinColumn(name = "customer_group", referencedColumnName = "ID")
     @ManyToOne
-    private Accounts accountID;
+    private Permissions customerGroup;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerID")
     private Collection<Feedbacks> feedbacksCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customers")
+    private Collection<CustomerGenders> customerGendersCollection;
 
     public Customers() {
     }
@@ -138,6 +137,54 @@ public class Customers implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public BigInteger getCustomerGender() {
+        return customerGender;
+    }
+
+    public void setCustomerGender(BigInteger customerGender) {
+        this.customerGender = customerGender;
+    }
+
+    public BigInteger getCustomerCard() {
+        return customerCard;
+    }
+
+    public void setCustomerCard(BigInteger customerCard) {
+        this.customerCard = customerCard;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public byte[] getPassword() {
+        return password;
+    }
+
+    public void setPassword(byte[] password) {
+        this.password = password;
+    }
+
+    public byte[] getSaltPassword() {
+        return saltPassword;
+    }
+
+    public void setSaltPassword(byte[] saltPassword) {
+        this.saltPassword = saltPassword;
+    }
+
+    public byte[] getPepperPassword() {
+        return pepperPassword;
+    }
+
+    public void setPepperPassword(byte[] pepperPassword) {
+        this.pepperPassword = pepperPassword;
     }
 
     public String getFullname() {
@@ -188,70 +235,6 @@ public class Customers implements Serializable {
         this.imageURL = imageURL;
     }
 
-    public String getCardName() {
-        return cardName;
-    }
-
-    public void setCardName(String cardName) {
-        this.cardName = cardName;
-    }
-
-    public String getCardNumber() {
-        return cardNumber;
-    }
-
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
-    public Date getValueFrom() {
-        return valueFrom;
-    }
-
-    public void setValueFrom(Date valueFrom) {
-        this.valueFrom = valueFrom;
-    }
-
-    public Date getExpirationDate() {
-        return expirationDate;
-    }
-
-    public void setExpirationDate(Date expirationDate) {
-        this.expirationDate = expirationDate;
-    }
-
-    public Integer getCvvNumber() {
-        return cvvNumber;
-    }
-
-    public void setCvvNumber(Integer cvvNumber) {
-        this.cvvNumber = cvvNumber;
-    }
-
-    public String getCardType() {
-        return cardType;
-    }
-
-    public void setCardType(String cardType) {
-        this.cardType = cardType;
-    }
-
-    public BigInteger getPoint() {
-        return point;
-    }
-
-    public void setPoint(BigInteger point) {
-        this.point = point;
-    }
-
-    public String getRank() {
-        return rank;
-    }
-
-    public void setRank(String rank) {
-        this.rank = rank;
-    }
-
     public Date getCreatedate() {
         return createdate;
     }
@@ -284,6 +267,14 @@ public class Customers implements Serializable {
         this.modifieby = modifieby;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
     @XmlTransient
     public Collection<Orders> getOrdersCollection() {
         return ordersCollection;
@@ -293,12 +284,30 @@ public class Customers implements Serializable {
         this.ordersCollection = ordersCollection;
     }
 
-    public Accounts getAccountID() {
-        return accountID;
+    @XmlTransient
+    public Collection<CustomerCard> getCustomerCardCollection() {
+        return customerCardCollection;
     }
 
-    public void setAccountID(Accounts accountID) {
-        this.accountID = accountID;
+    public void setCustomerCardCollection(Collection<CustomerCard> customerCardCollection) {
+        this.customerCardCollection = customerCardCollection;
+    }
+
+    @XmlTransient
+    public Collection<CustomerFeedback> getCustomerFeedbackCollection() {
+        return customerFeedbackCollection;
+    }
+
+    public void setCustomerFeedbackCollection(Collection<CustomerFeedback> customerFeedbackCollection) {
+        this.customerFeedbackCollection = customerFeedbackCollection;
+    }
+
+    public Permissions getCustomerGroup() {
+        return customerGroup;
+    }
+
+    public void setCustomerGroup(Permissions customerGroup) {
+        this.customerGroup = customerGroup;
     }
 
     @XmlTransient
@@ -308,6 +317,15 @@ public class Customers implements Serializable {
 
     public void setFeedbacksCollection(Collection<Feedbacks> feedbacksCollection) {
         this.feedbacksCollection = feedbacksCollection;
+    }
+
+    @XmlTransient
+    public Collection<CustomerGenders> getCustomerGendersCollection() {
+        return customerGendersCollection;
+    }
+
+    public void setCustomerGendersCollection(Collection<CustomerGenders> customerGendersCollection) {
+        this.customerGendersCollection = customerGendersCollection;
     }
 
     @Override

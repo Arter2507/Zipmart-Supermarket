@@ -5,6 +5,7 @@
 package com.group5.zipmart.entities;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -15,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -22,8 +24,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -38,6 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Employees.findAll", query = "SELECT e FROM Employees e"),
     @NamedQuery(name = "Employees.findById", query = "SELECT e FROM Employees e WHERE e.id = :id"),
+    @NamedQuery(name = "Employees.findByEmployeeGender", query = "SELECT e FROM Employees e WHERE e.employeeGender = :employeeGender"),
+    @NamedQuery(name = "Employees.findByUsername", query = "SELECT e FROM Employees e WHERE e.username = :username"),
     @NamedQuery(name = "Employees.findByFullname", query = "SELECT e FROM Employees e WHERE e.fullname = :fullname"),
     @NamedQuery(name = "Employees.findByAddress", query = "SELECT e FROM Employees e WHERE e.address = :address"),
     @NamedQuery(name = "Employees.findByPhone", query = "SELECT e FROM Employees e WHERE e.phone = :phone"),
@@ -48,7 +50,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Employees.findByCreatedate", query = "SELECT e FROM Employees e WHERE e.createdate = :createdate"),
     @NamedQuery(name = "Employees.findByModifiedate", query = "SELECT e FROM Employees e WHERE e.modifiedate = :modifiedate"),
     @NamedQuery(name = "Employees.findByCreateby", query = "SELECT e FROM Employees e WHERE e.createby = :createby"),
-    @NamedQuery(name = "Employees.findByModifieby", query = "SELECT e FROM Employees e WHERE e.modifieby = :modifieby")})
+    @NamedQuery(name = "Employees.findByModifieby", query = "SELECT e FROM Employees e WHERE e.modifieby = :modifieby"),
+    @NamedQuery(name = "Employees.findByStatus", query = "SELECT e FROM Employees e WHERE e.status = :status")})
 public class Employees implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,6 +60,20 @@ public class Employees implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
+    @Column(name = "employee_gender")
+    private BigInteger employeeGender;
+    @Size(max = 50)
+    @Column(name = "username")
+    private String username;
+    @Lob
+    @Column(name = "password")
+    private byte[] password;
+    @Lob
+    @Column(name = "salt_password")
+    private byte[] saltPassword;
+    @Lob
+    @Column(name = "pepper_password")
+    private byte[] pepperPassword;
     @Size(max = 50)
     @Column(name = "fullname")
     private String fullname;
@@ -67,7 +84,7 @@ public class Employees implements Serializable {
     @Size(max = 50)
     @Column(name = "phone")
     private String phone;
-    @Pattern(regexp="[a-z0-9\\.]+@[a-z]+\\.[a-z]+", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 255)
     @Column(name = "email")
     private String email;
@@ -75,7 +92,7 @@ public class Employees implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date birthDate;
     @Size(max = 2147483647)
-    @Column(name = "Notes")
+    @Column(name = "notes")
     private String notes;
     @Size(max = 2147483647)
     @Column(name = "imageURL")
@@ -86,19 +103,23 @@ public class Employees implements Serializable {
     @Column(name = "modifiedate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedate;
-    @Size(max = 255)
+    @Size(max = 50)
     @Column(name = "createby")
     private String createby;
-    @Size(max = 255)
+    @Size(max = 50)
     @Column(name = "modifieby")
     private String modifieby;
+    @Column(name = "status")
+    private Boolean status;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeID")
     private Collection<Orders> ordersCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeID")
-    private Collection<Blogs> blogsCollection;
-    @JoinColumn(name = "accountID", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
-    private Accounts accountID;
+    @JoinColumn(name = "employee_group", referencedColumnName = "ID")
+    @ManyToOne
+    private Permissions employeeGroup;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employees")
+    private Collection<EmployeeGenders> employeeGendersCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employees")
+    private Collection<EmployeeBlog> employeeBlogCollection;
 
     public Employees() {
     }
@@ -113,6 +134,46 @@ public class Employees implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public BigInteger getEmployeeGender() {
+        return employeeGender;
+    }
+
+    public void setEmployeeGender(BigInteger employeeGender) {
+        this.employeeGender = employeeGender;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public byte[] getPassword() {
+        return password;
+    }
+
+    public void setPassword(byte[] password) {
+        this.password = password;
+    }
+
+    public byte[] getSaltPassword() {
+        return saltPassword;
+    }
+
+    public void setSaltPassword(byte[] saltPassword) {
+        this.saltPassword = saltPassword;
+    }
+
+    public byte[] getPepperPassword() {
+        return pepperPassword;
+    }
+
+    public void setPepperPassword(byte[] pepperPassword) {
+        this.pepperPassword = pepperPassword;
     }
 
     public String getFullname() {
@@ -203,6 +264,14 @@ public class Employees implements Serializable {
         this.modifieby = modifieby;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
     @XmlTransient
     public Collection<Orders> getOrdersCollection() {
         return ordersCollection;
@@ -212,21 +281,30 @@ public class Employees implements Serializable {
         this.ordersCollection = ordersCollection;
     }
 
+    public Permissions getEmployeeGroup() {
+        return employeeGroup;
+    }
+
+    public void setEmployeeGroup(Permissions employeeGroup) {
+        this.employeeGroup = employeeGroup;
+    }
+
     @XmlTransient
-    public Collection<Blogs> getBlogsCollection() {
-        return blogsCollection;
+    public Collection<EmployeeGenders> getEmployeeGendersCollection() {
+        return employeeGendersCollection;
     }
 
-    public void setBlogsCollection(Collection<Blogs> blogsCollection) {
-        this.blogsCollection = blogsCollection;
+    public void setEmployeeGendersCollection(Collection<EmployeeGenders> employeeGendersCollection) {
+        this.employeeGendersCollection = employeeGendersCollection;
     }
 
-    public Accounts getAccountID() {
-        return accountID;
+    @XmlTransient
+    public Collection<EmployeeBlog> getEmployeeBlogCollection() {
+        return employeeBlogCollection;
     }
 
-    public void setAccountID(Accounts accountID) {
-        this.accountID = accountID;
+    public void setEmployeeBlogCollection(Collection<EmployeeBlog> employeeBlogCollection) {
+        this.employeeBlogCollection = employeeBlogCollection;
     }
 
     @Override

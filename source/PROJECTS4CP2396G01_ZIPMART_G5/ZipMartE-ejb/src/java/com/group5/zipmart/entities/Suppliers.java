@@ -103,9 +103,9 @@ public class Suppliers implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplierID")
     private Collection<Products> productsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplierID")
-    private Collection<Brand> brandCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplierID")
     private Collection<ImportOrder> importOrderCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplierID")
+    private Collection<Brand> brandCollection;
 
     public Suppliers() {
     }
@@ -244,21 +244,21 @@ public class Suppliers implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Brand> getBrandCollection() {
-        return brandCollection;
-    }
-
-    public void setBrandCollection(Collection<Brand> brandCollection) {
-        this.brandCollection = brandCollection;
-    }
-
-    @XmlTransient
     public Collection<ImportOrder> getImportOrderCollection() {
         return importOrderCollection;
     }
 
     public void setImportOrderCollection(Collection<ImportOrder> importOrderCollection) {
         this.importOrderCollection = importOrderCollection;
+    }
+
+    @XmlTransient
+    public Collection<Brand> getBrandCollection() {
+        return brandCollection;
+    }
+
+    public void setBrandCollection(Collection<Brand> brandCollection) {
+        this.brandCollection = brandCollection;
     }
 
     @Override

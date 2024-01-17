@@ -5,8 +5,10 @@
 package com.group5.zipmart.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,12 +18,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -74,7 +78,9 @@ public class Feedbacks implements Serializable {
     @Size(max = 255)
     @Column(name = "modifieby")
     private String modifieby;
-    @JoinColumn(name = "customerID", referencedColumnName = "ID")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "feedbacks")
+    private Collection<CustomerFeedback> customerFeedbackCollection;
+    @JoinColumn(name = "customer_ID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Customers customerID;
 
@@ -160,6 +166,15 @@ public class Feedbacks implements Serializable {
 
     public void setModifieby(String modifieby) {
         this.modifieby = modifieby;
+    }
+
+    @XmlTransient
+    public Collection<CustomerFeedback> getCustomerFeedbackCollection() {
+        return customerFeedbackCollection;
+    }
+
+    public void setCustomerFeedbackCollection(Collection<CustomerFeedback> customerFeedbackCollection) {
+        this.customerFeedbackCollection = customerFeedbackCollection;
     }
 
     public Customers getCustomerID() {

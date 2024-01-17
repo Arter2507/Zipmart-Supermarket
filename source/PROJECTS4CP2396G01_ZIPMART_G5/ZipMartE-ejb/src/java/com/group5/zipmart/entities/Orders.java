@@ -6,7 +6,6 @@ package com.group5.zipmart.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,8 +19,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -36,9 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o"),
     @NamedQuery(name = "Orders.findById", query = "SELECT o FROM Orders o WHERE o.id = :id"),
-    @NamedQuery(name = "Orders.findByOrderDate", query = "SELECT o FROM Orders o WHERE o.orderDate = :orderDate"),
-    @NamedQuery(name = "Orders.findByShipDate", query = "SELECT o FROM Orders o WHERE o.shipDate = :shipDate"),
-    @NamedQuery(name = "Orders.findByShipAddress", query = "SELECT o FROM Orders o WHERE o.shipAddress = :shipAddress"),
+    @NamedQuery(name = "Orders.findByPaymentMethod", query = "SELECT o FROM Orders o WHERE o.paymentMethod = :paymentMethod"),
     @NamedQuery(name = "Orders.findByNote", query = "SELECT o FROM Orders o WHERE o.note = :note"),
     @NamedQuery(name = "Orders.findByStatus", query = "SELECT o FROM Orders o WHERE o.status = :status")})
 public class Orders implements Serializable {
@@ -49,29 +44,22 @@ public class Orders implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
-    @Column(name = "orderDate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date orderDate;
-    @Column(name = "shipDate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date shipDate;
     @Size(max = 255)
-    @Column(name = "shipAddress")
-    private String shipAddress;
+    @Column(name = "paymentMethod")
+    private String paymentMethod;
     @Size(max = 2147483647)
     @Column(name = "note")
     private String note;
-    @Size(max = 50)
     @Column(name = "status")
-    private String status;
+    private Integer status;
     @JoinColumn(name = "customerID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Customers customerID;
     @JoinColumn(name = "employeeID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Employees employeeID;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderID")
-    private Collection<OrdersDetails> ordersDetailsCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orders")
+    private Collection<OrderDetails> orderDetailsCollection;
 
     public Orders() {
     }
@@ -88,28 +76,12 @@ public class Orders implements Serializable {
         this.id = id;
     }
 
-    public Date getOrderDate() {
-        return orderDate;
+    public String getPaymentMethod() {
+        return paymentMethod;
     }
 
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public Date getShipDate() {
-        return shipDate;
-    }
-
-    public void setShipDate(Date shipDate) {
-        this.shipDate = shipDate;
-    }
-
-    public String getShipAddress() {
-        return shipAddress;
-    }
-
-    public void setShipAddress(String shipAddress) {
-        this.shipAddress = shipAddress;
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 
     public String getNote() {
@@ -120,11 +92,11 @@ public class Orders implements Serializable {
         this.note = note;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -145,12 +117,12 @@ public class Orders implements Serializable {
     }
 
     @XmlTransient
-    public Collection<OrdersDetails> getOrdersDetailsCollection() {
-        return ordersDetailsCollection;
+    public Collection<OrderDetails> getOrderDetailsCollection() {
+        return orderDetailsCollection;
     }
 
-    public void setOrdersDetailsCollection(Collection<OrdersDetails> ordersDetailsCollection) {
-        this.ordersDetailsCollection = ordersDetailsCollection;
+    public void setOrderDetailsCollection(Collection<OrderDetails> orderDetailsCollection) {
+        this.orderDetailsCollection = orderDetailsCollection;
     }
 
     @Override

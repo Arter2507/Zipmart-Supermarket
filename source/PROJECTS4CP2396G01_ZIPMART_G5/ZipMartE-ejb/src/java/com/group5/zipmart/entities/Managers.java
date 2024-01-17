@@ -5,22 +5,28 @@
 package com.group5.zipmart.entities;
 
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,6 +38,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Managers.findAll", query = "SELECT m FROM Managers m"),
     @NamedQuery(name = "Managers.findById", query = "SELECT m FROM Managers m WHERE m.id = :id"),
+    @NamedQuery(name = "Managers.findByManagerGender", query = "SELECT m FROM Managers m WHERE m.managerGender = :managerGender"),
+    @NamedQuery(name = "Managers.findByUsername", query = "SELECT m FROM Managers m WHERE m.username = :username"),
     @NamedQuery(name = "Managers.findByFullname", query = "SELECT m FROM Managers m WHERE m.fullname = :fullname"),
     @NamedQuery(name = "Managers.findByAddress", query = "SELECT m FROM Managers m WHERE m.address = :address"),
     @NamedQuery(name = "Managers.findByPhone", query = "SELECT m FROM Managers m WHERE m.phone = :phone"),
@@ -40,7 +48,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Managers.findByCreatedate", query = "SELECT m FROM Managers m WHERE m.createdate = :createdate"),
     @NamedQuery(name = "Managers.findByModifiedate", query = "SELECT m FROM Managers m WHERE m.modifiedate = :modifiedate"),
     @NamedQuery(name = "Managers.findByCreateby", query = "SELECT m FROM Managers m WHERE m.createby = :createby"),
-    @NamedQuery(name = "Managers.findByModifieby", query = "SELECT m FROM Managers m WHERE m.modifieby = :modifieby")})
+    @NamedQuery(name = "Managers.findByModifieby", query = "SELECT m FROM Managers m WHERE m.modifieby = :modifieby"),
+    @NamedQuery(name = "Managers.findByStatus", query = "SELECT m FROM Managers m WHERE m.status = :status")})
 public class Managers implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,6 +58,20 @@ public class Managers implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
+    @Column(name = "manager_gender")
+    private BigInteger managerGender;
+    @Size(max = 50)
+    @Column(name = "username")
+    private String username;
+    @Lob
+    @Column(name = "password")
+    private byte[] password;
+    @Lob
+    @Column(name = "salt_password")
+    private byte[] saltPassword;
+    @Lob
+    @Column(name = "pepper_password")
+    private byte[] pepperPassword;
     @Size(max = 50)
     @Column(name = "fullname")
     private String fullname;
@@ -72,15 +95,19 @@ public class Managers implements Serializable {
     @Column(name = "modifiedate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedate;
-    @Size(max = 255)
+    @Size(max = 50)
     @Column(name = "createby")
     private String createby;
-    @Size(max = 255)
+    @Size(max = 50)
     @Column(name = "modifieby")
     private String modifieby;
-    @JoinColumn(name = "accountID", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
-    private Accounts accountID;
+    @Column(name = "status")
+    private Boolean status;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "managers")
+    private Collection<ManagerGenders> managerGendersCollection;
+    @JoinColumn(name = "manager_group", referencedColumnName = "ID")
+    @ManyToOne
+    private Permissions managerGroup;
 
     public Managers() {
     }
@@ -95,6 +122,46 @@ public class Managers implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public BigInteger getManagerGender() {
+        return managerGender;
+    }
+
+    public void setManagerGender(BigInteger managerGender) {
+        this.managerGender = managerGender;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public byte[] getPassword() {
+        return password;
+    }
+
+    public void setPassword(byte[] password) {
+        this.password = password;
+    }
+
+    public byte[] getSaltPassword() {
+        return saltPassword;
+    }
+
+    public void setSaltPassword(byte[] saltPassword) {
+        this.saltPassword = saltPassword;
+    }
+
+    public byte[] getPepperPassword() {
+        return pepperPassword;
+    }
+
+    public void setPepperPassword(byte[] pepperPassword) {
+        this.pepperPassword = pepperPassword;
     }
 
     public String getFullname() {
@@ -169,12 +236,29 @@ public class Managers implements Serializable {
         this.modifieby = modifieby;
     }
 
-    public Accounts getAccountID() {
-        return accountID;
+    public Boolean getStatus() {
+        return status;
     }
 
-    public void setAccountID(Accounts accountID) {
-        this.accountID = accountID;
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    @XmlTransient
+    public Collection<ManagerGenders> getManagerGendersCollection() {
+        return managerGendersCollection;
+    }
+
+    public void setManagerGendersCollection(Collection<ManagerGenders> managerGendersCollection) {
+        this.managerGendersCollection = managerGendersCollection;
+    }
+
+    public Permissions getManagerGroup() {
+        return managerGroup;
+    }
+
+    public void setManagerGroup(Permissions managerGroup) {
+        this.managerGroup = managerGroup;
     }
 
     @Override

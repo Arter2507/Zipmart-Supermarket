@@ -108,8 +108,8 @@ public class Products implements Serializable {
     @JoinColumn(name = "supplierID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Suppliers supplierID;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productID")
-    private Collection<OrdersDetails> ordersDetailsCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "products")
+    private Collection<OrderDetails> orderDetailsCollection;
 
     public Products() {
     }
@@ -271,12 +271,12 @@ public class Products implements Serializable {
     }
 
     @XmlTransient
-    public Collection<OrdersDetails> getOrdersDetailsCollection() {
-        return ordersDetailsCollection;
+    public Collection<OrderDetails> getOrderDetailsCollection() {
+        return orderDetailsCollection;
     }
 
-    public void setOrdersDetailsCollection(Collection<OrdersDetails> ordersDetailsCollection) {
-        this.ordersDetailsCollection = ordersDetailsCollection;
+    public void setOrderDetailsCollection(Collection<OrderDetails> orderDetailsCollection) {
+        this.orderDetailsCollection = orderDetailsCollection;
     }
 
     @Override

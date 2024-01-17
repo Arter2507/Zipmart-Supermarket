@@ -5,22 +5,25 @@
 package com.group5.zipmart.entities;
 
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,6 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Blogs.findAll", query = "SELECT b FROM Blogs b"),
     @NamedQuery(name = "Blogs.findById", query = "SELECT b FROM Blogs b WHERE b.id = :id"),
+    @NamedQuery(name = "Blogs.findByEmployeeID", query = "SELECT b FROM Blogs b WHERE b.employeeID = :employeeID"),
     @NamedQuery(name = "Blogs.findByTitle", query = "SELECT b FROM Blogs b WHERE b.title = :title"),
     @NamedQuery(name = "Blogs.findByImageURL", query = "SELECT b FROM Blogs b WHERE b.imageURL = :imageURL"),
     @NamedQuery(name = "Blogs.findByContent", query = "SELECT b FROM Blogs b WHERE b.content = :content"),
@@ -48,6 +52,8 @@ public class Blogs implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
+    @Column(name = "employee_ID")
+    private BigInteger employeeID;
     @Size(max = 255)
     @Column(name = "title")
     private String title;
@@ -72,9 +78,8 @@ public class Blogs implements Serializable {
     @Size(max = 255)
     @Column(name = "modifieby")
     private String modifieby;
-    @JoinColumn(name = "employeeID", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
-    private Employees employeeID;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "blogs")
+    private Collection<EmployeeBlog> employeeBlogCollection;
 
     public Blogs() {
     }
@@ -89,6 +94,14 @@ public class Blogs implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public BigInteger getEmployeeID() {
+        return employeeID;
+    }
+
+    public void setEmployeeID(BigInteger employeeID) {
+        this.employeeID = employeeID;
     }
 
     public String getTitle() {
@@ -155,12 +168,13 @@ public class Blogs implements Serializable {
         this.modifieby = modifieby;
     }
 
-    public Employees getEmployeeID() {
-        return employeeID;
+    @XmlTransient
+    public Collection<EmployeeBlog> getEmployeeBlogCollection() {
+        return employeeBlogCollection;
     }
 
-    public void setEmployeeID(Employees employeeID) {
-        this.employeeID = employeeID;
+    public void setEmployeeBlogCollection(Collection<EmployeeBlog> employeeBlogCollection) {
+        this.employeeBlogCollection = employeeBlogCollection;
     }
 
     @Override

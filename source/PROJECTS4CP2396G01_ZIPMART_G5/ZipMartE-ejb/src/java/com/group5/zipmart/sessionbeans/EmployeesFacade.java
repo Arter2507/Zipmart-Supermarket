@@ -42,5 +42,4 @@ public class EmployeesFacade extends AbstractFacade<Employees> implements Employ
         Query query = em.createQuery(cq);
         return (long) query.getSingleResult();
     }
-    
 }
