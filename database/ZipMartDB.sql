@@ -20,8 +20,8 @@ FROM master.sys.master_files WHERE database_id = 1 AND file_id = 1;
 
 -- Create the 'Cp2396g01_group5_db' database with primary data file and log file locations.
 EXECUTE ('CREATE DATABASE Cp2396g01_group5_db
-  ON PRIMARY (NAME = N''Cp2396g01_group5_db'', FILENAME = N''' + @device_directory + N'Cp2396g01_group5_db.mdf'')
-  LOG ON (NAME = N''Cp2396g01_group5_db_log'',  FILENAME = N''' + @device_directory + N'Cp2396g01_group5_db.ldf'')');
+  ON PRIMARY (NAME = N''Cp2396g01_group5_db_v1'', FILENAME = N''' + @device_directory + N'Cp2396g01_group5_db_v1.mdf'')
+  LOG ON (NAME = N''Cp2396g01_group5_db_log_v1'',  FILENAME = N''' + @device_directory + N'Cp2396g01_group5_db_v1.ldf'')');
 GO
 GO
 
@@ -99,6 +99,7 @@ USE [Cp2396g01_group5_db];
 GO
 GO
 
+-- Check exists entity in the database 'Cp2396g01_group5_db'
 IF exists (select * from sysobjects where id = object_id('dbo.Sales by Year') and sysstat & 0xf = 4)
 	drop procedure [dbo].[Sales by Year]
 GO
@@ -111,48 +112,76 @@ IF exists (select * from sysobjects where id = object_id('dbo.Sales Totals by Am
 	drop view [dbo].[Sales Totals by Amount]
 GO
 
-IF exists (select * from sysobjects where id = object_id('dbo.Invoice') and sysstat & 0xf = 2)
-	drop view [dbo].[InvoiceView]
+IF exists (select * from sysobjects where id = object_id('dbo.Invoices') and sysstat & 0xf = 2)
+	drop view [dbo].[Invoices]
 GO
 
 IF exists (select * from sysobjects where id = object_id('dbo.Order Subtotals') and sysstat & 0xf = 2)
 	drop view [dbo].[Order Subtotals]
 GO
 
-IF exists (select * from sysobjects where id = object_id('dbo.BlogFeedBacks') and sysstat & 0xf = 3)
-	drop table [dbo].[BlogFeedBacks]
+IF exists (select * from sysobjects where id = object_id('dbo.Employee_Blog') and sysstat & 0xf = 3)
+	drop table [dbo].[Employee_Blog]
 GO
 
 IF exists (select * from sysobjects where id = object_id('dbo.Blogs') and sysstat & 0xf = 3)
 	drop table [dbo].[Blogs]
 GO
 
-IF exists (select * from sysobjects where id = object_id('dbo.Branch') and sysstat & 0xf = 3)
-	drop table [dbo].[Branch]
-GO
-
 IF exists (select * from sysobjects where id = object_id('dbo.ImportOrder') and sysstat & 0xf = 3)
 	drop table [dbo].[ImportOrder]
+GO
+
+IF exists (select * from sysobjects where id = object_id('dbo.Branch') and sysstat & 0xf = 3)
+	drop table [dbo].[Branch]
 GO
 
 IF exists (select * from sysobjects where id = object_id('dbo.ThresholdAdjustment') and sysstat & 0xf = 3)
 	drop table [dbo].[ThresholdAdjustment]
 GO
 
-IF exists (select * from sysobjects where id = object_id('dbo.Orders') and sysstat & 0xf = 3)
-	drop table [dbo].[Orders]
+IF exists (select * from sysobjects where id = object_id('dbo.Manager_Genders') and sysstat & 0xf = 3)
+	drop table [dbo].[Manager_Genders]
 GO
 
-IF exists (select * from sysobjects where id = object_id('dbo.OrdersDetails') and sysstat & 0xf = 3)
-	drop table [dbo].[OrdersDetails]
+IF exists (select * from sysobjects where id = object_id('dbo.Employee_Genders') and sysstat & 0xf = 3)
+	drop table [dbo].[Employee_Genders]
 GO
 
-IF exists (select * from sysobjects where id = object_id('dbo.SalesTarget') and sysstat & 0xf = 3)
-	drop table [dbo].[SalesTarget]
+IF exists (select * from sysobjects where id = object_id('dbo.Customer_Genders') and sysstat & 0xf = 3)
+	drop table [dbo].[Customer_Genders]
+GO
+
+IF exists (select * from sysobjects where id = object_id('dbo.Customer_Card') and sysstat & 0xf = 3)
+	drop table [dbo].[Customer_Card]
+GO
+
+IF exists (select * from sysobjects where id = object_id('dbo.Cards') and sysstat & 0xf = 3)
+	drop table [dbo].[Cards]
 GO
 
 IF exists (select * from sysobjects where id = object_id('dbo.Managers') and sysstat & 0xf = 3)
 	drop table [dbo].[Managers]
+GO
+
+IF exists (select * from sysobjects where id = object_id('dbo.Genders') and sysstat & 0xf = 3)
+	drop table [dbo].[Genders]
+GO
+
+IF exists (select * from sysobjects where id = object_id('dbo.Customer_Feedback') and sysstat & 0xf = 3)
+	drop table [dbo].[Customer_Feedback]
+GO
+
+IF exists (select * from sysobjects where id = object_id('dbo.Feedbacks') and sysstat & 0xf = 3)
+	drop table [dbo].[Feedbacks]
+GO
+
+IF exists (select * from sysobjects where id = object_id('dbo.OrderDetails') and sysstat & 0xf = 3)
+	drop table [dbo].[OrderDetails]
+GO
+
+IF exists (select * from sysobjects where id = object_id('dbo.Orders') and sysstat & 0xf = 3)
+	drop table [dbo].[Orders]
 GO
 
 IF exists (select * from sysobjects where id = object_id('dbo.Employees') and sysstat & 0xf = 3)
@@ -163,24 +192,12 @@ IF exists (select * from sysobjects where id = object_id('dbo.Products') and sys
 	drop table [dbo].[Products]
 GO
 
-IF exists (select * from sysobjects where id = object_id('dbo.Feedbacks') and sysstat & 0xf = 3)
-	drop table [dbo].[Feedbacks]
-GO
-
 IF exists (select * from sysobjects where id = object_id('dbo.Customers') and sysstat & 0xf = 3)
 	drop table [dbo].[Customers]
 GO
 
-IF exists (select * from sysobjects where id = object_id('dbo.Accounts') and sysstat & 0xf = 3)
-	drop table [dbo].[Accounts]
-GO
-
-IF exists (select * from sysobjects where id = object_id('dbo.Permission') and sysstat & 0xf = 3)
-	drop table [dbo].[Permission]
-GO
-
-IF exists (select * from sysobjects where id = object_id('dbo.Suppliers') and sysstat & 0xf = 3)
-	drop table [dbo].[Suppliers]
+IF exists (select * from sysobjects where id = object_id('dbo.Permissions') and sysstat & 0xf = 3)
+	drop table [dbo].[Permissions]
 GO
 
 IF exists (select * from sysobjects where id = object_id('dbo.Brand') and sysstat & 0xf = 3)
@@ -195,14 +212,26 @@ IF exists (select * from sysobjects where id = object_id('dbo.InventoryStatus') 
 	drop table [dbo].[InventoryStatus]
 GO
 
+IF exists (select * from sysobjects where id = object_id('dbo.Suppliers') and sysstat & 0xf = 3)
+	drop table [dbo].[Suppliers]
+GO
 
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('dbo.trg_Products_UpdateQuantityInStock') AND OBJECTPROPERTY(id, 'IsTrigger') = 1)
+	DROP TRIGGER [dbo].[trg_Products_UpdateQuantityInStock]
+GO
+
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('dbo.trg_UpdateRestockThreshold') AND OBJECTPROPERTY(id, 'IsTrigger') = 1)
+	DROP TRIGGER [dbo].[trg_trg_UpdateRestockThreshold]
+GO
+
+-- Create entity for the database 'Cp2396g01_group5_db'
 
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 --Create table PERMISSION--
-CREATE TABLE [dbo].[Permission](
+CREATE TABLE [dbo].[Permissions](
 	[ID] [bigint] IDENTITY(1,1) NOT NULL,
 	[permissionName] [nvarchar](50) NULL,
 	[createdate] [datetime] NULL,
@@ -221,29 +250,20 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
---Create Table Account--
-CREATE TABLE [dbo].[Accounts](
+--Create Table Genders--
+CREATE TABLE [dbo].[Genders](
 	[ID] [bigint] IDENTITY(1,1) NOT NULL,
-	[username] [nvarchar](50) NULL,
-	[password] [nvarchar](50) NULL,
-	[permissionID] [bigint] CONSTRAINT "DF_Perr" DEFAULT (3),
+	[genderName] [nvarchar](50) NULL,	
 	[description] [nvarchar](255) NULL,
-	[status] [bit] CONSTRAINT "DF_Sta" DEFAULT (1),
 	[createdate] [datetime] NULL,
 	[modifiedate] [datetime] NULL,
 	[createby] [nvarchar](255) NULL,
 	[modifieby] [nvarchar](255) NULL
-	CONSTRAINT "PK_Accounts" PRIMARY KEY  CLUSTERED 
+	CONSTRAINT "PK_Genders" PRIMARY KEY  CLUSTERED 
 	(
 		"ID"ASC
 	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
 
-	CONSTRAINT "FK_Accounts_Permission" FOREIGN KEY 
-	(
-		"permissionID"
-	) REFERENCES "dbo"."Permission" (
-		"ID"
-	),
 )ON [Primary]
 
 GO
@@ -255,30 +275,74 @@ GO
 --Create Table Manager--
 CREATE TABLE [dbo].[Managers](
 	[ID] [bigint] IDENTITY(1,1) NOT NULL,
-	[accountID] [bigint] NOT NULL,
-	[fullname] [nvarchar](50) NULL,
+	[manager_gender] [bigint] NULL,
+	[manager_group] [bigint] CONSTRAINT "DF_Perr_Mana" DEFAULT (1),
+	------------------------------
+	[username] [nvarchar](50) NULL,
+	[password] [varbinary](32) NULL,
+	[salt_password] [varbinary](16) NULL,
+	[pepper_password][varbinary](16) NULL,
+	--------------------------------
+	[fullname] [nvarchar](50) NULL,	
 	[address] [nvarchar](255) NULL,
 	[phone] [nvarchar](50) NULL,
 	[email] [nvarchar](255) NULL,
 	[imageURL] [nvarchar](max) NULL,
+	-------------------------------
 	[createdate] [datetime] NULL,
 	[modifiedate] [datetime] NULL,
-	[createby] [nvarchar](255) NULL,
-	[modifieby] [nvarchar](255) NULL
+	[createby] [nvarchar](50) NULL,
+	[modifieby] [nvarchar](50) NULL,
+	[status] [bit] NULL CONSTRAINT "DF_Status_Mana" DEFAULT (1),
 	CONSTRAINT "PK_Managers" PRIMARY KEY  CLUSTERED 
 	(
 		"ID" ASC
 	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
 
-	CONSTRAINT "FK_Manager_Accounts" FOREIGN KEY 
+	CONSTRAINT "FK_Manager_Group" FOREIGN KEY 
 	(
-		"accountID"
-	) REFERENCES "dbo"."Accounts" (
+		"manager_group"
+	) REFERENCES "dbo"."Permissions" (
 		"ID"
-	),
+	),	
 )ON [Primary]
 
 GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--Create Table Manager_Genders--
+CREATE TABLE [dbo].[Manager_Genders](
+	[manager_ID] [bigint] NOT NULL,
+	[gender_ID] [bigint] NOT NULL,	
+	[createdate] [datetime] NULL,
+	[modifiedate] [datetime] NULL,
+	[createby] [nvarchar](255) NULL,
+	[modifieby] [nvarchar](255) NULL
+	CONSTRAINT "PK_Manager_Genders" PRIMARY KEY  CLUSTERED 
+	(
+		"manager_ID",
+		"gender_ID"
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+	CONSTRAINT "FK_ManagerGender_Manager" FOREIGN KEY 
+	(
+		"manager_ID"
+	) REFERENCES "dbo"."Managers" (
+		"ID"
+	),
+	CONSTRAINT "FK_ManagerGender_Gender" FOREIGN KEY 
+	(
+		"gender_ID"
+	) REFERENCES "dbo"."Genders" (
+		"ID"
+	),
+
+)ON [Primary]
+
+GO
+
 
 SET ANSI_NULLS ON
 GO
@@ -287,35 +351,77 @@ GO
 --Create Table Employee--
 CREATE TABLE [dbo].[Employees](
 	[ID] [bigint] IDENTITY(1,1) NOT NULL,
-	[accountID] [bigint] NOT NULL,
+	[employee_gender] [bigint] NULL,
+	[employee_group] [bigint] CONSTRAINT "DF_Perr_Emp" DEFAULT (2),
+	-----------------------------
+	[username] [nvarchar](50) NULL,
+	[password] [varbinary](32) NULL,
+	[salt_password] [varbinary](16) NULL,
+	[pepper_password][varbinary](16) NULL,
+	-------------------------------
 	[fullname] [nvarchar](50) NULL,
 	[address] [nvarchar](255) NULL,
 	[phone] [nvarchar](50) NULL,
 	[email] [nvarchar](255) NULL,
 	[birthDate] [datetime] NULL ,
-	[Notes] [nvarchar](max) NULL,
+	[notes] [nvarchar](max) NULL,
 	[imageURL] [nvarchar](max) NULL,
+	------------------------------
 	[createdate] [datetime] NULL,
 	[modifiedate] [datetime] NULL,
-	[createby] [nvarchar](255) NULL,
-	[modifieby] [nvarchar](255) NULL
+	[createby] [nvarchar](50) NULL,
+	[modifieby] [nvarchar](50) NULL,
+	[status] [bit] NULL CONSTRAINT "DF_Status_Emp" DEFAULT (1),
 	CONSTRAINT "PK_Employee" PRIMARY KEY CLUSTERED
 	(
 	"ID" ASC
 	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
 
-	CONSTRAINT "FK_Employee_Account" FOREIGN KEY 
+	CONSTRAINT "FK_Employee_Group" FOREIGN KEY 
 	(
-	"accountID"
-	) REFERENCES "dbo"."Accounts"
-	(
-	"ID"
+		"employee_group"
+	) REFERENCES "dbo"."Permissions" (
+		"ID"
 	),
+
 	CONSTRAINT "CK_Birthdate" CHECK (birthDate < getdate())
 )ON [Primary]
 
 GO
 
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--Create Table Employee_Genders--
+CREATE TABLE [dbo].[Employee_Genders](
+	[employee_ID] [bigint] NOT NULL,
+	[gender_ID] [bigint] NOT NULL,	
+	[createdate] [datetime] NULL,
+	[modifiedate] [datetime] NULL,
+	[createby] [nvarchar](255) NULL,
+	[modifieby] [nvarchar](255) NULL
+	CONSTRAINT "PK_Employee_Genders" PRIMARY KEY  CLUSTERED 
+	(
+		"employee_ID",
+		"gender_ID"
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+	CONSTRAINT "FK_EmployeeGender_Employee" FOREIGN KEY 
+	(
+		"employee_ID"
+	) REFERENCES "dbo"."Employees" (
+		"ID"
+	),
+	CONSTRAINT "FK_EmployeeGender_Gender" FOREIGN KEY 
+	(
+		"gender_ID"
+	) REFERENCES "dbo"."Genders" (
+		"ID"
+	),
+
+)ON [Primary]
+
+GO
 
 SET ANSI_NULLS ON
 GO
@@ -324,13 +430,51 @@ GO
 --Create Table Customers--
 CREATE TABLE [dbo].[Customers](
 	[ID] [bigint] IDENTITY(1,1) NOT NULL,
-	[accountID] [bigint] NULL,
+	[customer_gender] [bigint] NULL,
+	[customer_card] [bigint] NULL,
+	[customer_group] [bigint] CONSTRAINT "DF_Perr_Cus" DEFAULT (3),
+	------------------------------
+	[username] [nvarchar](50) NULL,
+	[password] [varbinary](32) NULL,
+	[salt_password] [varbinary](16) NULL,
+	[pepper_password][varbinary](16) NULL,
+	-------------------------------
 	[fullname] [nvarchar](255) NULL,
 	[address] [nvarchar](50) NULL,
 	[phone] [nvarchar](50) NULL,
 	[email] [nvarchar](255) NULL,
 	[birthDate] [datetime] NULL ,
 	[imageURL] [nvarchar](255) NULL,
+	-------------------------------
+	[createdate] [datetime] NULL,
+	[modifiedate] [datetime] NULL,
+	[createby] [nvarchar](50) NULL,
+	[modifieby] [nvarchar](50) NULL,
+	[status] [bit] NULL CONSTRAINT "DF_Status_Cus" DEFAULT (1),
+	CONSTRAINT "PK_Customer" PRIMARY KEY CLUSTERED
+	(
+	"ID" ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],	
+	CONSTRAINT "FK_Customer_Group" FOREIGN KEY 
+	(
+		"customer_group"
+	) REFERENCES "dbo"."Permissions" (
+		"ID"
+	),
+	
+	CONSTRAINT "CK_Birthdate_Customer" CHECK (birthDate < getdate()),
+	
+)ON [Primary]
+
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--Create Table Cards--
+CREATE TABLE [dbo].[Cards](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
 	[cardName] [nvarchar](255) NULL,
 	[cardNumber] [varchar](16) NULL,
 	[valueFrom] [datetime] NULL,
@@ -343,20 +487,81 @@ CREATE TABLE [dbo].[Customers](
 	[modifiedate] [datetime] NULL,
 	[createby] [nvarchar](255) NULL,
 	[modifieby] [nvarchar](255) NULL
-	CONSTRAINT "PK_Customer" PRIMARY KEY CLUSTERED
+	CONSTRAINT "PK_Card" PRIMARY KEY  CLUSTERED 
 	(
-	"ID" ASC
-	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],	
-	CONSTRAINT "FK_Customer_Account" FOREIGN KEY 
-	(
-	"accountID"
-	) REFERENCES "dbo"."Accounts"
-	(
-	"ID"
-	),
-	CONSTRAINT "CK_Birthdate_Customer" CHECK (birthDate < getdate()),
+		"ID" ASC		
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
 	CONSTRAINT "CK_cvvNumber" CHECK (LEN(cvvNumber) = 3 AND cvvNumber LIKE '[0-9][0-9][0-9]'),
 	CONSTRAINT "CK_CardNumberFormat" CHECK (LEN(cardNumber) = 16 AND cardNumber LIKE '[0-9][0-9][0-9][0-9] [0-9][0-9][0-9][0-9] [0-9][0-9][0-9][0-9] [0-9][0-9][0-9][0-9]')
+
+)ON [Primary]
+
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--Create Table Customer_Card--
+CREATE TABLE [dbo].[Customer_Card](
+	[customer_ID] [bigint] NOT NULL,
+	[card_ID] [bigint] NOT NULL,	
+	[createdate] [datetime] NULL,
+	[modifiedate] [datetime] NULL,
+	[createby] [nvarchar](255) NULL,
+	[modifieby] [nvarchar](255) NULL
+	CONSTRAINT "PK_Customer_Card" PRIMARY KEY  CLUSTERED 
+	(
+		"customer_ID",
+		"card_ID"
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+	CONSTRAINT "FK_CustomerCard_Customer" FOREIGN KEY 
+	(
+		"customer_ID"
+	) REFERENCES "dbo"."Customers" (
+		"ID"
+	),
+	CONSTRAINT "FK_CustomerCard_Card" FOREIGN KEY 
+	(
+		"card_ID"
+	) REFERENCES "dbo"."Cards" (
+		"ID"
+	),
+
+)ON [Primary]
+
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--Create Table Customer_Genders--
+CREATE TABLE [dbo].[Customer_Genders](
+	[customer_ID] [bigint] NOT NULL,
+	[gender_ID] [bigint] NOT NULL,	
+	[createdate] [datetime] NULL,
+	[modifiedate] [datetime] NULL,
+	[createby] [nvarchar](255) NULL,
+	[modifieby] [nvarchar](255) NULL
+	CONSTRAINT "PK_Customer_Genders" PRIMARY KEY  CLUSTERED 
+	(
+		"customer_ID",
+		"gender_ID"
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+	CONSTRAINT "FK_CustomerGender_Customer" FOREIGN KEY 
+	(
+		"customer_ID"
+	) REFERENCES "dbo"."Customers" (
+		"ID"
+	),
+	CONSTRAINT "FK_CustomerGender_Gender" FOREIGN KEY 
+	(
+		"gender_ID"
+	) REFERENCES "dbo"."Genders" (
+		"ID"
+	),
+
 )ON [Primary]
 
 GO
@@ -368,7 +573,7 @@ GO
 --Create Table Blogs--
 CREATE TABLE [dbo].[Blogs](
 	[ID] [bigint] IDENTITY(1,1) NOT NULL,
-	[employeeID] [bigint] NOT NULL,
+	[employee_ID] [bigint] NULL,
 	[title] [nvarchar](255) NULL,
 	[imageURL] [nvarchar](max) NULL,
 	[content] [nvarchar](max) NULL,
@@ -382,16 +587,43 @@ CREATE TABLE [dbo].[Blogs](
 		"ID" ASC
 	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
 
-	CONSTRAINT "FK_Blog_Employee" FOREIGN KEY 
-	(
-		"employeeID"
-	) REFERENCES "dbo"."Employees" (
-		"ID"
-	),
 )ON [Primary]
 
 GO
 
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--Create Table Employee_Blog--
+CREATE TABLE [dbo].[Employee_Blog](
+	[employee_ID] [bigint] NOT NULL,
+	[blog_ID] [bigint] NOT NULL,	
+	[createdate] [datetime] NULL,
+	[modifiedate] [datetime] NULL,
+	[createby] [nvarchar](255) NULL,
+	[modifieby] [nvarchar](255) NULL
+	CONSTRAINT "PK_Employee_Blog" PRIMARY KEY  CLUSTERED 
+	(
+		"employee_ID",
+		"blog_ID"
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+	CONSTRAINT "FK_EmployeeBlog_Employee" FOREIGN KEY 
+	(
+		"employee_ID"
+	) REFERENCES "dbo"."Employees" (
+		"ID"
+	),
+	CONSTRAINT "FK_EmployeeBlog_Blog" FOREIGN KEY 
+	(
+		"blog_ID"
+	) REFERENCES "dbo"."Blogs" (
+		"ID"
+	),
+
+)ON [Primary]
+
+GO
 
 SET ANSI_NULLS ON
 GO
@@ -400,7 +632,7 @@ GO
 --Create Table FeedBacks--
 CREATE TABLE [dbo].[Feedbacks](
 	[ID] [bigint] IDENTITY(1,1) NOT NULL,
-	[customerID] [bigint] NOT NULL,
+	[customer_ID] [bigint] NOT NULL,
 	[title] [nvarchar](255) NOT NULL,
 	[content] [nvarchar](max) NULL,
 	[date] [datetime] NULL,
@@ -416,7 +648,7 @@ CREATE TABLE [dbo].[Feedbacks](
 
 	CONSTRAINT "FK_FeedBack_Customer" FOREIGN KEY 
 	(
-		"customerID"
+		"customer_ID"
 	) REFERENCES "dbo"."Customers" (
 		"ID"
 	),
@@ -424,6 +656,38 @@ CREATE TABLE [dbo].[Feedbacks](
 
 GO
 
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--Create TableCustomer_Feedback--
+CREATE TABLE [dbo].[Customer_Feedback](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[customer_ID] [bigint] NOT NULL,
+	[feedback_ID] [bigint] NOT NULL,	
+	[createdate] [datetime] NULL,
+	[modifiedate] [datetime] NULL,
+	[createby] [nvarchar](255) NULL,
+	[modifieby] [nvarchar](255) NULL
+	CONSTRAINT "PK_Customer_Feedback" PRIMARY KEY  CLUSTERED 
+	(
+		"customer_ID",
+		"feedback_ID"
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+	CONSTRAINT "FK_CustomerFeedback_Customer" FOREIGN KEY 
+	(
+		"customer_ID"
+	) REFERENCES "dbo"."Customers" (
+		"ID"
+	),
+	CONSTRAINT "FK_CustomerFeedback_Feedback" FOREIGN KEY 
+	(
+		"feedback_ID"
+	) REFERENCES "dbo"."Feedbacks" (
+		"ID"
+	),
+)ON [Primary]
+GO
 
 SET ANSI_NULLS ON
 GO
@@ -453,7 +717,6 @@ CREATE TABLE [dbo].[Suppliers](
 )ON [Primary]
 
 GO
-
 
 SET ANSI_NULLS ON
 GO
@@ -510,7 +773,6 @@ GO
 
 --GO
 
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -538,7 +800,6 @@ CONSTRAINT "PK_Branch" PRIMARY KEY CLUSTERED
 
 GO
  
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -727,12 +988,10 @@ GO
 CREATE TABLE dbo.Orders (
     [ID] [bigINT] IDENTITY(1,1) NOT NULL,
     [customerID] [bigINT] NOT NULL,
-	[employeeID] [bigINT] NOT NULL,
-    [orderDate] [DATETIME] NULL,
-    [shipDate] [DATETIME] NULL,
-	[shipAddress] [nvarchar](255) NULL,
+	[employeeID] [bigINT] NOT NULL,   	
+	[paymentMethod][nvarchar](255) NULL,
 	[note] [nvarchar](max) NULL,
-    [status] [NVARCHAR](50) NULL DEFAULT 'Successful',
+    [status] [int] NULL,
 	CONSTRAINT "PK_Orders" PRIMARY KEY CLUSTERED 
 	(
 	ID ASC
@@ -750,20 +1009,21 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 --Create Table OrderDetails
-CREATE TABLE [dbo].[OrdersDetails](
-	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+CREATE TABLE [dbo].[OrderDetails](	
 	[orderID] [bigint]NOT NULL,
 	[productID][bigint]NOT NULL,
 	[unitPrice] [money] NULL,
 	[quantity] [int]NULL,
 	[discount] [int]NULL,
 	[totalPrice] [money] NULL,
+	[orderDate] [DATETIME] NULL,
+    [shipDate] [DATETIME] NULL,
+	[shipAddress] [nvarchar](255) NULL,
 	[paymentMethod][nvarchar](255) NULL,
-	[cardName] [nvarchar](255) NULL,
-	[cardNumber] [varchar](16)
 	CONSTRAINT "PK_Order_Details" PRIMARY KEY  CLUSTERED 
 	(
-		"ID" ASC
+		"orderID",
+		"productID"
 	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
 
 	CONSTRAINT "FK_Order_Details_Orders" FOREIGN KEY 
@@ -782,6 +1042,7 @@ CREATE TABLE [dbo].[OrdersDetails](
 
 GO
 
+-- Create view OrderByQuarter
 CREATE VIEW OrderByQuarter AS
 SELECT
     ID,
@@ -812,29 +1073,33 @@ FROM
             Orders.ID,
             Orders.CustomerID,
             Orders.EmployeeID,
-            Orders.OrderDate,
-            Orders.ShipDate,
-            Orders.ShipAddress,
+            OrderDetails.OrderDate,
+            OrderDetails.ShipDate,
+            OrderDetails.ShipAddress,
             Orders.Note,
             Orders.Status,
             Customers.FullName,
             Customers.Address,
             Customers.Phone,
             Customers.Email,
-            Customers.Point,
-            Customers.Rank
-        FROM
+            Cards.Point,
+            Cards.Rank
+         FROM
             Customers
-        INNER JOIN Orders ON Customers.ID = Orders.CustomerID
+            INNER JOIN Orders ON Customers.ID = Orders.CustomerID
+            INNER JOIN Customer_Card ON Customer_Card.customer_ID = Customers.ID
+            INNER JOIN Cards ON Cards.ID = Customer_Card.card_ID
+            INNER JOIN OrderDetails ON OrderDetails.orderID = Orders.ID
     ) AS Subquery;
 
 GO
 GO
 
+-- Create view Invoices
 CREATE VIEW Invoices AS
 SELECT 
     o.ID AS 'Invoice Number',
-    o.orderDate AS 'Order Date',
+    od.orderDate AS 'Order Date',
     c.fullName AS 'Customer Name',
     c.address AS 'Customer Address',
     c.phone AS 'Customer Phone',
@@ -844,27 +1109,30 @@ SELECT
     od.quantity AS 'Quantity',
     od.discount AS 'Discount (%)',
     od.totalPrice AS 'Line Total',
-    o.shipAddress AS 'Shipping Address',
+    od.shipAddress AS 'Shipping Address',
     o.note AS 'Notes',
     o.status AS 'Order Status',
     od.paymentMethod AS 'Payment Method',
-    od.cardName AS 'Card Name',
-    od.cardNumber AS 'Card Number (last 4 digits)',
-    (SELECT SUM(totalPrice) FROM OrdersDetails WHERE orderID = o.ID) AS 'Invoice Total'
+    cd.cardName AS 'Card Name',
+    cd.cardNumber AS 'Card Number (last 4 digits)',
+    (SELECT SUM(totalPrice) FROM OrderDetails WHERE orderID = o.ID) AS 'Invoice Total'
 FROM Orders o
 INNER JOIN Customers c ON o.customerID = c.ID
-INNER JOIN OrdersDetails od ON o.ID = od.orderID
+INNER JOIN OrderDetails od ON o.ID = od.orderID
 INNER JOIN Products p ON od.productID = p.ID
+INNER JOIN Customer_Card cc ON cc.customer_ID = c.ID
+INNER JOIN Cards cd ON cd.ID = cc.card_ID
 WHERE o.status = 'Successful';
 
 GO
 
+-- Create view Order Subtotals
 CREATE VIEW "Order Subtotals" AS
 SELECT
     OD.OrderID,
     SUM(CONVERT(money, (P.unitPrice * OD.quantity * (1 - OD.Discount) / 100)) * 100) AS Subtotal
 FROM
-    dbo.OrdersDetails AS OD
+    dbo.OrderDetails AS OD
 JOIN
     dbo.Products AS P ON P.ID = OD.productID
 GROUP BY
@@ -872,34 +1140,37 @@ GROUP BY
 GO
 GO
 
+-- Create view Sales Totals by Amount
 CREATE VIEW "Sales Totals by Amount" AS
 SELECT 
     SUM("Order Subtotals".Subtotal) AS SaleAmount, 
     Orders.ID, 
     Customers.fullname, 
-    Orders.ShipDate,
-    DATEPART(QUARTER, Orders.ShipDate) AS Quarter
+    OrderDetails.ShipDate,
+    DATEPART(QUARTER, OrderDetails.ShipDate) AS Quarter
 FROM 
     Customers 
     INNER JOIN Orders ON Customers.ID = Orders.CustomerID
+	INNER JOIN OrderDetails ON Orders.ID = OrderDetails.orderID
     INNER JOIN "Order Subtotals" ON Orders.ID = "Order Subtotals".OrderID
 WHERE 
     ("Order Subtotals".Subtotal > 2500)
 GROUP BY 
     Orders.ID, 
     Customers.fullname, 
-    Orders.ShipDate, 
-    DATEPART(QUARTER, Orders.ShipDate);
+    OrderDetails.ShipDate, 
+    DATEPART(QUARTER, OrderDetails.ShipDate);
 GO
 GO
 
-
-
+-- Create procedure Sales by Year
 create procedure "Sales by Year" 
 	@Beginning_Date DateTime, @Ending_Date DateTime AS
-SELECT Orders.ShipDate, Orders.ID, "Order Subtotals".Subtotal, DATENAME(yy,ShipDate) AS Year
-FROM Orders INNER JOIN "Order Subtotals" ON Orders.ID = "Order Subtotals".OrderID
-WHERE Orders.ShipDate Between @Beginning_Date And @Ending_Date
+SELECT OrderDetails.ShipDate, Orders.ID, "Order Subtotals".Subtotal, DATENAME(yy,ShipDate) AS Year
+FROM Orders 
+INNER JOIN "Order Subtotals" ON Orders.ID = "Order Subtotals".OrderID
+INNER JOIN OrderDetails ON Orders.ID = OrderDetails.orderID
+WHERE OrderDetails.ShipDate Between @Beginning_Date And @Ending_Date
 GO
 GO
 
@@ -939,458 +1210,436 @@ GO
 --=======================INSERT DATA=====================--
 set quoted_identifier on
 go
-ALTER TABLE "Permission" NOCHECK CONSTRAINT ALL
+ALTER TABLE "Permissions" NOCHECK CONSTRAINT ALL
 go
-INSERT INTO "Permission" ("permissionName") VALUES ('manager');
-INSERT INTO "Permission" ("permissionName") VALUES ('employee');
-INSERT INTO "Permission" ("permissionName") VALUES ('customer');
+INSERT INTO "Permissions" ("permissionName") VALUES ('manager');
+INSERT INTO "Permissions" ("permissionName") VALUES ('employee');
+INSERT INTO "Permissions" ("permissionName") VALUES ('customer');
 GO
-ALTER TABLE "Permission" CHECK CONSTRAINT ALL
+ALTER TABLE "Permissions" CHECK CONSTRAINT ALL
 go
 GO
 
--------------------------------------------
+---------------------------------------------
 set quoted_identifier on
 go
-ALTER TABLE "Accounts" NOCHECK CONSTRAINT ALL
+ALTER TABLE "Genders" NOCHECK CONSTRAINT ALL
 go
----User with permission 1-----
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('Admin', 'Admin', 1, 'Manager');
----User with permission 2-----
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('quangtuong', 'Admin', 2, 'Employee');
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('hieutho', 'Admin', 2, 'Employee');
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('huunhan', 'Admin', 2, 'Employee');
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('minhnghia', 'Admin', 2, 'Employee');
----User with permission 3-----
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('hieutho', 'user', 3, 'Customer');
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('huunhan', 'user', 3, 'Customer');
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('minhnghia', 'user', 3, 'Customer');
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('minhtuan', 'user', 3, 'Customer');
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('myhao', 'user', 3, 'Customer');
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('kimthanh', 'user', 3, 'Customer');
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('trongtri', 'user', 3, 'Customer');
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('tanphat', 'user', 3, 'Customer');
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('ngocanh', 'user', 3, 'Customer');
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('anhthu', 'user', 3, 'Customer');
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('vanhien', 'user', 3, 'Customer');
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('ngoclan', 'user', 3, 'Customer');
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('ngoctrang', 'user', 3, 'Customer');
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('ngochien', 'user', 3, 'Customer');
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('thanhdat', 'user', 3, 'Customer');
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('minhdat', 'user', 3, 'Customer');
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('thuthao', 'user', 3, 'Customer');
-INSERT INTO "Accounts" ("userName", "password", "permissionID", "description") VALUES ('kimtuyen', 'user', 3, 'Customer');
+INSERT INTO "Genders" ("genderName", "description") VALUES ('Male', 'Male');
+INSERT INTO "Genders" ("genderName", "description") VALUES ('FeMale', 'FeMale');
+INSERT INTO "Genders" ("genderName", "description") VALUES ('Other', 'Other');
+INSERT INTO "Genders" ("genderName", "description") VALUES ('Null', 'Not Set');
 GO
-ALTER TABLE "Accounts" CHECK CONSTRAINT ALL
+ALTER TABLE "Genders" CHECK CONSTRAINT ALL
 go
 GO
 
--------------------------------------------
-set quoted_identifier on
-go
-ALTER TABLE "Managers" NOCHECK CONSTRAINT ALL
-go
-INSERT INTO "Managers" ("fullname","accountID","address","email","imageURL","phone") VALUES ('Manager',1,'Can Tho','manager.zipmart@gamil.com','https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/een5b4xmq5twvne8ce0c',' 0292 3731 072');
-GO
-ALTER TABLE "Managers" CHECK CONSTRAINT ALL
-go
-GO
+---------------------------------------------
+--set quoted_identifier on
+--go
+--ALTER TABLE "Managers" NOCHECK CONSTRAINT ALL
+--go
+--INSERT INTO "Managers" ("fullname","accountID","address","email","imageURL","phone") VALUES ('Manager',1,'Can Tho','manager.zipmart@gamil.com','https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/een5b4xmq5twvne8ce0c',' 0292 3731 072');
+--GO
+--ALTER TABLE "Managers" CHECK CONSTRAINT ALL
+--go
+--GO
 
--------------------------------------------
-set quoted_identifier on
-go
-ALTER TABLE "Employees" NOCHECK CONSTRAINT ALL
-go
-INSERT INTO "Employees" ("fullname","accountID","imageURL","birthDate","address","email","phone","Notes") VALUES ('To Quang Tuong',2,'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/pjfdcg0pm9beusibmr3h','07-25-2003','Can Tho','qtuong.257@gmail.com','0917895327','My note');
-INSERT INTO "Employees" ("fullname","accountID","imageURL","birthDate","address","email","phone","Notes") VALUES ('Pham Hieu Tho',3,'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn','07-04-2003','Can Tho','hieutho1510@gmail.com','0938973817','My note');
-INSERT INTO "Employees" ("fullname","accountID","imageURL","birthDate","address","email","phone","Notes") VALUES ('Pham Huu Nhan',4,'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/een5b4xmq5twvne8ce0c','07-25-2003','Can Tho','huunhan.service@gmail.com','0123456789','Off');
-INSERT INTO "Employees" ("fullname","accountID","imageURL","birthDate","address","email","phone","Notes") VALUES ('Ly Minh Nghia',5,'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/kubpbgbrjxtcuq9yg6b8','07-25-2003','Can Tho','minhnghia.service@gmail.com','0123456789','Off');
-GO
-ALTER TABLE "Employees" CHECK CONSTRAINT ALL
-go
-GO
+---------------------------------------------
+--set quoted_identifier on
+--go
+--ALTER TABLE "Employees" NOCHECK CONSTRAINT ALL
+--go
+--INSERT INTO "Employees" ("fullname","accountID","imageURL","birthDate","address","email","phone","Notes") VALUES ('To Quang Tuong',2,'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/pjfdcg0pm9beusibmr3h','07-25-2003','Can Tho','qtuong.257@gmail.com','0917895327','My note');
+--INSERT INTO "Employees" ("fullname","accountID","imageURL","birthDate","address","email","phone","Notes") VALUES ('Pham Hieu Tho',3,'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn','07-04-2003','Can Tho','hieutho1510@gmail.com','0938973817','My note');
+--INSERT INTO "Employees" ("fullname","accountID","imageURL","birthDate","address","email","phone","Notes") VALUES ('Pham Huu Nhan',4,'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/een5b4xmq5twvne8ce0c','07-25-2003','Can Tho','huunhan.service@gmail.com','0123456789','Off');
+--INSERT INTO "Employees" ("fullname","accountID","imageURL","birthDate","address","email","phone","Notes") VALUES ('Ly Minh Nghia',5,'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/kubpbgbrjxtcuq9yg6b8','07-25-2003','Can Tho','minhnghia.service@gmail.com','0123456789','Off');
+--GO
+--ALTER TABLE "Employees" CHECK CONSTRAINT ALL
+--go
+--GO
 
--------------------------------------------
-set quoted_identifier on
-go
-ALTER TABLE "Customers" NOCHECK CONSTRAINT ALL
-go
-INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (6, 'Pham Hieu Tho', 'Can Tho', '0938973817', 'hieutho1510@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn', 'Pham Hieu Tho', '1234567890123456', '2023-01-01', '2025-12-31', 123, 'credit card', 100, 'Gold');
-INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (7, 'Ly Minh Nghia', 'Can Tho', '0123456781', 'minhnghia.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/kubpbgbrjxtcuq9yg6b8', 'Ly Minh Nghia', '2345678901234567', '2023-01-01', '2025-12-31', 456, 'credit card', 100, 'Gold');
-INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (8, 'Pham Huu Nhan', 'Can Tho', '0123456782', 'huunhan.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/kubpbgbrjxtcuq9yg6b8', 'Pham Huu Nhan', '3456789012345678', '2023-01-01', '2025-12-31', 789, 'credit card', 100, 'Gold');
-INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (9, 'Nguyen Minhh Tuan', 'Can Tho', '0123436789', 'minhtuan.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/kubpbgbrjxtcuq9yg6b8', 'Nguyen Minhh Tuan', '4567890123456789', '2023-01-01', '2025-12-31', 234, 'prepaid card', 100, 'Gold');
-INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (10, 'Nguyen Thi My Hao', 'Can Tho', '0123456789', 'myhao.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn', 'Nguyen Thi My Hao', '5678901234567890', '2023-01-01', '2025-12-31', 567, 'prepaid card', 100, 'Gold');
-INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (11, 'Ong Kim Thanh', 'Can Tho', '0123456759', 'kimthanh.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/kubpbgbrjxtcuq9yg6b8', 'Ong Kim Thanh', '6789012345678901', '2023-01-01', '2025-12-31', 890, 'prepaid card', 100, 'Gold');
-INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (12, 'Nguyen Trong Tri', 'Can Tho', '0123466789', 'trongtri.cus0@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/kubpbgbrjxtcuq9yg6b8', 'Nguyen Trong Tri', '7890123456789012', '2023-01-01', '2025-12-31', 345, 'debit card', 100, 'Gold');
-INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (13, 'Nguyen Tan Phat', 'Can Tho', '0123457789', 'tanphat.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/kubpbgbrjxtcuq9yg6b8', 'Nguyen Tan Phat', '8901234567890123', '2023-01-01', '2025-12-31', 678, 'debit card', 100, 'Gold');
-INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (14, 'Truong Ngoc Anh', 'Can Tho', '0123458789', 'ngocanh.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn', 'Truong Ngoc Anh', '9012345678901234', '2023-01-01', '2025-12-31', 901, 'debit card', 100, 'Gold');
-INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (15, 'Nguyen Thi Anh Thu', 'Can Tho', '0923456789', 'anhthu.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn', 'Nguyen Thi Anh Thu', '0123456789012345', '2023-01-01', '2025-12-31', 123, 'credit card', 100, 'Gold');
-INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (16, 'Pham Van Hien', 'Can Tho', '0123423789', 'vanhien.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/kubpbgbrjxtcuq9yg6b8', 'Pham Van Hien', '1234567890123456', '2023-01-01', '2025-12-31', 456, 'credit card', 100, 'Gold');
-INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (17, 'To Ngoc Lan', 'Can Tho', '0123456119', 'ngoclan.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn', 'To Ngoc Lan', '2345678901234567', '2023-01-01', '2025-12-31', 789, 'credit card', 100, 'Gold');
-INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (18, 'Truong Thi Ngoc Trang', 'Can Tho', '0123456789', 'ngoctrang.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn', 'Truong Thi Ngoc Trang', '3456789012345678', '2023-01-01', '2025-12-31', 234, 'prepaid card', 100, 'Gold');
-INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (19, 'Nguyen Ngoc Hien', 'Can Tho', '0123453189', 'ngochien.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn', 'Nguyen Ngoc Hien', '4567890123456789', '2023-01-01', '2025-12-31', 567, 'prepaid card', 100, 'Gold');
-INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (20, 'Nguyen Thanh Dat', 'Can Tho', '0125356789', 'thanhdat.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/kubpbgbrjxtcuq9yg6b8', 'Nguyen Thanh Dat', '5678901234567890', '2023-01-01', '2025-12-31', 890, 'prepaid card', 100, 'Gold');
-INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (21, 'Dang Minh Dat', 'Can Tho', '0123453589', 'minhdat.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/kubpbgbrjxtcuq9yg6b8', 'Dang Minh Dat', '6789012345678901', '2023-01-01', '2025-12-31', 345, 'debit card', 100, 'Gold');
-INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (22, 'Tran Thi Thu Thao', 'Can Tho', '0112456789', 'thuthao.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn', 'Tran Thi Thu Thao', '7890123456789012', '2023-01-01', '2025-12-31', 678, 'debit card', 100, 'Gold');
-INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (23, 'Vuong Nguyen Kim Tuyen', 'Can Tho', '0753456789', 'kimtuyen.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn', 'Vuong Nguyen Kim Tuyen', '8901234567890123', '2023-01-01', '2025-12-31', 901, 'debit card', 100, 'Gold');
+---------------------------------------------
+--set quoted_identifier on
+--go
+--ALTER TABLE "Customers" NOCHECK CONSTRAINT ALL
+--go
+--INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (6, 'Pham Hieu Tho', 'Can Tho', '0938973817', 'hieutho1510@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn', 'Pham Hieu Tho', '1234567890123456', '2023-01-01', '2025-12-31', 123, 'credit card', 100, 'Gold');
+--INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (7, 'Ly Minh Nghia', 'Can Tho', '0123456781', 'minhnghia.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/kubpbgbrjxtcuq9yg6b8', 'Ly Minh Nghia', '2345678901234567', '2023-01-01', '2025-12-31', 456, 'credit card', 100, 'Gold');
+--INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (8, 'Pham Huu Nhan', 'Can Tho', '0123456782', 'huunhan.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/kubpbgbrjxtcuq9yg6b8', 'Pham Huu Nhan', '3456789012345678', '2023-01-01', '2025-12-31', 789, 'credit card', 100, 'Gold');
+--INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (9, 'Nguyen Minhh Tuan', 'Can Tho', '0123436789', 'minhtuan.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/kubpbgbrjxtcuq9yg6b8', 'Nguyen Minhh Tuan', '4567890123456789', '2023-01-01', '2025-12-31', 234, 'prepaid card', 100, 'Gold');
+--INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (10, 'Nguyen Thi My Hao', 'Can Tho', '0123456789', 'myhao.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn', 'Nguyen Thi My Hao', '5678901234567890', '2023-01-01', '2025-12-31', 567, 'prepaid card', 100, 'Gold');
+--INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (11, 'Ong Kim Thanh', 'Can Tho', '0123456759', 'kimthanh.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/kubpbgbrjxtcuq9yg6b8', 'Ong Kim Thanh', '6789012345678901', '2023-01-01', '2025-12-31', 890, 'prepaid card', 100, 'Gold');
+--INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (12, 'Nguyen Trong Tri', 'Can Tho', '0123466789', 'trongtri.cus0@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/kubpbgbrjxtcuq9yg6b8', 'Nguyen Trong Tri', '7890123456789012', '2023-01-01', '2025-12-31', 345, 'debit card', 100, 'Gold');
+--INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (13, 'Nguyen Tan Phat', 'Can Tho', '0123457789', 'tanphat.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/kubpbgbrjxtcuq9yg6b8', 'Nguyen Tan Phat', '8901234567890123', '2023-01-01', '2025-12-31', 678, 'debit card', 100, 'Gold');
+--INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (14, 'Truong Ngoc Anh', 'Can Tho', '0123458789', 'ngocanh.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn', 'Truong Ngoc Anh', '9012345678901234', '2023-01-01', '2025-12-31', 901, 'debit card', 100, 'Gold');
+--INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (15, 'Nguyen Thi Anh Thu', 'Can Tho', '0923456789', 'anhthu.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn', 'Nguyen Thi Anh Thu', '0123456789012345', '2023-01-01', '2025-12-31', 123, 'credit card', 100, 'Gold');
+--INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (16, 'Pham Van Hien', 'Can Tho', '0123423789', 'vanhien.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/kubpbgbrjxtcuq9yg6b8', 'Pham Van Hien', '1234567890123456', '2023-01-01', '2025-12-31', 456, 'credit card', 100, 'Gold');
+--INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (17, 'To Ngoc Lan', 'Can Tho', '0123456119', 'ngoclan.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn', 'To Ngoc Lan', '2345678901234567', '2023-01-01', '2025-12-31', 789, 'credit card', 100, 'Gold');
+--INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (18, 'Truong Thi Ngoc Trang', 'Can Tho', '0123456789', 'ngoctrang.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn', 'Truong Thi Ngoc Trang', '3456789012345678', '2023-01-01', '2025-12-31', 234, 'prepaid card', 100, 'Gold');
+--INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (19, 'Nguyen Ngoc Hien', 'Can Tho', '0123453189', 'ngochien.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn', 'Nguyen Ngoc Hien', '4567890123456789', '2023-01-01', '2025-12-31', 567, 'prepaid card', 100, 'Gold');
+--INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (20, 'Nguyen Thanh Dat', 'Can Tho', '0125356789', 'thanhdat.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/kubpbgbrjxtcuq9yg6b8', 'Nguyen Thanh Dat', '5678901234567890', '2023-01-01', '2025-12-31', 890, 'prepaid card', 100, 'Gold');
+--INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (21, 'Dang Minh Dat', 'Can Tho', '0123453589', 'minhdat.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/kubpbgbrjxtcuq9yg6b8', 'Dang Minh Dat', '6789012345678901', '2023-01-01', '2025-12-31', 345, 'debit card', 100, 'Gold');
+--INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (22, 'Tran Thi Thu Thao', 'Can Tho', '0112456789', 'thuthao.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn', 'Tran Thi Thu Thao', '7890123456789012', '2023-01-01', '2025-12-31', 678, 'debit card', 100, 'Gold');
+--INSERT INTO "Customers" ( "accountID", "fullname", "address", "phone", "email", "birthDate", "imageURL", "cardName", "cardNumber","valueFrom","expirationDate","cvvNumber","cardType","point", "rank"	) VALUES (23, 'Vuong Nguyen Kim Tuyen', 'Can Tho', '0753456789', 'kimtuyen.cus@gmail.com', '07-04-2003', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn', 'Vuong Nguyen Kim Tuyen', '8901234567890123', '2023-01-01', '2025-12-31', 901, 'debit card', 100, 'Gold');
 
-GO
-ALTER TABLE "Customers" CHECK CONSTRAINT ALL
-go
-GO
+--GO
+--ALTER TABLE "Customers" CHECK CONSTRAINT ALL
+--go
+--GO
 
--------------------------------------------
-set quoted_identifier on
-go
-ALTER TABLE "Blogs" NOCHECK CONSTRAINT ALL
-go
-INSERT INTO "Blogs" ( employeeID, title, content) VALUES 
-(2, 'Pancake SanTa Beetroot Strawberry', 
-'<p style="text-align: center">
-        <img
-          src="https://www.lottemart.vn/media/wysiwyg/pancake.jpg"
-          alt="pancake"
-          width="1200"
-          height="1200"
-        />
-      </p>' +
-'<p>
-        <span >
-          Pancake is a poetic dish originating from France, with many flavors
-          and many different ways of preparation, so Pancake always has its own
-          appeal. Today we will go into the kitchen and try to make this
-          extremely unique Strawberry Beetroot Pancake. This will definitely be
-          a dessert that will increase happiness in a cozy evening gathering
-          with the family.
-        </span>
-      </p>' +
-'<p style="text-align: center">
-        <span >
-          <img
-            src="https://www.lottemart.vn/media/wysiwyg/pancake1.jpg"
-            alt="pancake"
-            width="1200"
-            height="1200"
-          />
-        </span>
-      </p>' +
-'<p style="text-align: left">
-        <span >&nbsp;</span>
-      </p>
-' +
-'<p><strong>Ingredient:</strong></p>' +
-'<ul>
-        <li aria-level="1" >
-          Strawberries: 20 fruits.
-        </li>
-        <li aria-level="1" >
-          Pancake flour: 300 grams.
-        </li>
-        <li aria-level="1" >Milk: 2/3 Cup.</li>
-        <li aria-level="1" >Butter: 1 tablespoon.</li>
-        <li aria-level="1" >Beetroot: 120 grams.</li>
-        <li aria-level="1" >Eggs: 1 egg.</li>
-        <li aria-level="1" >Fresh Cream: 1/2 cup.</li>
-      </ul>' +
-'<p>
-        <strong>Step 1:</strong>
-        <span >
-          Cut the beetroot into very small and thin slices, then mince them or
-          put them in a blender to puree. Cut strawberries into rolls, then wash
-          and drain.</span
-        >
-      </p>' +
-'<p style="text-align: center">
-        <span >
-          <img
-            src="https://www.lottemart.vn/media/wysiwyg/4e6bacfa-6ffb-49c0-bc61-ebdde354b99a.jpg"
-            alt="pancake"
-            width="1200"
-            height="1200"
-          />
-        </span>
-      </p>' +
-'<p>
-        <strong>Step 2:</strong>
-        <span >
-          Put the cake flour in a bowl, then add eggs, milk and beetroot puree
-          and mix with a whisk.</span
-        >
-      </p>' +
-'<p style="text-align: center">
-        <span >
-          <img
-            src="https://www.lottemart.vn/media/wysiwyg/pancake3.jpg"
-            alt="pancake"
-            width="1200"
-            height="1200"
-          />
-        </span>
-      </p>' +
-'<p>
-        <strong>Step 3:</strong>
-        <span >
-          Put the butter in the hot pan, when the butter melts, add the smooth
-          flour into the pan to the size you want. When the cake is done, take
-          it out onto a plate.</span
-        >
-      </p>' +
-' <p style="text-align: center">
-        <span >
-          <img
-            src="https://www.lottemart.vn/media/wysiwyg/pancake4.jpg"
-            alt="pancake"
-            width="1200"
-            height="1200"
-          />
-        </span>
-      </p>' +
-'<p>
-        <strong>Step 4:</strong>
-        <span >
-          Put the cream and sugar in a bowl and gently whip the cream, prepare
-          the pancakes in order: pancakes, then cream, add a layer of pancakes,
-          and a layer of cream, on top of strawberries.</span
-        >
-      </p>' +
-'<p style="text-align: center">
-        <span >
-          <img
-            src="https://www.lottemart.vn/media/wysiwyg/pancake5.jpg"
-            alt="pancake"
-            width="1200"
-            height="1200"
-          />
-        </span>
-      </p>' +
-'<p>
-        <span >
-          How to make Reindeer: Place marshmallows under the stick, pin
-          chocolate squares to the stick, use hard Marshmallow for eyes and
-          cookies for horns. Let''s shape the reindeer''s nose using red
-          chocolate.</span
-        >
-      </p>' +
-'<p style="text-align: center">
-        <span >
-          <img
-            src="https://www.lottemart.vn/media/wysiwyg/pancake6.jpg"
-            alt="pancake"
-            width="1200"
-            height="1200"
-          />
-        </span>
-      </p>' +
-'<p>
-        <strong>Step 5:</strong>
-        <span >
-          So Pancake Santa is done, a little tip for decoration, you can add
-          cream on top of the strawberries to make them look more like
-          Santa.</span
-        >
-      </p>' +
-'<p style="text-align: center">
-        <span >
-          <img
-            src="https://www.lottemart.vn/media/wysiwyg/pancake7_1.jpg"
-            alt="pancake"
-            width="1200"
-            height="1200"
-          />
-        </span>
-      </p>');
-	  ---------------------------------------------
-INSERT INTO "Blogs" (employeeID, title, content) VALUES 
-(4, 'Spicy Kim Chi Cold Noodles', 
-'<p style="text-align: center">
-        <img
-          src="https://www.lottemart.vn/media/wysiwyg/milanh.jpg"
-          alt="pancake"
-          width="1200"
-          height="1200"
-        />
-      </p>' +
-'<p>
-        <span >
-          Noodles are a dish that is easy to crave, especially on rainy days and
-          are also extremely easy to eat. That''s why noodles will be on the menu
-          today, we will introduce to you Korean spicy Kim Chi noodles, with
-          only a few basic ingredients but this noodle dish is still very
-          special with its steaming flavor. its own guide.
-        </span>
-      </p>' +
-'<p style="text-align: center">
-        <span >
-          <img
-            src="https://www.lottemart.vn/media/wysiwyg/milanh1.jpg"
-            alt="pancake"
-            width="1200"
-            height="1200"
-          />
-        </span>
-      </p>' +
-'<p style="text-align: left">
-        <span >&nbsp;</span>
-      </p>
-' +
-'<p><strong>Ingredient:</strong></p>' +
-'<ul>
-        <li aria-level="1" >
-          Kimchi: a little.
-        </li>
-        <li aria-level="1" >
-          Cucumber: 1/2 fruit
-        </li>
-        <li aria-level="1" >Sesame: 1 little</li>
-        <li aria-level="1" >Vermicelli: 200 grams</li>
-        <li aria-level="1" >Boiled eggs: 1 egg</li>
-      </ul>' +
-'<p><strong>Spice:</strong></p>' +
-'<ul>
-        <li aria-level="1" >
-          Pepper: 2 spoons.
-        </li>
-        <li aria-level="1" >
-          Oligo olive oil: 2 spoons.
-        </li>
-        <li aria-level="1" >Sugar: 1 tablespoon.</li>
-        <li aria-level="1" >Sesame oil: 1 tablespoon.</li>
-        <li aria-level="1" >Vinegar: 2 tablespoons.</li>
-		<li aria-level="1" >Soy sauce: 1 tablespoon.</li>
-		<li aria-level="1" >Pepper: a little.</li>
-      </ul>'+
-'<p>
-        <strong>Step 1:</strong>
-        <span >
-          Cut Kim Chi, cut cucumber into pieces, mix with prepared spices. Cut
-          boiled eggs in half.</span
-        >
-      </p>' +
-'<p style="text-align: center">
-        <span >
-          <img
-            src="https://www.lottemart.vn/media/wysiwyg/milanh2.jpg"
-            alt="pancake"
-            width="1200"
-            height="1200"
-          />
-        </span>
-      </p>' +
-'<p>
-        <strong>Step 2:</strong>
-        <span >
-          Put the noodles in the heated water and use chopsticks to stir so the
-          noodles don''t stick together. When the water boils, add half a glass
-          of cold water and continue to add water 3-4 times.</span
-        >
-      </p>' +
-'<p style="text-align: center">
-        <span >
-          <img
-            src="https://www.lottemart.vn/media/wysiwyg/milanh3.jpg"
-            alt="pancake"
-            width="1200"
-            height="1200"
-          />
-        </span>
-      </p>' +
-'<p style="text-align: center">
-        <span >
-          <img
-            src="https://www.lottemart.vn/media/wysiwyg/milanh4.jpg" 
-            alt="pancake"
-            width="1200"
-            height="1200"
-          />
-        </span>
-      </p>' +
-'<p>
-        <strong>Step 3:</strong>
-        <span >
-          Take the noodles out, wash them to remove the boiled noodles, and add
-          ice water to make the noodles more chewy.</span
-        >
-      </p>' +
-' <p style="text-align: center">
-        <span >
-          <img
-            src="https://www.lottemart.vn/media/wysiwyg/milanh5.jpg"
-            alt="pancake"
-            width="1200"
-            height="1200"
-          />
-        </span>
-      </p>' +
-'<p>
-        <strong>Step 4:</strong>
-        <span >
-          Put the noodles in a bowl, add the kimchi with sauce to the noodles
-          and mix well.</span
-        >
-      </p>' +
-'<p style="text-align: center">
-        <span >
-          <img
-            src="https://www.lottemart.vn/media/wysiwyg/milanh6.jpg"
-            alt="pancake"
-            width="1200"
-            height="1200"
-          />
-        </span>
-      </p>' +
-'<p>
-        <strong>Step 5:</strong>
-        <span >
-          Add eggs, cucumber and sprinkle some sesame seeds. And let''s sip
-          together.</span
-        >
-      </p>' +
-'<p style="text-align: center">
-        <span >
-          <img
-            src="https://www.lottemart.vn/media/wysiwyg/milanh7.jpg" 
-            alt="pancake"
-            width="1200"
-            height="1200"
-          />
-        </span>
-      </p>'+
-'<p style="text-align: center">
-        <span >
-          <img
-            src="https://www.lottemart.vn/media/wysiwyg/milanh8.jpg"
-            alt="pancake"
-            width="1200"
-            height="1200"
-          />
-        </span>
-      </p>');
+---------------------------------------------
+--set quoted_identifier on
+--go
+--ALTER TABLE "Blogs" NOCHECK CONSTRAINT ALL
+--go
+--INSERT INTO "Blogs" ( employeeID, title, content) VALUES 
+--(2, 'Pancake SanTa Beetroot Strawberry', 
+--'<p style="text-align: center">
+--        <img
+--          src="https://www.lottemart.vn/media/wysiwyg/pancake.jpg"
+--          alt="pancake"
+--          width="1200"
+--          height="1200"
+--        />
+--      </p>' +
+--'<p>
+--        <span >
+--          Pancake is a poetic dish originating from France, with many flavors
+--          and many different ways of preparation, so Pancake always has its own
+--          appeal. Today we will go into the kitchen and try to make this
+--          extremely unique Strawberry Beetroot Pancake. This will definitely be
+--          a dessert that will increase happiness in a cozy evening gathering
+--          with the family.
+--        </span>
+--      </p>' +
+--'<p style="text-align: center">
+--        <span >
+--          <img
+--            src="https://www.lottemart.vn/media/wysiwyg/pancake1.jpg"
+--            alt="pancake"
+--            width="1200"
+--            height="1200"
+--          />
+--        </span>
+--      </p>' +
+--'<p style="text-align: left">
+--        <span >&nbsp;</span>
+--      </p>
+--' +
+--'<p><strong>Ingredient:</strong></p>' +
+--'<ul>
+--        <li aria-level="1" >
+--          Strawberries: 20 fruits.
+--        </li>
+--        <li aria-level="1" >
+--          Pancake flour: 300 grams.
+--        </li>
+--        <li aria-level="1" >Milk: 2/3 Cup.</li>
+--        <li aria-level="1" >Butter: 1 tablespoon.</li>
+--        <li aria-level="1" >Beetroot: 120 grams.</li>
+--        <li aria-level="1" >Eggs: 1 egg.</li>
+--        <li aria-level="1" >Fresh Cream: 1/2 cup.</li>
+--      </ul>' +
+--'<p>
+--        <strong>Step 1:</strong>
+--        <span >
+--          Cut the beetroot into very small and thin slices, then mince them or
+--          put them in a blender to puree. Cut strawberries into rolls, then wash
+--          and drain.</span
+--        >
+--      </p>' +
+--'<p style="text-align: center">
+--        <span >
+--          <img
+--            src="https://www.lottemart.vn/media/wysiwyg/4e6bacfa-6ffb-49c0-bc61-ebdde354b99a.jpg"
+--            alt="pancake"
+--            width="1200"
+--            height="1200"
+--          />
+--        </span>
+--      </p>' +
+--'<p>
+--        <strong>Step 2:</strong>
+--        <span >
+--          Put the cake flour in a bowl, then add eggs, milk and beetroot puree
+--          and mix with a whisk.</span
+--        >
+--      </p>' +
+--'<p style="text-align: center">
+--        <span >
+--          <img
+--            src="https://www.lottemart.vn/media/wysiwyg/pancake3.jpg"
+--            alt="pancake"
+--            width="1200"
+--            height="1200"
+--          />
+--        </span>
+--      </p>' +
+--'<p>
+--        <strong>Step 3:</strong>
+--        <span >
+--          Put the butter in the hot pan, when the butter melts, add the smooth
+--          flour into the pan to the size you want. When the cake is done, take
+--          it out onto a plate.</span
+--        >
+--      </p>' +
+--' <p style="text-align: center">
+--        <span >
+--          <img
+--            src="https://www.lottemart.vn/media/wysiwyg/pancake4.jpg"
+--            alt="pancake"
+--            width="1200"
+--            height="1200"
+--          />
+--        </span>
+--      </p>' +
+--'<p>
+--        <strong>Step 4:</strong>
+--        <span >
+--          Put the cream and sugar in a bowl and gently whip the cream, prepare
+--          the pancakes in order: pancakes, then cream, add a layer of pancakes,
+--          and a layer of cream, on top of strawberries.</span
+--        >
+--      </p>' +
+--'<p style="text-align: center">
+--        <span >
+--          <img
+--            src="https://www.lottemart.vn/media/wysiwyg/pancake5.jpg"
+--            alt="pancake"
+--            width="1200"
+--            height="1200"
+--          />
+--        </span>
+--      </p>' +
+--'<p>
+--        <span >
+--          How to make Reindeer: Place marshmallows under the stick, pin
+--          chocolate squares to the stick, use hard Marshmallow for eyes and
+--          cookies for horns. Let''s shape the reindeer''s nose using red
+--          chocolate.</span
+--        >
+--      </p>' +
+--'<p style="text-align: center">
+--        <span >
+--          <img
+--            src="https://www.lottemart.vn/media/wysiwyg/pancake6.jpg"
+--            alt="pancake"
+--            width="1200"
+--            height="1200"
+--          />
+--        </span>
+--      </p>' +
+--'<p>
+--        <strong>Step 5:</strong>
+--        <span >
+--          So Pancake Santa is done, a little tip for decoration, you can add
+--          cream on top of the strawberries to make them look more like
+--          Santa.</span
+--        >
+--      </p>' +
+--'<p style="text-align: center">
+--        <span >
+--          <img
+--            src="https://www.lottemart.vn/media/wysiwyg/pancake7_1.jpg"
+--            alt="pancake"
+--            width="1200"
+--            height="1200"
+--          />
+--        </span>
+--      </p>');
+--	  ---------------------------------------------
+--INSERT INTO "Blogs" (employeeID, title, content) VALUES 
+--(4, 'Spicy Kim Chi Cold Noodles', 
+--'<p style="text-align: center">
+--        <img
+--          src="https://www.lottemart.vn/media/wysiwyg/milanh.jpg"
+--          alt="pancake"
+--          width="1200"
+--          height="1200"
+--        />
+--      </p>' +
+--'<p>
+--        <span >
+--          Noodles are a dish that is easy to crave, especially on rainy days and
+--          are also extremely easy to eat. That''s why noodles will be on the menu
+--          today, we will introduce to you Korean spicy Kim Chi noodles, with
+--          only a few basic ingredients but this noodle dish is still very
+--          special with its steaming flavor. its own guide.
+--        </span>
+--      </p>' +
+--'<p style="text-align: center">
+--        <span >
+--          <img
+--            src="https://www.lottemart.vn/media/wysiwyg/milanh1.jpg"
+--            alt="pancake"
+--            width="1200"
+--            height="1200"
+--          />
+--        </span>
+--      </p>' +
+--'<p style="text-align: left">
+--        <span >&nbsp;</span>
+--      </p>
+--' +
+--'<p><strong>Ingredient:</strong></p>' +
+--'<ul>
+--        <li aria-level="1" >
+--          Kimchi: a little.
+--        </li>
+--        <li aria-level="1" >
+--          Cucumber: 1/2 fruit
+--        </li>
+--        <li aria-level="1" >Sesame: 1 little</li>
+--        <li aria-level="1" >Vermicelli: 200 grams</li>
+--        <li aria-level="1" >Boiled eggs: 1 egg</li>
+--      </ul>' +
+--'<p><strong>Spice:</strong></p>' +
+--'<ul>
+--        <li aria-level="1" >
+--          Pepper: 2 spoons.
+--        </li>
+--        <li aria-level="1" >
+--          Oligo olive oil: 2 spoons.
+--        </li>
+--        <li aria-level="1" >Sugar: 1 tablespoon.</li>
+--        <li aria-level="1" >Sesame oil: 1 tablespoon.</li>
+--        <li aria-level="1" >Vinegar: 2 tablespoons.</li>
+--		<li aria-level="1" >Soy sauce: 1 tablespoon.</li>
+--		<li aria-level="1" >Pepper: a little.</li>
+--      </ul>'+
+--'<p>
+--        <strong>Step 1:</strong>
+--        <span >
+--          Cut Kim Chi, cut cucumber into pieces, mix with prepared spices. Cut
+--          boiled eggs in half.</span
+--        >
+--      </p>' +
+--'<p style="text-align: center">
+--        <span >
+--          <img
+--            src="https://www.lottemart.vn/media/wysiwyg/milanh2.jpg"
+--            alt="pancake"
+--            width="1200"
+--            height="1200"
+--          />
+--        </span>
+--      </p>' +
+--'<p>
+--        <strong>Step 2:</strong>
+--        <span >
+--          Put the noodles in the heated water and use chopsticks to stir so the
+--          noodles don''t stick together. When the water boils, add half a glass
+--          of cold water and continue to add water 3-4 times.</span
+--        >
+--      </p>' +
+--'<p style="text-align: center">
+--        <span >
+--          <img
+--            src="https://www.lottemart.vn/media/wysiwyg/milanh3.jpg"
+--            alt="pancake"
+--            width="1200"
+--            height="1200"
+--          />
+--        </span>
+--      </p>' +
+--'<p style="text-align: center">
+--        <span >
+--          <img
+--            src="https://www.lottemart.vn/media/wysiwyg/milanh4.jpg" 
+--            alt="pancake"
+--            width="1200"
+--            height="1200"
+--          />
+--        </span>
+--      </p>' +
+--'<p>
+--        <strong>Step 3:</strong>
+--        <span >
+--          Take the noodles out, wash them to remove the boiled noodles, and add
+--          ice water to make the noodles more chewy.</span
+--        >
+--      </p>' +
+--' <p style="text-align: center">
+--        <span >
+--          <img
+--            src="https://www.lottemart.vn/media/wysiwyg/milanh5.jpg"
+--            alt="pancake"
+--            width="1200"
+--            height="1200"
+--          />
+--        </span>
+--      </p>' +
+--'<p>
+--        <strong>Step 4:</strong>
+--        <span >
+--          Put the noodles in a bowl, add the kimchi with sauce to the noodles
+--          and mix well.</span
+--        >
+--      </p>' +
+--'<p style="text-align: center">
+--        <span >
+--          <img
+--            src="https://www.lottemart.vn/media/wysiwyg/milanh6.jpg"
+--            alt="pancake"
+--            width="1200"
+--            height="1200"
+--          />
+--        </span>
+--      </p>' +
+--'<p>
+--        <strong>Step 5:</strong>
+--        <span >
+--          Add eggs, cucumber and sprinkle some sesame seeds. And let''s sip
+--          together.</span
+--        >
+--      </p>' +
+--'<p style="text-align: center">
+--        <span >
+--          <img
+--            src="https://www.lottemart.vn/media/wysiwyg/milanh7.jpg" 
+--            alt="pancake"
+--            width="1200"
+--            height="1200"
+--          />
+--        </span>
+--      </p>'+
+--'<p style="text-align: center">
+--        <span >
+--          <img
+--            src="https://www.lottemart.vn/media/wysiwyg/milanh8.jpg"
+--            alt="pancake"
+--            width="1200"
+--            height="1200"
+--          />
+--        </span>
+--      </p>');
 
-GO
-ALTER TABLE "Blogs" CHECK CONSTRAINT ALL
-go
-GO
+--GO
+--ALTER TABLE "Blogs" CHECK CONSTRAINT ALL
+--go
+--GO
 
-------------------------------------
-set quoted_identifier on
-go
-ALTER TABLE "Feedbacks" NOCHECK CONSTRAINT ALL
-go
-INSERT INTO "Feedbacks" (customerID, title, content, date, rate) VALUES (1,'Great Service!', 'I had a wonderful experience with your service.', '2023-01-15', 5);
-INSERT INTO "Feedbacks" (customerID, title, content, date, rate) VALUES (2, 'Product Feedback', 'The product exceeded my expectations.', '2023-01-18', 4);
-INSERT INTO "Feedbacks" (customerID, title, content, date, rate) VALUES (3, 'Improvement Suggestion', 'I think there are areas that could be improved.', '2023-01-20', 3);
-INSERT INTO "Feedbacks" (customerID, title, content, date, rate) VALUES (4, 'Excellent Support', 'Your customer support team is fantastic!', '2023-01-22', 5);
-INSERT INTO "Feedbacks" (customerID, title, content, date, rate) VALUES (5, 'Quality Issues', 'I encountered some quality issues with the product.', '2023-01-25', 2);
-INSERT INTO "Feedbacks" (customerID, title, content, date, rate) VALUES (6, 'Prompt Delivery', 'The delivery was quick and on time.', '2023-01-28', 5);
-INSERT INTO "Feedbacks" (customerID, title, content, date, rate) VALUES (7, 'Customer Service Feedback', 'I had a pleasant experience with your customer service.', '2023-02-01', 4);
-INSERT INTO "Feedbacks" (customerID, title, content, date, rate) VALUES (8, 'Product Suggestions', 'Here are some suggestions for product enhancements.', '2023-02-05', 3);
+--------------------------------------
+--set quoted_identifier on
+--go
+--ALTER TABLE "Feedbacks" NOCHECK CONSTRAINT ALL
+--go
+--INSERT INTO "Feedbacks" (customerID, title, content, date, rate) VALUES (1,'Great Service!', 'I had a wonderful experience with your service.', '2023-01-15', 5);
+--INSERT INTO "Feedbacks" (customerID, title, content, date, rate) VALUES (2, 'Product Feedback', 'The product exceeded my expectations.', '2023-01-18', 4);
+--INSERT INTO "Feedbacks" (customerID, title, content, date, rate) VALUES (3, 'Improvement Suggestion', 'I think there are areas that could be improved.', '2023-01-20', 3);
+--INSERT INTO "Feedbacks" (customerID, title, content, date, rate) VALUES (4, 'Excellent Support', 'Your customer support team is fantastic!', '2023-01-22', 5);
+--INSERT INTO "Feedbacks" (customerID, title, content, date, rate) VALUES (5, 'Quality Issues', 'I encountered some quality issues with the product.', '2023-01-25', 2);
+--INSERT INTO "Feedbacks" (customerID, title, content, date, rate) VALUES (6, 'Prompt Delivery', 'The delivery was quick and on time.', '2023-01-28', 5);
+--INSERT INTO "Feedbacks" (customerID, title, content, date, rate) VALUES (7, 'Customer Service Feedback', 'I had a pleasant experience with your customer service.', '2023-02-01', 4);
+--INSERT INTO "Feedbacks" (customerID, title, content, date, rate) VALUES (8, 'Product Suggestions', 'Here are some suggestions for product enhancements.', '2023-02-05', 3);
 
-GO
-ALTER TABLE "Feedbacks" CHECK CONSTRAINT ALL
-go
-GO
+--GO
+--ALTER TABLE "Feedbacks" CHECK CONSTRAINT ALL
+--go
+--GO
 
-------------------------------------
+--------------------------------------
 set quoted_identifier on
 go
 ALTER TABLE "Suppliers" NOCHECK CONSTRAINT ALL
@@ -1496,7 +1745,7 @@ go
 ALTER TABLE "Products" NOCHECK CONSTRAINT ALL
 go
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (1, 1, 1,'Iron', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/homeelectric/zjaqhjmprv4hsyy0afcf',15.0000,50,150,'unit',
+VALUES (1, 1, 1,'Iron', 'images\products\homeelectric\banuikho.jpg',15.0000,50,150,'unit',
 '<p>
 	<span >Goldsun Gir2202 Dry Iron will be an indispensable device in the family, considered a modern iron, helping to iron clothes quickly, saving time and effort for the user.</span>
 </p>' +
@@ -1510,7 +1759,7 @@ VALUES (1, 1, 1,'Iron', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_aut
 	<span >Note when using: Low temperature for synthetic fibers/silk. Average temperature used for fabrics. High temperature for linen and cotton. Place of production: Vietnam.</span>
 </p>', 200, 15, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (1, 1, 1,'Mini Gas Stove', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/homeelectric/gganbpkixbzpd4roex02',8.4300,50,150,'unit',
+VALUES (1, 1, 1,'Mini Gas Stove', 'images\products\homeelectric\bepgasmini.jpg',8.4300,50,150,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>NaMilux Mini gas stove NH-P3031PF</strong> is a convenient gas stove model with new improvements in extremely strong capacity, shortening cooking time and minimizing gas waste.
@@ -1524,7 +1773,7 @@ VALUES (1, 1, 1,'Mini Gas Stove', 'https://res.cloudinary.com/dwjl02bji/image/up
 		<li aria-level="1" >Heat-resistant electroplated brackets (3500 degrees Celsius), bracket trays to prevent water from spilling into gas cans.</li>
 </ul>', 200, 15, 0, 3);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (1, 1, 1,'Kitchen infrared', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/homeelectric/rp2yeycvq84roxf1pylx',17.5000,20,100,'unit',
+VALUES (1, 1, 1,'Kitchen infrared', 'images\products\homeelectric\bephongngoai.jpg',17.5000,20,100,'unit',
 '<p>
 	<span >Sunhouse SHD6014 Infrared Stove is simply designed, super thin with a weight of 2kg, you can move it anywhere conveniently. The product is designed with two eye-catching main colors: black and white, the kitchen surface is made from a super durable material that is heat-resistant and durable, easy to observe.</span>
 </p>' +
@@ -1538,7 +1787,7 @@ VALUES (1, 1, 1,'Kitchen infrared', 'https://res.cloudinary.com/dwjl02bji/image/
 	<span >Using electronic chips to control, many different cooking modes such as stir-frying, stewing, hot pot, frying,... make cooking easier and simpler.</span>
 </p>', 100, 27, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (1, 2, 1,'Lock&Lock Grill EJG232 - Black', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/homeelectric/wzip6clrxi7wsccackrg',15.0000,50,150,'unit',
+VALUES (1, 2, 1,'Lock&Lock Grill EJG232 - Black', 'images\products\homeelectric\noichienkhongdau.jpg',15.0000,50,150,'unit',
 '<p>
 	<span >Lock&Lock Grill EJG232 Black has a compact, simple but modern design, suitable for your kitchen space.</span>
 </p>' +
@@ -1553,7 +1802,7 @@ VALUES (1, 2, 1,'Lock&Lock Grill EJG232 - Black', 'https://res.cloudinary.com/dw
 </p>', 50, 0, 1, 2);
 ----------------------------------------
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (2, 3, 3,'Simply Pure 100% Soybean Oil Bottle', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/spice/qvf9obrq9ccj4caqmyev',0.5300,50,150,'unit',
+VALUES (2, 3, 3,'Simply Pure 100% Soybean Oil Bottle', 'images\products\spice\dauanhatcaiSimply.jpg',0.5300,50,150,'unit',
 '<p>
 	<span >Simply Pure 100% Canola Oil 1L Bottle is produced from premium imported ingredients, retaining high levels of unsaturated fat (> 88%) to help protect heart health. The product also adds a rich source of vitamin A in sunflower oil that can prevent cataracts.</span>
 </p>' +
@@ -1567,7 +1816,7 @@ VALUES (2, 3, 3,'Simply Pure 100% Soybean Oil Bottle', 'https://res.cloudinary.c
 	<span >Instructions for use: Fry, stir-fry, mix salad, make cakes, cook vegetarian dishes. Store in a cool and dry place, away from direct sunlight. Close the lid tightly after use.</span>
 </p>', 500, 0, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (2, 3, 5,'Cholimex Char Siu Sauce', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/spice/kq7cgznbxxf0sroshibb',2.2100,97,234,'unit',
+VALUES (2, 3, 5,'Cholimex Char Siu Sauce', 'images\products\spice\sotxaxiuCholimex.jpg',2.2100,97,234,'unit',
 '<p>
 	<span >Cholimex Char Xiu Sauce 200G is packaged beautifully, neatly, and is easy to preserve. The product helps housewives save a lot of time when cooking.</span>
 </p>' +
@@ -1578,7 +1827,7 @@ VALUES (2, 3, 5,'Cholimex Char Siu Sauce', 'https://res.cloudinary.com/dwjl02bji
 	<span >Cholimex sauce is produced using modern, closed technology under strict supervision and inspection, helping to cook char siu meat faster and more convenient.</span>
 </p>' , 434, 0, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (2, 3, 5,'Fuji Soy Sauce Chai', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/spice/l61kwh3uvpiupbjchumm',0.6900,100,543,'unit',
+VALUES (2, 3, 5,'Fuji Soy Sauce Chai', 'images\products\spice\nuoctuongPhuSi.jpg',0.6900,100,543,'unit',
 '<p>
 	<span >Fuji Soy Sauce is extracted from soybeans, bringing a delicious, attractive taste to your family meals.</span>
 </p>' +
@@ -1589,7 +1838,7 @@ VALUES (2, 3, 5,'Fuji Soy Sauce Chai', 'https://res.cloudinary.com/dwjl02bji/ima
 	<span >Storage: Dry, cool place, avoid direct sunlight, cover tightly after use. Made in Viet Nam.</span>
 </p>' , 234, 5, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (2, 3, 5,'Chinsu Chili Sauce', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/spice/uksqho9qnyas1pktbglo',1.5600,89,132,'unit',
+VALUES (2, 3, 5,'Chinsu Chili Sauce', 'images\products\spice\tuongotChinsu.jpg',1.5600,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>NaMilux Mini gas stove NH-P3031PF</strong> Chili sauce is made from ripe red chili peppers with the strong aroma of garlic and subtle variations of spices to fill each chili sauce line of the Chinsu chili sauce brand.
@@ -1600,7 +1849,7 @@ VALUES (2, 3, 5,'Chinsu Chili Sauce', 'https://res.cloudinary.com/dwjl02bji/imag
 </ul>', 223, 0, 1, 1);
 --------------------------
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (3, 4, 9,'Tam Nong whole chicken', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/meat/qkeumjwmp5kbz6sjcqvd',0.2200,89,132,'unit',
+VALUES (3, 4, 9,'Tam Nong whole chicken', 'images\products\meat\gatanguyenconTamNong.jpg',0.2200,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>Tam Nong whole chicken 1.4kg is raised according to strict standards, under the supervision of experts.
@@ -1609,7 +1858,7 @@ VALUES (3, 4, 9,'Tam Nong whole chicken', 'https://res.cloudinary.com/dwjl02bji/
 		<li aria-level="1" >Chicken is carefully packaged and preserved to deliver to consumers, keeping product quality always the best. Tam Nong chicken can be used to prepare many delicious dishes such as: boiled chicken, stewed chicken, grilled chicken, fried chicken, fried chicken.</li>
 </ul>', 223, 0, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (3, 4, 9,'Imported beef shoulder core', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/meat/jerbgyghxitboo3tusdv',0.2300,89,132,'unit',
+VALUES (3, 4, 9,'Imported beef shoulder core', 'images\products\meat\loivaibo.jpg',0.2300,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>The shoulder core is cut from the meat area between the shoulder and neck of the cow. In the middle of the tenderloin there is a thin, crispy and not tough tendon.
@@ -1620,7 +1869,7 @@ VALUES (3, 4, 9,'Imported beef shoulder core', 'https://res.cloudinary.com/dwjl0
         <li aria-level="1" >Beef shoulder steak contains several essential nutrients including protein, iron, zinc, selenium, riboflavin, niacin, vitamin B6, vitamin B12, phosphorus, pantothenate, magnesium and potassium.</li>
 </ul>', 223, 0, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (3, 5, 9,'CP chicken fillet', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/meat/gvwq6pm1ekdj7zcgzv6m',0.2400,89,132,'unit',
+VALUES (3, 5, 9,'CP chicken fillet', 'images\products\meat\philega.jpg',0.2400,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>CP Chicken Fillet 500g (ea) is made from clean chicken sources, raised in a farm system that meets strict standards.</li>
@@ -1631,7 +1880,7 @@ VALUES (3, 5, 9,'CP chicken fillet', 'https://res.cloudinary.com/dwjl02bji/image
 		<li aria-level="1" >The nutritional content of chicken breast is high and the amount of fat is low. Suitable for people who are in the process of losing weight and babies who are weaning.</li>
 </ul>', 223, 0, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (3, 4, 9,'Pork Ribs', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/meat/plfutc8s2rzm0vwggqm5',0.2500,89,132,'unit',
+VALUES (3, 4, 9,'Pork Ribs', 'images\products\meat\suonnonheo.jpg',0.2500,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>Pork ribs are a very popular cut of meat with soft meat, balanced with fat, keeping the meat from drying out. In particular, the cartilage is both soft and crunchy, bringing a pleasant feeling when eating.</li>
@@ -1643,7 +1892,7 @@ VALUES (3, 4, 9,'Pork Ribs', 'https://res.cloudinary.com/dwjl02bji/image/upload/
 </ul>', 223, 0, 1, 1);
 ------------------------------
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (4, 4, 9,'Fresh Octopus', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/aquaticproducts/ua21gvgkeq5r07pwagju',0.2600,89,132,'unit',
+VALUES (4, 4, 9,'Fresh Octopus', 'images\products\aquaticproducts\bachtuoctuoi.jpg',0.2600,89,132,'unit',
 '<p>
 	<span >Fresh octopus meat provides essential vitamins for the body such as: A, B1, B2, PP, C and some other minerals such as calcium, phosphorus...</span>
 </p>' +
@@ -1654,7 +1903,7 @@ VALUES (4, 4, 9,'Fresh Octopus', 'https://res.cloudinary.com/dwjl02bji/image/upl
 	<span >Octopus meat has almost no fat and is very beneficial for muscles. This type of seafood is also rich in nutrients and has the effect of strengthening physical strength.</span>
 </p>', 223, 0, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (4, 4, 9,'Tuna fillet', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/aquaticproducts/iirxqgqawhetde1ul0ff',0.2700,89,132,'unit',
+VALUES (4, 4, 9,'Tuna fillet', 'images\products\aquaticproducts\cangudaiduongphile.jpg',0.2700,89,132,'unit',
 '<p>
 	<span >Ocean tuna is prepared from fresh ocean tuna, going through a careful selection process, closed processing and packaging process, ensuring all food hygiene and safety standards, safe for health.</span>
 </p>' +
@@ -1662,7 +1911,7 @@ VALUES (4, 4, 9,'Tuna fillet', 'https://res.cloudinary.com/dwjl02bji/image/uploa
 	<span >Ocean tuna has high protein content, contains a lot of magnesium minerals, a mixture of B vitamins, potassium, a source of omega 3,... bringing great health benefits such as helping to: lose weight; eye health; prevent atherosclerosis; Activate brain cells and promote brain activities;....</span>
 </p>' , 223, 0, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (4, 4, 9,'Saury', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/aquaticproducts/r6bm1uqumac3oxcqpygw',0.3000,89,132,'unit',
+VALUES (4, 4, 9,'Saury', 'images\products\aquaticproducts\cathudao.jpg',0.3000,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>Saury (sanma) caught mainly in September-October contains many healthy oils and is considered a famous specialty of Japanese autumn. During the Edo period (1603 - 1868), this shiny green-skinned fish was considered a low-grade food, while white fish were much more popular.</li>
@@ -1673,7 +1922,7 @@ VALUES (4, 4, 9,'Saury', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_au
 		<li aria-level="1" >How to preserve fresh saury: Saury should be prepared immediately to maintain its freshness, but if you can use it in time, you can store it in the refrigerator.</li>
 </ul>', 223, 0, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (4, 4, 9,'Red tilapia', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/aquaticproducts/oegoj0ht4xyaegewkxty',0.9800,89,132,'unit',
+VALUES (4, 4, 9,'Red tilapia', 'images\products\aquaticproducts\cadieuhong.jpg',0.9800,89,132,'unit',
 '<p>
 	<span >Red tilapia or red tilapia, also known as red tilapia, is a freshwater fish belonging to the tilapia family. As a type of fish with delicious meat quality, red tilapia meat is white, clean, the meat fibers are firmly structured and especially the meat does not have too many bones.</span>
 </p>' +
@@ -1685,7 +1934,7 @@ VALUES (4, 4, 9,'Red tilapia', 'https://res.cloudinary.com/dwjl02bji/image/uploa
 </p>', 223, 0, 1, 1);
 -----------------------------
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (5, 5, 2,'Broccoli', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/vegetable/rlzdealvi9czewwxzmmx',0.5400,89,132,'unit',
+VALUES (5, 5, 2,'Broccoli', 'images\products\vegetable\bongcaixanh.jpg',0.5400,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>Broccoli (also known as broccoli) is a vegetable belonging to the cruciferous family with the scientific name Brassica Oleracea. Broccoli is a green vegetable shaped like a miniature tree, along with kale and cauliflower and are both cruciferous vegetables.</li>
@@ -1694,14 +1943,14 @@ VALUES (5, 5, 2,'Broccoli', 'https://res.cloudinary.com/dwjl02bji/image/upload/f
         <li aria-level="1" >The product does not contain harmful chemicals or growth stimulants, ensuring safety for consumers health. Therefore, you can completely feel secure when choosing this product for every meal your family has, making meals more delicious.</li>
 </ul>', 223, 0, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (5, 5, 2,'Da Lat Beets', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/vegetable/tuezl9qfx8n2ddivmbmj',0.5600,89,132,'unit',
+VALUES (5, 5, 2,'Da Lat Beets', 'images\products\vegetable\cudenDaLat.jpg',0.5600,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>Dalat Beetroot is a clean food, containing many nutrients such as fiber, vitamin A, potassium... good for the body. The active ingredients in fresh beets have the effect of nourishing the blood, strengthening the body immune components, helping to detect and eliminate abnormal cells before they can transform into cancer cells.</li>
         <li aria-level="1" >Products are grown using modern technology, ensuring freshness and food hygiene and safety.</li>
 </ul>', 223, 0, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (5, 5, 2,'Iceberg Lettuce', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/vegetable/kxgdwbhlz8nkqxxmqupv',3.4300,89,132,'unit',
+VALUES (5, 5, 2,'Iceberg Lettuce', 'images\products\vegetable\xalachIceberg.jpg',3.4300,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>Iceberg Lettuce (also known as head lettuce) is a type of lettuce originating from America. Ice Berg Lettuce is tightly rolled into large, heavy heads, similar to cabbage buds.</li>
@@ -1709,7 +1958,7 @@ VALUES (5, 5, 2,'Iceberg Lettuce', 'https://res.cloudinary.com/dwjl02bji/image/u
 		<li aria-level="1" >Thanks to being rich in antioxidants, regular use of the product also makes your skin softer and brighter.</li>
 </ul>', 223, 0, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (5, 5, 2,'Da Lat Beef Tomatoes', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/vegetable/ovss5w0hae1ur16lfnad',2.3100,89,132,'unit',
+VALUES (5, 5, 2,'Da Lat Beef Tomatoes', 'images\products\vegetable\cachuaBeefDaLat.jpg',2.3100,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>Beef tomatoes are large fruits, with an average fruit weight of 110-200 grams. The fruit is red, ripens early, and has a dense flesh. This type of tomato has won and won the American AAS (All-Amer Selections) award.</li>
@@ -1717,7 +1966,7 @@ VALUES (5, 5, 2,'Da Lat Beef Tomatoes', 'https://res.cloudinary.com/dwjl02bji/im
 </ul>', 223, 10, 1, 1);
 ---------------------------
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (6, 5, 4,'Happycook HEK-180PW 1.8L Electric Kettle', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/convenientproduct/vmu2xberquhpitiv82c9',5.9800,89,132,'unit',
+VALUES (6, 5, 4,'Happycook HEK-180PW 1.8L Electric Kettle', 'images\products\convenientproduct\amdunsieutoc.jpg',5.9800,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>Compact design, light weight, a familiar household appliance in every Vietnamese family today. Capacity of 1.8 liters is suitable for families of 2 - 4 members or in offices, companies,...</li>
@@ -1726,7 +1975,7 @@ VALUES (6, 5, 4,'Happycook HEK-180PW 1.8L Electric Kettle', 'https://res.cloudin
         <li aria-level="1" >Large capacity heating plate: The Happy Cook kettle electric heating plate operates stably with a capacity of up to 1,500W, allowing water heating time to be shortened, meeting hot water needs in just a few minutes.</li>
 </ul>', 223, 15, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (6, 5, 6,'Nano Cyclone Wet Towels 20 Pieces', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/convenientproduct/gd58smp2qn76g62yywla',4.3200,89,132,'unit',
+VALUES (6, 5, 6,'Nano Cyclone Wet Towels 20 Pieces', 'images\products\convenientproduct\khanuotnano.jpg',4.3200,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>Nano Popular Premium Wet Towels 20 Pieces are soft, smooth wet towels and are a useful product for your life, helping you save time and shopping costs.</li>
@@ -1735,7 +1984,7 @@ VALUES (6, 5, 6,'Nano Cyclone Wet Towels 20 Pieces', 'https://res.cloudinary.com
         <li aria-level="1" >The product is made from non-woven fabric, purified water, natural fragrances, and humectants that help keep and provide necessary moisture to the skin, keeping the skin fresh, clean, and not dry after wiping.</li>
 </ul>', 223, 0, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (6, 5, 6,'Nestlé Milo Breakfast Cereal Box', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/convenientproduct/ue11htdtsyx36mevslwd',2.1100,89,132,'unit',
+VALUES (6, 5, 6,'Nestlé Milo Breakfast Cereal Box', 'images\products\convenientproduct\ngucocansang.jpg',2.1100,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>Nestlé MILO breakfast cereal 300g box is extracted from barley germ and grains containing many minerals, iron, vitamins, calcium and iodized salt to give your baby abundant energy to start a new day.</li>
@@ -1744,7 +1993,7 @@ VALUES (6, 5, 6,'Nestlé Milo Breakfast Cereal Box', 'https://res.cloudinary.com
         <li aria-level="1" >The product is conveniently packaged, mothers can easily prepare it for their children to take to school or on family picnics. Ingredients: Cereal flour, oatmeal, rice flour, sugar, glucose syrup, palm oil, honey, minerals...</li>
 </ul>', 223, 20, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (6, 5, 6,'Lipton Lemon Honey Lemon Tea Box', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/convenientproduct/eq6vow6fbwjld1uxbnhy',1.8900,89,132,'unit',
+VALUES (6, 5, 6,'Lipton Lemon Honey Lemon Tea Box', 'images\products\convenientproduct\trachanhLipton.jpg',1.8900,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>Lipton Lemon Honey Lemon Tea Box of 16 Packs 12G is made from natural ingredients with a great combination of black tea leaves and natural lemon flavor to bring a refreshing feeling when enjoying.</li>
@@ -1753,21 +2002,21 @@ VALUES (6, 5, 6,'Lipton Lemon Honey Lemon Tea Box', 'https://res.cloudinary.com/
 </ul>', 223, 5, 1, 1);
 --------------------------------------
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (7, 5, 8,'Boys Short-Sleeved T-shirt with 2-sided Print in Light Blue Size 11-14', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/fashion/onaqwtwwgcwalvjk7ku6',3.4200,89,132,'unit',
+VALUES (7, 5, 8,'Boys Short-Sleeved T-shirt with 2-sided Print in Light Blue Size 11-14', 'images\products\fashion\aothuntayngan.jpg',3.4200,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>Baby Boy T-shirt with 2-sided Print in Light Blue Size 11-14 is a simple short-sleeved, round-neck shirt, but the print on the front and back of the shirt makes your baby look very stylish, the fabric Breathable and absorbent cotton provides comfort when outdoors, helping your baby feel comfortable and confident when moving.</li>
         <li aria-level="1" >Mothers can combine the shirt with jeans, boy shorts, etc. with children sports shoes and sandals to give the baby a unique personality.</li>  
 </ul>', 223, 5, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (7, 5, 8,'Automatic Folding Umbrella (Random Color Delivery)', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/fashion/quw4fgd6ladjwkndja97',0.21,89,132,'unit',
+VALUES (7, 5, 8,'Automatic Folding Umbrella (Random Color Delivery)', 'images\products\fashion\ogap3Ocean.jpg',0.21,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>Automatic Folding Umbrella (Random Color) has a sturdy, durable metal frame, durable and water-resistant umbrella material. The Automatic Folding Umbrella is designed to be compact and lightweight, easy to install quickly, and easy to carry with you.</li>
         <li aria-level="1" >The product has a 2-way automatic folding and opening design that is convenient for users. The product comes in many colors and is delivered randomly. Made in Viet Nam.</li>  
 </ul>', 223, 0, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (7, 5, 8,'Women Onoff Collarless Socks with Star Floral Pattern 146-Sw01 (Random Color)', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/fashion/yfkm5mvmjqwigfumpue2',0.2100,89,132,'unit',
+VALUES (7, 5, 8,'Women Onoff Collarless Socks with Star Floral Pattern 146-Sw01 (Random Color)', 'images\products\fashion\vonukhongco.jpg',0.2100,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>Women OnOff Collarless Socks with Star Floral Pattern 146-SW01 use natural Cotton material with OEKO-Tex safety material certification, the socks are soft and sweat-absorbent, keeping feet dry and comfortable.</li>
@@ -1775,7 +2024,7 @@ VALUES (7, 5, 8,'Women Onoff Collarless Socks with Star Floral Pattern 146-Sw01 
         <li aria-level="1" >Care instructions: Wash with water below 40 degrees Celsius, do not dry at high temperatures, do not iron, do not use strong detergents. Made in Viet Nam.</li>  
 </ul>', 223, 0, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (7, 14, 8,'Women Double Striped Elastic Shorts Size L (Random Color Delivery)', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/fashion/pxcgseqpstnsbit6fxmm',0.2100,89,132,'unit',
+VALUES (7, 14, 8,'Women Double Striped Elastic Shorts Size L (Random Color Delivery)', 'images\products\fashion\quanshortthun.jpg',0.2100,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>Women double-striped elastic shorts use soft, smooth fish skin elastic material, with air holes created by overlapping layers of fish skin, giving the wearer a cool, sweat-absorbing feeling. Besides, the pants have meticulous seams, providing standard form, high durability as well as a dynamic and comfortable feeling for girls to wear.</li>
@@ -1784,7 +2033,7 @@ VALUES (7, 14, 8,'Women Double Striped Elastic Shorts Size L (Random Color Deliv
 </ul>', 223, 0, 1, 1);
 ------------------------------
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (8, 5, 9,'Chinese Soft Red Pomegranate', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/fruit/aiy2mf6ot3ifpqiucara',0.2100,89,132,'unit',
+VALUES (8, 5, 9,'Chinese Soft Red Pomegranate', 'images\products\fruit\luuhatdoTrungQuoc.jpg',0.2100,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>The Chinese soft red pomegranate is a fruit rich in antioxidants and has a delicious flavor, so it is very popular. It has red flesh, thick, succulent flesh, soft edible seeds, and a pink-yellow skin.</li>
@@ -1792,7 +2041,7 @@ VALUES (8, 5, 9,'Chinese Soft Red Pomegranate', 'https://res.cloudinary.com/dwjl
         <li aria-level="1" >Plant compounds in pomegranates have anti-inflammatory effects. Studies show that pomegranate extract can block enzymes that cause joint damage in people with osteoarthritis.</li>  
 </ul>', 223, 0, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (8, 5, 9,'Cantaloupes of the Dutch variety', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/fruit/azcwxzlvjojyjq3e1fvz',5.3200,89,132,'unit',
+VALUES (8, 5, 9,'Cantaloupes of the Dutch variety', 'images\products\fruit\dualuoiHaLan.jpg',5.3200,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>Dutch Cantaloupes are grown using Israeli technology with strict supervision, creating cantaloupe varieties with high sugar content, firm flesh, green flesh, round fruit, and longer-lasting sweetness.</li>
@@ -1800,14 +2049,14 @@ VALUES (8, 5, 9,'Cantaloupes of the Dutch variety', 'https://res.cloudinary.com/
 Besides, cantaloupe contains a lot of fiber so it has a laxative effect and prevents constipation. Melon contains the largest amount of digestive enzymes among fresh fruits, more than papaya and mango. In addition, cantaloupe is also a rich source of beta-carotene, folic acid, potassium and vitamins C and A.</li>  
 </ul>', 223, 20, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (8, 5, 7,'Cripps Red apples imported from South Africa', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/fruit/mzszzomdjvxmz84ymeyf',0.2100,89,132,'unit',
+VALUES (8, 5, 7,'Cripps Red apples imported from South Africa', 'images\products\fruit\taoNamPhi.jpg',0.2100,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>South African Cripps Red apples are one of the imported South African apple varieties that are loved by many consumers with unique characteristics. Cripps Red apples are crunchy, sweet imported fruits with a mildly sour taste.</li>
         <li aria-level="1" >Apples contain many important nutrients, including fiber, vitamins, minerals and antioxidants. In addition, apples contain a lot of vitamin A, vitamin B, vitamin D, etc.</li>  
 </ul>', 223, 0, 1, 1);
 INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (8, 5, 7,'Guava variety from Taiwan', 'https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/products/fruit/bxrmpdpzr2h8wlyqrzwu',0.2100,89,132,'unit',
+VALUES (8, 5, 7,'Guava variety from Taiwan', 'images\products\fruit\oiDaiLoan.jpg',0.2100,89,132,'unit',
 '<ul>
         <li aria-level="1" >
           <strong>Taiwanese guava is also known as Taiwanese pear guava because the fruit is large like a pear. Taiwanese guavas have large, shiny fruits that are very crunchy, sweet and have very few seeds, so they are very popular.</li>
@@ -1833,92 +2082,89 @@ ALTER TABLE "ThresholdAdjustment" CHECK CONSTRAINT ALL
 go
 GO
 
-------------------------------------
-set quoted_identifier on
-go
-ALTER TABLE "Orders" NOCHECK CONSTRAINT ALL
-go
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (1, 1, '2023-01-15 08:30:00', '2023-01-18 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (2, 1, '2023-01-15 08:30:00', '2023-01-18 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Processing');
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (3, 2, '2023-01-16 09:30:00', '2023-01-18 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Processing');
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (4, 2, '2023-01-16 09:30:00', '2023-01-18 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Processing');
----------------------------------
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (5, 3, '2023-01-17 10:30:00', '2023-01-20 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Pending');
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (6, 3, '2023-01-17 10:30:00', '2023-01-20 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Pending');
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (7, 4, '2023-01-18 11:00:00', '2023-01-20 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Pending');
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (8, 4, '2023-01-18 11:00:00', '2023-01-20 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (9, 2, '2023-01-19 11:00:00', '2023-01-23 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Pending');
-------------------------------
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (10, 2, '2023-01-19 11:00:00', '2023-01-23 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (11, 1, '2023-01-20 15:30:00', '2023-01-23 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (11, 1, '2023-01-20 15:30:00', '2023-01-23 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Pending');
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (12, 3, '2023-01-20 15:30:00', '2023-01-23 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (13, 3, '2023-01-20 18:30:00', '2023-01-23 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Processing');
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (14, 4, '2023-01-21 08:30:00', '2023-01-23 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (15, 4, '2023-01-21 08:30:00', '2023-01-23 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Processing');
-------------------------------
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (16, 3, '2023-01-22 08:30:00', '2023-01-25 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (17, 3, '2023-01-22 15:30:00', '2023-01-25 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (17, 2, '2023-01-23 18:30:00', '2023-01-25 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Processing');
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (18, 2, '2023-01-24 08:30:00', '2023-01-30 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Processing');
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (1, 4, '2023-01-25 18:30:00', '2023-01-30 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
------------------------------
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (2, 4, '2023-01-26 08:30:00', '2023-01-30 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (2, 1, '2023-01-27 15:30:00', '2023-01-30 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Processing');
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (3, 1, '2023-01-28 08:30:00', '2023-01-30 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (4, 1, '2023-01-29 18:30:00', '2023-02-03 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
-INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (2, 1, '2023-01-30 15:30:00', '2023-02-03 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Processing');
-
-GO
-ALTER TABLE "Orders" CHECK CONSTRAINT ALL
-go
-GO
-
-------------------------------------
-set quoted_identifier on
-go
-ALTER TABLE "OrdersDetails" NOCHECK CONSTRAINT ALL
-go
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (1, 1, 15.0000, 1, 15, 12.7500, 'credit card', 'Pham Hieu Tho', '1234567890123456');
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (2, 2, 8.4300, 2, 15, 14.3300, 'credit card', 'Ly Minh Nghia', '2345678901234567');
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (3, 3, 7.1500, 1, 27, 5.2200, 'credit card', 'Pham Huu Nhan', '3456789012345678');
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (4, 4, 15.0000, 3, 0, 45.0000, 'prepaid card', 'Nguyen Minhh Tuan', '4567890123456789');
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (5, 5, 0.5300, 1, 0, 0.5300, 'prepaid card', 'Nguyen Thi My Hao', '5678901234567890');
---------------------------
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (6, 6, 2.2100, 1, 0, 2.2100, 'prepaid card', 'Ong Kim Thanh', '6789012345678901');
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (7, 7, 0.6900, 1, 0,  0.6900, 'debit card', 'Nguyen Trong Tri', '7890123456789012');
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (8, 8, 1.5600, 3, 0, 4.6800, 'debit card', 'Nguyen Tan Phat', '8901234567890123');
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (9, 9, 0.2200, 3, 0,  0.6600, 'debit card', 'Truong Ngoc Anh', '9012345678901234');
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (10, 1, 15.0000, 1, 15, 12.7500, 'credit card', 'Nguyen Thi Anh Thu', '0123456789012345');
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (11, 10, 0.2300, 1, 0, 0.2300, 'credit card', 'Pham Van Hien', '1234567890123456');
-------------------------------
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (12, 1, 15.0000, 1, 15, 12.7500, 'credit card', 'Pham Van Hien', '1234567890123456');
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (13, 1, 15.0000, 5, 15, 63.7500,  'credit card', 'To Ngoc Lan', '2345678901234567');
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (14, 20, 2.3100, 1, 10, 2.0800, 'prepaid card', 'Truong Thi Ngoc Trang', '3456789012345678');
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (15, 21, 2.3100, 1, 15, 1.9600, 'prepaid card', 'Nguyen Ngoc Hien', '4567890123456789');
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (16, 21, 2.3100, 1, 15, 1.9600, 'prepaid card', 'Nguyen Thanh Dat', '5678901234567890');
-------------------------------
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (17, 21, 2.3100, 1, 15, 2.0800, 'debit card', 'Dang Minh Dat', '6789012345678901');
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (18, 22, 4.3200, 3, 0, 12.9600, 'debit card', 'Tran Thi Thu Thao', '7890123456789012');
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (19, 23, 2.1100, 3, 25, 4.7500, 'debit card', 'Tran Thi Thu Thao', '7890123456789012');
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (20, 24, 1.8900, 3, 5, 5.3900, 'debit card', 'Vuong Nguyen Kim Tuyen', '8901234567890123');
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (21, 25, 3.4200, 3, 5, 9.7500, 'credit card', 'Pham Hieu Tho', '1234567890123456');
------------------------------
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (22, 30, 5.3200, 1, 20, 4.2600, 'credit card', 'Ly Minh Nghia', '2345678901234567');
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (23, 30, 5.3200, 1, 20, 4.2600, 'credit card', 'Ly Minh Nghia', '2345678901234567');
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (24, 30, 5.3200, 1, 20, 4.2600, 'credit card', 'Pham Huu Nhan', '3456789012345678');
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (25, 30, 5.3200, 1, 20, 4.2600, 'prepaid card', 'Nguyen Minhh Tuan', '4567890123456789');
-INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (26, 30, 5.3200, 1, 20, 4.2600, 'prepaid card', 'Nguyen Thi My Hao', '5678901234567890');
-
-GO
-ALTER TABLE "OrdersDetails" CHECK CONSTRAINT ALL
-go
-GO
-
-ALTER TABLE [dbo].[Accounts]
-ADD "status" BIT DEFAULT 1;
-GO
+--------------------------------------
+--set quoted_identifier on
+--go
+--ALTER TABLE "Orders" NOCHECK CONSTRAINT ALL
+--go
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (1, 1, '2023-01-15 08:30:00', '2023-01-18 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (2, 1, '2023-01-15 08:30:00', '2023-01-18 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Processing');
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (3, 2, '2023-01-16 09:30:00', '2023-01-18 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Processing');
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (4, 2, '2023-01-16 09:30:00', '2023-01-18 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Processing');
 -----------------------------------
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (5, 3, '2023-01-17 10:30:00', '2023-01-20 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Pending');
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (6, 3, '2023-01-17 10:30:00', '2023-01-20 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Pending');
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (7, 4, '2023-01-18 11:00:00', '2023-01-20 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Pending');
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (8, 4, '2023-01-18 11:00:00', '2023-01-20 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (9, 2, '2023-01-19 11:00:00', '2023-01-23 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Pending');
+--------------------------------
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (10, 2, '2023-01-19 11:00:00', '2023-01-23 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (11, 1, '2023-01-20 15:30:00', '2023-01-23 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (11, 1, '2023-01-20 15:30:00', '2023-01-23 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Pending');
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (12, 3, '2023-01-20 15:30:00', '2023-01-23 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (13, 3, '2023-01-20 18:30:00', '2023-01-23 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Processing');
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (14, 4, '2023-01-21 08:30:00', '2023-01-23 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (15, 4, '2023-01-21 08:30:00', '2023-01-23 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Processing');
+--------------------------------
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (16, 3, '2023-01-22 08:30:00', '2023-01-25 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (17, 3, '2023-01-22 15:30:00', '2023-01-25 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (17, 2, '2023-01-23 18:30:00', '2023-01-25 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Processing');
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (18, 2, '2023-01-24 08:30:00', '2023-01-30 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Processing');
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (1, 4, '2023-01-25 18:30:00', '2023-01-30 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
+-------------------------------
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (2, 4, '2023-01-26 08:30:00', '2023-01-30 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (2, 1, '2023-01-27 15:30:00', '2023-01-30 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Processing');
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (3, 1, '2023-01-28 08:30:00', '2023-01-30 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (4, 1, '2023-01-29 18:30:00', '2023-02-03 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Shipped');
+--INSERT INTO "Orders" (customerID, employeeID, orderDate, shipDate, shipAddress, note, status) VALUES (2, 1, '2023-01-30 15:30:00', '2023-02-03 12:45:00', 'Ninh Kieu, Can Tho', 'Special instructions for the order.', 'Processing');
+
+--GO
+--ALTER TABLE "Orders" CHECK CONSTRAINT ALL
+--go
+--GO
+
+--------------------------------------
+--set quoted_identifier on
+--go
+--ALTER TABLE "OrdersDetails" NOCHECK CONSTRAINT ALL
+--go
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (1, 1, 15.0000, 1, 15, 12.7500, 'credit card', 'Pham Hieu Tho', '1234567890123456');
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (2, 2, 8.4300, 2, 15, 14.3300, 'credit card', 'Ly Minh Nghia', '2345678901234567');
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (3, 3, 7.1500, 1, 27, 5.2200, 'credit card', 'Pham Huu Nhan', '3456789012345678');
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (4, 4, 15.0000, 3, 0, 45.0000, 'prepaid card', 'Nguyen Minhh Tuan', '4567890123456789');
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (5, 5, 0.5300, 1, 0, 0.5300, 'prepaid card', 'Nguyen Thi My Hao', '5678901234567890');
+----------------------------
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (6, 6, 2.2100, 1, 0, 2.2100, 'prepaid card', 'Ong Kim Thanh', '6789012345678901');
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (7, 7, 0.6900, 1, 0,  0.6900, 'debit card', 'Nguyen Trong Tri', '7890123456789012');
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (8, 8, 1.5600, 3, 0, 4.6800, 'debit card', 'Nguyen Tan Phat', '8901234567890123');
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (9, 9, 0.2200, 3, 0,  0.6600, 'debit card', 'Truong Ngoc Anh', '9012345678901234');
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (10, 1, 15.0000, 1, 15, 12.7500, 'credit card', 'Nguyen Thi Anh Thu', '0123456789012345');
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (11, 10, 0.2300, 1, 0, 0.2300, 'credit card', 'Pham Van Hien', '1234567890123456');
+--------------------------------
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (12, 1, 15.0000, 1, 15, 12.7500, 'credit card', 'Pham Van Hien', '1234567890123456');
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (13, 1, 15.0000, 5, 15, 63.7500,  'credit card', 'To Ngoc Lan', '2345678901234567');
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (14, 20, 2.3100, 1, 10, 2.0800, 'prepaid card', 'Truong Thi Ngoc Trang', '3456789012345678');
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (15, 21, 2.3100, 1, 15, 1.9600, 'prepaid card', 'Nguyen Ngoc Hien', '4567890123456789');
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (16, 21, 2.3100, 1, 15, 1.9600, 'prepaid card', 'Nguyen Thanh Dat', '5678901234567890');
+--------------------------------
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (17, 21, 2.3100, 1, 15, 2.0800, 'debit card', 'Dang Minh Dat', '6789012345678901');
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (18, 22, 4.3200, 3, 0, 12.9600, 'debit card', 'Tran Thi Thu Thao', '7890123456789012');
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (19, 23, 2.1100, 3, 25, 4.7500, 'debit card', 'Tran Thi Thu Thao', '7890123456789012');
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (20, 24, 1.8900, 3, 5, 5.3900, 'debit card', 'Vuong Nguyen Kim Tuyen', '8901234567890123');
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (21, 25, 3.4200, 3, 5, 9.7500, 'credit card', 'Pham Hieu Tho', '1234567890123456');
+-------------------------------
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (22, 30, 5.3200, 1, 20, 4.2600, 'credit card', 'Ly Minh Nghia', '2345678901234567');
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (23, 30, 5.3200, 1, 20, 4.2600, 'credit card', 'Ly Minh Nghia', '2345678901234567');
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (24, 30, 5.3200, 1, 20, 4.2600, 'credit card', 'Pham Huu Nhan', '3456789012345678');
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (25, 30, 5.3200, 1, 20, 4.2600, 'prepaid card', 'Nguyen Minhh Tuan', '4567890123456789');
+--INSERT INTO "OrdersDetails" ( orderID, productID, unitPrice, quantity, discount, totalPrice, paymentMethod, cardName, cardNumber) VALUES (26, 30, 5.3200, 1, 20, 4.2600, 'prepaid card', 'Nguyen Thi My Hao', '5678901234567890');
+
+--GO
+--ALTER TABLE "OrdersDetails" CHECK CONSTRAINT ALL
+--go
+--GO
+
+-------------------------------------
 
 GO
 USE [master]
