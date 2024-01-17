@@ -224,6 +224,26 @@ IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('dbo.trg_UpdateRestockT
 	DROP TRIGGER [dbo].[trg_trg_UpdateRestockThreshold]
 GO
 
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('dbo.trg_Group_Manager') AND OBJECTPROPERTY(id, 'IsTrigger') = 1)
+	DROP TRIGGER [dbo].[trg_Group_Manager]
+GO
+
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('dbo.trg_Group_Employee') AND OBJECTPROPERTY(id, 'IsTrigger') = 1)
+	DROP TRIGGER [dbo].[trg_Group_Employee]
+GO
+
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('dbo.trg_Group_Customer') AND OBJECTPROPERTY(id, 'IsTrigger') = 1)
+	DROP TRIGGER [dbo].[trg_Group_Customer]
+GO
+
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('dbo.trg_SetTotalPrice') AND OBJECTPROPERTY(id, 'IsTrigger') = 1)
+	DROP TRIGGER [dbo].[trg_SetTotalPrice]
+GO
+
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('dbo.Trigger_UpdateInventoryStatus') AND OBJECTPROPERTY(id, 'IsTrigger') = 1)
+	DROP TRIGGER [dbo].[Trigger_UpdateInventoryStatus]
+GO
+
 -- Create entity for the database 'Cp2396g01_group5_db'
 
 SET ANSI_NULLS ON
@@ -279,9 +299,9 @@ CREATE TABLE [dbo].[Managers](
 	[manager_group] [bigint] CONSTRAINT "DF_Perr_Mana" DEFAULT (1),
 	------------------------------
 	[username] [nvarchar](50) NULL,
-	[password] [varbinary](32) NULL,
-	[salt_password] [varbinary](16) NULL,
-	[pepper_password][varbinary](16) NULL,
+	[password] [nvarchar](max) NULL,
+	[salt_password] [nvarchar](max) NULL,
+	[pepper_password][nvarchar](16) NULL,
 	--------------------------------
 	[fullname] [nvarchar](50) NULL,	
 	[address] [nvarchar](255) NULL,
@@ -355,9 +375,9 @@ CREATE TABLE [dbo].[Employees](
 	[employee_group] [bigint] CONSTRAINT "DF_Perr_Emp" DEFAULT (2),
 	-----------------------------
 	[username] [nvarchar](50) NULL,
-	[password] [varbinary](32) NULL,
-	[salt_password] [varbinary](16) NULL,
-	[pepper_password][varbinary](16) NULL,
+	[password] [nvarchar](max) NULL,
+	[salt_password] [nvarchar](max) NULL,
+	[pepper_password][nvarchar](16) NULL,
 	-------------------------------
 	[fullname] [nvarchar](50) NULL,
 	[address] [nvarchar](255) NULL,
@@ -435,9 +455,9 @@ CREATE TABLE [dbo].[Customers](
 	[customer_group] [bigint] CONSTRAINT "DF_Perr_Cus" DEFAULT (3),
 	------------------------------
 	[username] [nvarchar](50) NULL,
-	[password] [varbinary](32) NULL,
-	[salt_password] [varbinary](16) NULL,
-	[pepper_password][varbinary](16) NULL,
+	[password] [nvarchar](max) NULL,
+	[salt_password] [nvarchar](max) NULL,
+	[pepper_password][nvarchar](16) NULL,
 	-------------------------------
 	[fullname] [nvarchar](255) NULL,
 	[address] [nvarchar](50) NULL,
@@ -1207,7 +1227,68 @@ BEGIN
 END;
 GO
 
---=======================INSERT DATA=====================--
+------Enforce group manager------
+CREATE TRIGGER trg_Group_Manager
+ON Managers AFTER INSERT AS BEGIN
+UPDATE Managers
+SET
+  manager_group = 1
+FROM
+  Managers
+  INNER JOIN inserted ON Managers.ID = inserted.ID END;
+GO
+
+------Enforce group employee------
+CREATE TRIGGER trg_Group_Employee
+ON Employees AFTER INSERT AS BEGIN
+UPDATE Employees
+SET
+  employee_group = 2
+FROM
+  Employees
+  INNER JOIN inserted ON Employees.ID = inserted.ID END;
+GO
+
+------Enforce group customer------
+CREATE TRIGGER trg_Group_Customer
+ON Customers AFTER INSERT AS BEGIN
+UPDATE Customers
+SET
+  customer_group = 3
+FROM
+  Customers
+  INNER JOIN inserted ON Customers.ID = inserted.ID END;
+GO
+
+------Enforce UpdateInventoryStatus------
+CREATE TRIGGER Trigger_UpdateInventoryStatus ON Products AFTER INSERT,
+UPDATE AS BEGIN
+UPDATE Products
+SET
+  inventoryStatus = CASE
+    WHEN Products.quantityInStock < 5 THEN 3
+    WHEN Products.quantityInStock >= 50 THEN 2
+    WHEN Products.quantityInStock > 100 THEN 1
+  END
+FROM
+  Products
+  INNER JOIN inserted ON Products.ID = inserted.ID;
+END;
+GO
+
+------Enforce SetTotalPrice------
+CREATE TRIGGER trg_SetTotalPrice ON dbo.OrderDetails AFTER INSERT,
+UPDATE AS BEGIN
+UPDATE dbo.OrderDetails
+SET
+  totalPrice = OrderDetails.quantity * OrderDetails.unitPrice * ((100 - OrderDetails.discount) / 100)
+FROM
+  dbo.OrderDetails
+  INNER JOIN inserted ON dbo.OrderDetails.orderID = inserted.orderID
+  AND dbo.OrderDetails.productID = inserted.productID END;
+ GO
+ 
+ --=======================INSERT DATA=====================--
 set quoted_identifier on
 go
 ALTER TABLE "Permissions" NOCHECK CONSTRAINT ALL

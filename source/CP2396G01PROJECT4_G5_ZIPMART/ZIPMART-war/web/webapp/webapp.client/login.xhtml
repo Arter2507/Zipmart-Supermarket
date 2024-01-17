@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <ui:include src="../../resources/includes.configlayouts/includes.client/login.xhtml"/>
+    </h:head>
+    <h:body>
+        <div class="container" id="container">      
+        <div class="form-container sign-in">
+            <h:form>
+                <h1>Sign In</h1>
+                <div class="social-icons">
+                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+                <span>or use your username password</span>
+                <h:inputText a:placeholder="Username"/>
+                <h:inputSecret a:placeholder="Password"/>
+                <a href="#">Forget Your Password?</a>
+                <h:commandButton styleClass="btn btn-info btnIn" value="Sign In"></h:commandButton>
+            </h:form>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">              
+                <div class="toggle-panel toggle-right">
+                    <h1>Hello, Friend!</h1>
+                    <strong><p>Register with your personal details to use all of site features</p></strong>
+                    <h:link id="login" outcome="/webapp/webapp.client/register.xhtml"><button class="hidden">Sign Up</button></h:link>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </h:body>
+</html>
