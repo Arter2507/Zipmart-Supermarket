@@ -2,9 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://java.sun.com/jsf/passthrough"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">    
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:body>
         <ui:composition template="/webapp/webapp.layout/_adminLayout.xhtml">
             <ui:define name="content">
@@ -16,10 +16,11 @@
                         <div class="col-md-12">
                             <div class="card mb-4">
                                 <!-- Add Form -->
-                                <h:form id="formAccountSettings" enctype="multipart/form-data">
+                                <h:form id="formUpdate" enctype="multipart/form-data">
+                                    <h:inputHidden value="#{employeeManagedBean.employee.id}"/>
                                     <div class="card-body">
                                         <div class="d-flex align-items-start align-items-sm-center gap-4">
-                                            <h:graphicImage url="#{resource['/images/logo/photo-camera-gray.svg']}" alt="user-avatar" styleClass="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar" height="200px" width="200px"  />
+                                            <h:graphicImage url="#{resource[employeeManagedBean.employee.imageURL]}" alt="user-avatar" styleClass="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar" height="200px" width="200px"  />
                                             <div class="button-wrapper">
                                                 <h:outputLabel for="upload" class="btn btn-primary me-2 mb-3" tabindex="0">
                                                     <span class="d-none d-sm-block">Upload new photo</span>
@@ -32,33 +33,45 @@
 
                                     <script>
                                         window.onload = function () {
-                                            console.log(document.getElementById("formAccountSettings:upload"));
-                                            document.getElementById("formAccountSettings:upload").onchange = function () {
+                                            console.log(document.getElementById("formUpdate:upload"));
+                                            document.getElementById("formUpdate:upload").onchange = function () {
                                                 var reader = new FileReader();
 
                                                 reader.onload = function (e) {
                                                     // get loaded data and render thumbnail.
-                                                    document.getElementById("formAccountSettings:uploadedAvatar").src = e.target.result;
+                                                    document.getElementById("formUpdate:uploadedAvatar").src = e.target.result;
                                                 };
 
                                                 // read the image file as a data URL.
                                                 reader.readAsDataURL(this.files[0]);
                                             };
+                                            var inputFile = document.getElementById("formUpdate:upload");
+                                            inputFile.hidden = true;
+                                             var birthday = document.getElementById("formUpdate:birthday");
+                                            birthday.type = "date";
                                         };
                                     </script>
 
                                     <div class="card-body pt-2 mt-1">
                                         <div class="row mt-2 gy-4">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:inputText class="form-control" id="fullname" value="#{employeeManagedBean.fullname}" required="true" requiredMessage="This field cannot be empty!"/>  
+                                                    <h:inputText class="form-control" id="fullname" value="#{employeeManagedBean.employee.fullname}" required="true" requiredMessage="This field cannot be empty!"/>  
                                                     <h:outputLabel for="fullname">Full Name</h:outputLabel>
                                                     <h:message for = "fullname" style = "color: red;" /> 
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:inputText class="form-control" id="uname" value="#{employeeManagedBean.username}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:selectOneMenu id="gender" styleClass="select2 form-select" value="#{employeeManagedBean.selected_gender}">
+                                                        <f:selectItems value="#{employeeManagedBean.showGender()}" var="gender" itemValue="#{gender.id}" itemLabel="#{gender.genderName}"/>
+                                                    </h:selectOneMenu>   
+                                                    <h:outputLabel for="gender">Gender</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="uname" value="#{employeeManagedBean.employee.username}" required="true" requiredMessage="This field cannot be empty!"/>
                                                     <h:outputLabel for="uname">Username</h:outputLabel>
                                                     <h:message for = "uname" style = "color: red;" />
                                                     <h:outputText value="#{empManagedBean.usernameMessage}"/>
@@ -66,45 +79,53 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:inputSecret styleClass="form-control" id="pword" value="#{employeeManagedBean.password}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:inputHidden  id="pword" value="#{employeeManagedBean.employee.password}" required="true"/>
+                                                    <h:inputText styleClass="form-control" value="#{employeeManagedBean.newPassword}" required="true"/>
                                                     <h:outputLabel for="pword">Password</h:outputLabel>
                                                     <h:message for = "pword" style = "color: red;" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:inputText a:type="number" class="form-control" id="phoneNumber" value="#{employeeManagedBean.phone}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:inputText a:type="number" class="form-control" id="phoneNumber" value="#{employeeManagedBean.employee.phone}" required="true" requiredMessage="This field cannot be empty!"/>
                                                     <h:outputLabel for="phoneNumber">Phone Number</h:outputLabel>
                                                     <h:message for = "phoneNumber" style = "color: red;" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:inputText a:type="date" class="form-control" id="birthday" value="#{employeeManagedBean.dayOfBirth}" required="true" requiredMessage="This field cannot be empty!">
+                                                    <h:inputText a:type="date" class="form-control" id="birthday" value="#{employeeManagedBean.employee.birthDate}" required="true" requiredMessage="This field cannot be empty!">
                                                         <f:convertDateTime pattern="yyyy-MM-dd" />
                                                     </h:inputText>
                                                     <h:outputLabel for="birthday">Birthday</h:outputLabel>
                                                     <h:message for = "birthday" style = "color: red;" />
                                                 </div>
                                             </div>
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:inputText a:type="email" class="form-control" id="email" value="#{employeeManagedBean.email}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:inputText a:type="email" class="form-control" id="email" value="#{employeeManagedBean.employee.email}" required="true" requiredMessage="This field cannot be empty!"/>
                                                     <h:outputLabel for="email">Email</h:outputLabel>
                                                     <h:message for = "email" style = "color: red;" />
                                                 </div>
                                             </div>
-                                            <div class="col-md-12">
+                                            <div class="col-md-3">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:inputText class="form-control" id="address" value="#{employeeManagedBean.address}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:inputText class="form-control" id="address" value="#{employeeManagedBean.employee.address}" required="true" requiredMessage="This field cannot be empty!"/>
                                                     <h:outputLabel for="address">Address</h:outputLabel>
                                                     <h:message for = "fullname" style = "color: red;" />
                                                 </div>
                                             </div>
+                                            <div class="col-md-3">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="note" value="#{employeeManagedBean.employee.notes}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:outputLabel for="note">Note</h:outputLabel>
+                                                    <h:message for = "note" style = "color: red;" />
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="mt-4">
-                                            <h:commandButton styleClass="btn btn-primary me-2 text-white" value="save" action="#{employeeManagedBean.saveCreateEmp()}"/>
-                                            <button type="reset" id="btnReset" class="btn btn-outline-secondary">Reset</button>
+                                            <h:commandButton styleClass="btn btn-primary me-2 text-white" value="save" action="#{employeeManagedBean.saveUpdateEmp()}"/>
+                                            <h:link outcome="/webapp/webapp.administrator/employee/employee.xhtml" class="btn btn-outline-secondary">Back</h:link>
                                         </div>
                                     </div>
                                 </h:form>

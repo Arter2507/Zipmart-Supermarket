@@ -10861,19 +10861,19 @@ a:focus {
 }
 
 .bg-login-image {
-  background: url("#{request.contextPath}/resources/assets/admin/images/logo_admin.png");
+  background: url("#{request.contextPath}/resources/images/admin/logo_admin.png");
   background-position: center;
   background-size: cover;
 }
 
 .bg-register-image {
-  background: url("#{request.contextPath}/resources/assets/admin/images/logo_admin.png");
+  background: url("#{request.contextPath}/resources/images/admin/logo_admin.png");
   background-position: center;
   background-size: cover;
 }
 
 .bg-password-image {
-  background: url("#{request.contextPath}/resources/assets/admin/images/logo_admin.png");
+  background: url("#{request.contextPath}/resources/images/admin/logo_admin.png");
   background-position: center;
   background-size: cover;
 }

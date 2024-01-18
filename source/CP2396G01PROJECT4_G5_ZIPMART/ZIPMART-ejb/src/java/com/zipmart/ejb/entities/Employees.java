@@ -64,7 +64,7 @@ public class Employees implements Serializable {
     @Column(name = "ID")
     private Long id;
     @Column(name = "employee_gender")
-    private BigInteger employeeGender;
+    private Long employeeGender;
     @Size(max = 50)
     @Column(name = "username")
     private String username;
@@ -125,8 +125,14 @@ public class Employees implements Serializable {
     private Collection<EmployeeBlog> employeeBlogCollection;
 
     @Transient
-    private String plainpass;
+    private String active;
     
+    @Transient
+    private String oldPass;
+    
+    @Transient
+    private String newPass;
+
     public Employees() {
     }
 
@@ -142,11 +148,11 @@ public class Employees implements Serializable {
         this.id = id;
     }
 
-    public BigInteger getEmployeeGender() {
+    public Long getEmployeeGender() {
         return employeeGender;
     }
 
-    public void setEmployeeGender(BigInteger employeeGender) {
+    public void setEmployeeGender(Long employeeGender) {
         this.employeeGender = employeeGender;
     }
 
@@ -338,12 +344,28 @@ public class Employees implements Serializable {
         return "com.zipmart.ejb.entities.Employees[ id=" + id + " ]";
     }
 
-    public String getPlainpass() {
-        return plainpass;
+    public String getActive() {
+        return status == null ? "null" : status ? "Enabled" : "Disabled";
     }
 
-    public void setPlainpass(String plainpass) {
-        this.plainpass = plainpass;
+    public void setActive(String active) {
+        this.active = active;
     }
-    
+
+    public String getOldPass() {
+        return oldPass;
+    }
+
+    public void setOldPass(String oldPass) {
+        this.oldPass = oldPass;
+    }
+
+    public String getNewPass() {
+        return newPass;
+    }
+
+    public void setNewPass(String newPass) {
+        this.newPass = newPass;
+    }
+
 }

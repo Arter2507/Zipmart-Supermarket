@@ -1,7 +1,12 @@
 package com.zipmart.mbean.employee;
 
+import com.zipmart.ejb.entities.EmployeeGenders;
+import com.zipmart.ejb.entities.EmployeeGendersPK;
 import com.zipmart.ejb.entities.Employees;
+import com.zipmart.ejb.entities.Genders;
+import com.zipmart.ejb.session_beans.EmployeeGendersFacadeLocal;
 import com.zipmart.ejb.session_beans.EmployeesFacadeLocal;
+import com.zipmart.ejb.session_beans.GendersFacadeLocal;
 import com.zipmart.ejb.session_beans.PermissionsFacadeLocal;
 import com.zipmart.util.FileUltil;
 import java.io.IOException;
@@ -16,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Part;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -29,22 +35,29 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 public class EmployeeManagedBean implements Serializable {
 
     @EJB
+    private EmployeeGendersFacadeLocal employeeGendersFacade;
+
+    @EJB
+    private GendersFacadeLocal gendersFacade;
+
+    @EJB
     private EmployeesFacadeLocal employeesFacade;
 
     @EJB
     private PermissionsFacadeLocal permissionFacade;
 
     private Employees employee;
+    private EmployeeGenders employeeGender;
+    private Genders gender;
+    private EmployeeGendersPK idPK;
 
-    private long id;
-    private long permissionID;
+    private Long id;
+    private Long permissionID;
     private String fullname;
     private String username;
     private String password;
-    private String plainpass;
-    private String salt_pass;
-    private String pepper_pass;
-    private String hashPassword;
+    private String newPassword;
+
     private String email;
     private Part file;
     private String imgUrl;
@@ -54,17 +67,47 @@ public class EmployeeManagedBean implements Serializable {
     private Timestamp birthday;
     private boolean status;
     private Date dayOfBirth;
+    private long selected_gender;
 
     private String usernameMessage;
     private String messageDeleteEmployee;
-    
+
+    private String salt_pass = UUID.randomUUID().toString();
+    private String pepper_pass = "secret_employee";
+    private String salt = BCrypt.gensalt(12).concat(pepper_pass);
+    private String hashPassword = BCrypt.hashpw(password, salt);
+
     public EmployeeManagedBean() {
-       employee = new Employees();
+        employee = new Employees();
+        employeeGender = new EmployeeGenders();
+        gender = new Genders();
+        idPK = new EmployeeGendersPK();
+        selected_gender = 4;
+    }
+
+    // Toggle Enable
+    public String toggleEmployeeStatus(Long ID) {
+        employee = employeesFacade.find(ID);
+        System.out.println("init" + employee.getId() + "----------" + employee.getStatus());
+        if (employee.getStatus() == null) {
+            employee.setStatus(false);
+        } else if (employee.getStatus()) {
+            employee.setStatus(false);
+        } else {
+            employee.setStatus(true);
+        }
+        employeesFacade.edit(employee);
+        return "employee";
     }
 
     // Get All Data
     public List<Employees> showEmpList() {
         return employeesFacade.findAll();
+    }
+
+    // Get All Data Gender
+    public List<Genders> showGender() {
+        return gendersFacade.findAll();
     }
 
     // Show update Employee
@@ -73,6 +116,14 @@ public class EmployeeManagedBean implements Serializable {
         id = employee.getId();
         System.out.println("==================================" + id.toString());
         return "updateEmployee";
+    }
+
+    // Show Details
+    public String showDetail(Long id) {
+        employee = employeesFacade.find(id);
+        id = employee.getId();
+        System.out.println("==================================" + id.toString());
+        return "detailsEmployee";
     }
 
     // Insert Employee
@@ -87,7 +138,55 @@ public class EmployeeManagedBean implements Serializable {
         }
         return "employee";
     }
-    
+
+    // Add Data Employee Gender
+    public void addEmployeeGender(Long employeeId, Long genderId) {
+        // Create object EmployeeGenders
+        idPK.setGenderID(genderId);
+        idPK.setEmployeeID(employeeId);
+        employeeGender.setEmployeeGendersPK(idPK);
+        EmployeeGenders existingEmployeeGender = employeeGendersFacade.find(idPK);
+
+        if (existingEmployeeGender == null) {
+            // Create if not exist
+            employeeGendersFacade.create(employeeGender);
+        } else {
+            // Update if exist
+            existingEmployeeGender.setGenders(employeeGender.getGenders());
+            existingEmployeeGender.setEmployees(employeeGender.getEmployees());
+            employeeGendersFacade.edit(existingEmployeeGender);
+        }
+    }
+
+    // Update Employee
+    public String saveUpdateEmp() {
+        imgUrl = FileUltil.getInstance().uploadFile(file);
+        hashPassword = BCrypt.hashpw(newPassword, salt);
+        gender = gendersFacade.find(selected_gender);
+        if (employee != null && gender != null) {
+            addEmployeeGender(employee.getId(), gender.getId());
+            System.out.println(employee.getId() + "----------------------------------" + gender.getId());
+        }
+        if(imgUrl == null ){
+        employee.setImageURL(employee.getImageURL());
+        }else{
+            employee.setImageURL(imgUrl);
+        }        
+        employee.setEmployeeGender(selected_gender);
+        employee.setFullname(employee.getFullname());
+        employee.setUsername(employee.getUsername());
+        employee.setPassword(hashPassword);
+        employee.setSaltPassword(salt);
+        employee.setAddress(employee.getAddress());
+        employee.setPhone(employee.getPhone());
+        employee.setEmail(employee.getEmail());
+        employee.setBirthDate(employee.getBirthDate());
+        employee.setNotes(employee.getNotes());
+        employee.setImageURL(employee.getImageURL());
+        employeesFacade.edit(employee);
+        return "employee";
+    }
+
     // Delete Employee
     public String deleteEmployee(Long id) {
         employeesFacade.remove(employeesFacade.find(id));
@@ -107,14 +206,6 @@ public class EmployeeManagedBean implements Serializable {
 
     // setup form employee
     private void employeeCredentialsFromAccount() {
-        salt_pass = UUID.randomUUID().toString();
-        pepper_pass = "secret_employee";
-        String salt = BCrypt.gensalt(12).concat(pepper_pass);
-        String temp = password;
-        plainpass = temp;
-        employee.setPlainpass(plainpass);
-        System.out.println(plainpass);
-        hashPassword = BCrypt.hashpw(password, salt);
         employee.setImageURL(imgUrl);
         employee.setFullname(fullname);
         employee.setUsername(username);
@@ -319,11 +410,59 @@ public class EmployeeManagedBean implements Serializable {
         this.messageDeleteEmployee = messageDeleteEmployee;
     }
 
-    public String getPlainpass() {
-        return plainpass;
+    public String getSalt() {
+        return salt;
     }
 
-    public void setPlainpass(String plainpass) {
-        this.plainpass = plainpass;
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public long getSelected_gender() {
+        return selected_gender;
+    }
+
+    public void setSelected_gender(long selected_gender) {
+        this.selected_gender = selected_gender;
+    }
+
+    public GendersFacadeLocal getGendersFacade() {
+        return gendersFacade;
+    }
+
+    public void setGendersFacade(GendersFacadeLocal gendersFacade) {
+        this.gendersFacade = gendersFacade;
+    }
+
+    public EmployeeGendersFacadeLocal getEmployeeGendersFacade() {
+        return employeeGendersFacade;
+    }
+
+    public void setEmployeeGendersFacade(EmployeeGendersFacadeLocal employeeGendersFacade) {
+        this.employeeGendersFacade = employeeGendersFacade;
+    }
+
+    public Genders getGender() {
+        return gender;
+    }
+
+    public void setGender(Genders gender) {
+        this.gender = gender;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public EmployeeGendersPK getIdPK() {
+        return idPK;
+    }
+
+    public void setIdPK(EmployeeGendersPK idPK) {
+        this.idPK = idPK;
     }
 }
