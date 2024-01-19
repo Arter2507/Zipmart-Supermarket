@@ -29,6 +29,8 @@ public interface EmployeesFacadeLocal {
 
     int count();
 
-    public long getUserNameEx(String username);
+    public long getUserNameEx(String username, boolean status);
+    
+    public long findByUsername(String username);
     
 }
