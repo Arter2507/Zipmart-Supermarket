@@ -23,6 +23,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -61,7 +62,7 @@ public class Managers implements Serializable {
     @Column(name = "ID")
     private Long id;
     @Column(name = "manager_gender")
-    private BigInteger managerGender;
+    private Long managerGender;
     @Size(max = 50)
     @Column(name = "username")
     private String username;
@@ -111,6 +112,15 @@ public class Managers implements Serializable {
     @ManyToOne
     private Permissions managerGroup;
 
+    @Transient
+    private String active;
+    
+    @Transient
+    private String oldPass;
+    
+    @Transient
+    private String newPass;
+    
     public Managers() {
     }
 
@@ -126,11 +136,11 @@ public class Managers implements Serializable {
         this.id = id;
     }
 
-    public BigInteger getManagerGender() {
+    public Long getManagerGender() {
         return managerGender;
     }
 
-    public void setManagerGender(BigInteger managerGender) {
+    public void setManagerGender(Long managerGender) {
         this.managerGender = managerGender;
     }
 
@@ -286,6 +296,30 @@ public class Managers implements Serializable {
     @Override
     public String toString() {
         return "com.zipmart.ejb.entities.Managers[ id=" + id + " ]";
+    }
+
+    public String getActive() {
+        return status == null ? "null" : status ? "Enabled" : "Disabled";
+    }
+
+    public void setActive(String active) {
+        this.active = active;
+    }
+
+    public String getOldPass() {
+        return oldPass;
+    }
+
+    public void setOldPass(String oldPass) {
+        this.oldPass = oldPass;
+    }
+
+    public String getNewPass() {
+        return newPass;
+    }
+
+    public void setNewPass(String newPass) {
+        this.newPass = newPass;
     }
     
 }

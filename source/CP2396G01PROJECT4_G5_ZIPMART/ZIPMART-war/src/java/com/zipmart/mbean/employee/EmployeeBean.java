@@ -59,7 +59,6 @@ public class EmployeeBean implements Serializable {
     private Timestamp birthdate;
     private boolean status = true;
 
-    private String salt_pass = UUID.randomUUID().toString();
     private String pepper_pass = "secret_employee";
     private String salt = BCrypt.gensalt(12).concat(pepper_pass);
     private String hashPassword = BCrypt.hashpw(password, salt);
@@ -69,7 +68,8 @@ public class EmployeeBean implements Serializable {
 
     private Long selected_gender;
     private long genderValue;
-    private String genderLabel;   
+    private String genderLabel;
+    private String user_message;
     
     public EmployeeBean() {
     }
@@ -126,12 +126,18 @@ public class EmployeeBean implements Serializable {
     public String createEmp() {
         long checkUser = employeesFacade.findByUsername(username);
         if (checkUser > 0 && status == true) {
+            user_message = "Username already exists!";
+            FacesContext.getCurrentInstance().addMessage("username", new FacesMessage(FacesMessage.SEVERITY_ERROR, user_message, null));
             System.out.println("Username already exists!" + username + "-------" + status + "=====" + checkUser);
             return "addEmployee";
         } else if (checkUser > 0 && status == false) {
+            user_message = "Username already exists!";
+            FacesContext.getCurrentInstance().addMessage("username", new FacesMessage(FacesMessage.SEVERITY_ERROR, user_message, null));
             System.out.println("Username already exists!" + username + "-------" + status + "=====" + checkUser);
             return "addEmployee";
         } else if (checkUser > 0 && employee.getStatus() == null) {
+            user_message = "Username already exists!";
+            FacesContext.getCurrentInstance().addMessage("username", new FacesMessage(FacesMessage.SEVERITY_ERROR, user_message, null));
             System.out.println("Username already exists!" + username + "-------" + status + "=====" + checkUser);
             return "addEmployee";
         } else {
@@ -406,14 +412,6 @@ public class EmployeeBean implements Serializable {
 
     public void setStatus(boolean status) {
         this.status = status;
-    }
-
-    public String getSalt_pass() {
-        return salt_pass;
-    }
-
-    public void setSalt_pass(String salt_pass) {
-        this.salt_pass = salt_pass;
     }
 
     public String getPepper_pass() {

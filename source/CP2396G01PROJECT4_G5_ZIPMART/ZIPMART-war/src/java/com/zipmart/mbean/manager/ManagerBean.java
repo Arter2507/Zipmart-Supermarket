@@ -1,24 +1,25 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSF/JSFManagedBean.java to edit this template
+ */
 package com.zipmart.mbean.manager;
 
-import com.zipmart.ejb.entities.EmployeeGenders;
-import com.zipmart.ejb.entities.EmployeeGendersPK;
-import com.zipmart.ejb.entities.Employees;
 import com.zipmart.ejb.entities.Genders;
-import com.zipmart.ejb.session_beans.EmployeeGendersFacadeLocal;
-import com.zipmart.ejb.session_beans.EmployeesFacadeLocal;
+import com.zipmart.ejb.entities.ManagerGenders;
+import com.zipmart.ejb.entities.ManagerGendersPK;
+import com.zipmart.ejb.entities.Managers;
 import com.zipmart.ejb.session_beans.GendersFacadeLocal;
+import com.zipmart.ejb.session_beans.ManagerGendersFacadeLocal;
+import com.zipmart.ejb.session_beans.ManagersFacadeLocal;
 import com.zipmart.util.FileUltil;
 import java.io.IOException;
-import javax.inject.Named;
-import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Base64;
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -31,21 +32,21 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
  */
 @Named(value = "managerBean")
 @RequestScoped
-public class ManagerBean implements Serializable {
-
-    @EJB
-    private EmployeeGendersFacadeLocal employeeGendersFacade;
+public class ManagerBean {
 
     @EJB
     private GendersFacadeLocal gendersFacade;
 
     @EJB
-    private EmployeesFacadeLocal employeesFacade;
+    private ManagerGendersFacadeLocal managerGendersFacade;
 
-    private Employees employee = new Employees();
+    @EJB
+    private ManagersFacadeLocal managersFacade;
+
+    private Managers manager = new Managers();
     private Genders gender = new Genders();
-    private EmployeeGenders eg = new EmployeeGenders();
-    private EmployeeGendersPK idEG = new EmployeeGendersPK();
+    private ManagerGenders mg = new ManagerGenders();
+    private ManagerGendersPK idMG = new ManagerGendersPK();
 
     private Long id;
     private String fullname;
@@ -55,53 +56,58 @@ public class ManagerBean implements Serializable {
     private String phone;
     private String email;
     private String address;
-    private Date dayOfBirth;
-    private Timestamp birthdate;
     private boolean status = true;
 
-    private String salt_pass = UUID.randomUUID().toString();
     private String pepper_pass = "secret_employee";
-    private String salt = BCrypt.gensalt(12).concat(pepper_pass);
+    private String salt = BCrypt.gensalt();
     private String hashPassword = BCrypt.hashpw(password, salt);
+    private String BasicBase64format;
+            
 
     private Part file;
     private String imageURL;
 
     private Long selected_gender;
     private long genderValue;
-    private String genderLabel;   
-    
+    private String genderLabel;
+    private String user_message;
+    private String message_delete;
+
     public ManagerBean() {
     }
 
-    public List<Employees> showAll() {
-        List<Employees> listEmp = new ArrayList<>();
-        for (Employees employee : employeesFacade.findAll()) {
-            if (employee.getStatus() == null) {
-                employee.setStatus(Boolean.TRUE);
+    // Get All Data
+    public List<Managers> showAll() {
+        List<Managers> listMg = new ArrayList<>();
+        for (Managers manager : managersFacade.findAll()) {
+            if (manager.getStatus() == null) {
+                manager.setStatus(Boolean.TRUE);
             }
-            if (employee.getStatus()) {
-                listEmp.add(employee);
+            if (manager.getStatus()) {
+                listMg.add(manager);
             }
         }
-        return listEmp;
+        return listMg;
     }
-
+    
+    // Show All Gender Data
     public List<Genders> showGenders() {
         return gendersFacade.findAll();
     }
-
+    
+    // Show Edit
     public String showListID(Long id) {
-        employee = employeesFacade.find(id);
-        id = employee.getId();
-        System.out.println("====== ID Employee ========== " + id);
-        return "updateEmployee";
+        manager = managersFacade.find(id);
+        id = manager.getId();
+        System.out.println("====== ID Manager ========== " + id);
+        return "profileEdit";
     }
-
+    
+    // Show Detail
     public String showDetails(Long id) {
-        employee = employeesFacade.find(id);
-        id = employee.getId();
-        genderValue = employee.getEmployeeGender();  // Assuming employeeGender is an integer
+        manager = managersFacade.find(id);
+        id = manager.getId();
+        genderValue = manager.getManagerGender(); 
         switch ((int) genderValue) {
             case 1:
                 genderLabel = "Male";
@@ -119,66 +125,73 @@ public class ManagerBean implements Serializable {
                 genderLabel = "Unknow";
                 break;
         }
-        System.out.println("====== ID Employee ========== " + id + "=========" + genderValue + "========" + genderLabel);
-        return "detailsEmployee";
+        System.out.println("====== ID Manager ========== " + id + "=========" + genderValue + "========" + genderLabel);
+        return "profile";
     }
-
-    public String createEmp() {
-        long checkUser = employeesFacade.findByUsername(username);
+    
+    // Add Manager
+    public String createManager() {
+        long checkUser = managersFacade.findByUsername(username);
         if (checkUser > 0 && status == true) {
+            user_message = "Username already exists!";
+            FacesContext.getCurrentInstance().addMessage("username", new FacesMessage(FacesMessage.SEVERITY_ERROR, user_message, null));
             System.out.println("Username already exists!" + username + "-------" + status + "=====" + checkUser);
-            return "addEmployee";
+            return "addManager";
         } else if (checkUser > 0 && status == false) {
+            user_message = "Username already exists!";
+            FacesContext.getCurrentInstance().addMessage("username", new FacesMessage(FacesMessage.SEVERITY_ERROR, user_message, null));
             System.out.println("Username already exists!" + username + "-------" + status + "=====" + checkUser);
-            return "addEmployee";
-        } else if (checkUser > 0 && employee.getStatus() == null) {
+            return "addManager";
+        } else if (checkUser > 0 && manager.getStatus() == null) {
+            user_message = "Username already exists!";
+            FacesContext.getCurrentInstance().addMessage("username", new FacesMessage(FacesMessage.SEVERITY_ERROR, user_message, null));
             System.out.println("Username already exists!" + username + "-------" + status + "=====" + checkUser);
-            return "addEmployee";
+            return "addManager";
         } else {
+            BasicBase64format = Base64.getEncoder().encodeToString(password.getBytes());
             imageURL = FileUltil.getInstance().uploadFile(file);
-            employee.setFullname(fullname);
-            employee.setUsername(username);
-            employee.setPassword(hashPassword);
-            employee.setSaltPassword(salt);
-            employee.setPepperPassword(pepper_pass);
-            employee.setAddress(address);
-            employee.setPhone(phone);
-            employee.setEmail(email);
-            employee.setBirthDate(dayOfBirth);
-            employee.setImageURL(imageURL);
-            if (employee.getStatus() == null) {
-                employee.setStatus(Boolean.TRUE);
+            manager.setFullname(fullname);
+            manager.setUsername(username);
+            manager.setPassword(BasicBase64format);
+            manager.setSaltPassword(salt);
+            manager.setPepperPassword(pepper_pass);
+            manager.setAddress(address);
+            manager.setPhone(phone);
+            manager.setEmail(email);
+            manager.setImageURL(imageURL);
+            if (manager.getStatus() == null) {
+                manager.setStatus(Boolean.TRUE);
             }
             
-            employeesFacade.create(employee);
+            managersFacade.create(manager);
 
             selected_gender = 4L;
 
-            Employees emp = employee;
-            id = emp.getId();
-            emp = employeesFacade.find(id);
+            Managers mng = manager;
+            id = mng.getId();
+            mng = managersFacade.find(id);
             gender = gendersFacade.find(selected_gender);
-            if (emp != null && gender != null) {
-                idEG.setEmployeeID(emp.getId());
-                idEG.setGenderID(gender.getId());
+            if (mng != null && gender != null) {
+                idMG.setManagerID(mng.getId());
+                idMG.setGenderID(gender.getId());
 
-                emp.setEmployeeGender(gender.getId());
-                System.out.println("Gender: " + emp.getEmployeeGender());
+                mng.setManagerGender(gender.getId());
+                System.out.println("Gender: " + mng.getManagerGender());
 
-                eg = employeeGendersFacade.find(idEG);
+                mg = managerGendersFacade.find(idMG);
 
-                if (eg == null) {
+                if (mg == null) {
                     // Create if not exist
-                    eg = new EmployeeGenders();
-                    eg.setEmployeeGendersPK(idEG);
-                    employeeGendersFacade.create(eg);
+                    mg = new ManagerGenders();
+                    mg.setManagerGendersPK(idMG);
+                    managerGendersFacade.create(mg);
                 } else {
                     // Update if exist
-                    eg.setGenders(gender);
-                    eg.setEmployees(emp);
-                    employeeGendersFacade.edit(eg);
+                    mg.setGenders(gender);
+                    mg.setManagers(mng);
+                    managerGendersFacade.edit(mg);
                 }
-                employeesFacade.edit(emp);
+                managersFacade.edit(mng);
             }
             System.out.println("Image URL: " + imageURL);
             System.out.println("Full name: " + fullname);
@@ -188,83 +201,76 @@ public class ManagerBean implements Serializable {
             System.out.println("Pepper: " + pepper_pass);
             System.out.println("Address: " + address);
             System.out.println("Email: " + email);
-            System.out.println("Birthdate: " + birthdate);
         }
-        return "employee";
+        return "manager";
     }
-
-    public String updateEmp() {
-        Employees empUp = employee;
+    
+    // Update Manager
+    public String updateManager() {
+        Managers managerUp = manager;
         gender = gendersFacade.find(selected_gender);
         imageURL = FileUltil.getInstance().uploadFile(file);
 
         hashPassword = BCrypt.hashpw(new_password, salt);
 
         if (imageURL == null) {
-            empUp.setImageURL(empUp.getImageURL());
+            managerUp.setImageURL(managerUp.getImageURL());
         } else {
-            empUp.setImageURL(imageURL);
+            managerUp.setImageURL(imageURL);
         }
 
         if (gender != null) {
-            empUp.setEmployeeGender(gender.getId());
+            managerUp.setManagerGender(gender.getId());
 
-            idEG.setEmployeeID(empUp.getId());
-            idEG.setGenderID(gender.getId());
-            System.out.println("Gender: " + empUp.getEmployeeGender());
-            eg.setEmployeeGendersPK(idEG);
-            EmployeeGenders existingEmployeeGender = employeeGendersFacade.find(idEG);
+            idMG.setManagerID(managerUp.getId());
+            idMG.setGenderID(gender.getId());
+            System.out.println("Gender: " + managerUp.getManagerGender());
+            mg.setManagerGendersPK(idMG);
+            ManagerGenders existingEmployeeGender = managerGendersFacade.find(idMG);
 
             if (existingEmployeeGender == null) {
                 // Create if not exist
-                employeeGendersFacade.create(eg);
+                managerGendersFacade.create(mg);
             } else {
                 // Update if exist
-                existingEmployeeGender.setGenders(eg.getGenders());
-                existingEmployeeGender.setEmployees(eg.getEmployees());
-                employeeGendersFacade.edit(existingEmployeeGender);
+                existingEmployeeGender.setGenders(mg.getGenders());
+                existingEmployeeGender.setManagers(mg.getManagers());
+                managerGendersFacade.edit(existingEmployeeGender);
             }
         }
-        empUp.setFullname(empUp.getFullname());
-        empUp.setUsername(empUp.getUsername());
-        empUp.setPassword(hashPassword);
-        empUp.setSaltPassword(salt);
-        empUp.setAddress(empUp.getAddress());
-        empUp.setPhone(empUp.getPhone());
-        empUp.setEmail(empUp.getEmail());
-        empUp.setBirthDate(empUp.getBirthDate());
-        empUp.setNotes(empUp.getNotes());
-        empUp.setImageURL(empUp.getImageURL());
-        employeesFacade.edit(empUp);
-        return "employee";
-    }
-
-    public String toggleEmployeeStatus(Long ID) {
-        employee = employeesFacade.find(ID);
-        System.out.println("init id: " + employee.getId() + "---------- status: " + employee.getStatus());
-        if (employee.getStatus()) {
-            employee.setStatus(false);
-        } else {
-            employee.setStatus(true);
-        }
-        employeesFacade.edit(employee);
-        return "employee";
-    }
-
-    public String deleteEmployee(Long id) {
-        employeesFacade.remove(employeesFacade.find(id));
-        String messageDeleteEmployee = "Deleted employee successfully!";
-        return null;
-    }
-
-    public void backToEmployee() {
-//        // Huỷ session trước đó
-//        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        // Chuyển về trang employee.xhtml
-        FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "employee");
+        managerUp.setFullname(managerUp.getFullname());
+        managerUp.setUsername(managerUp.getUsername());
+        managerUp.setPassword(hashPassword);
+        managerUp.setSaltPassword(salt);
+        managerUp.setAddress(managerUp.getAddress());
+        managerUp.setPhone(managerUp.getPhone());
+        managerUp.setEmail(managerUp.getEmail());
+        managerUp.setImageURL(managerUp.getImageURL());
+        managersFacade.edit(managerUp);
+        return "manager";
     }
     
-    // Exception handling
+    // Change Status
+    public String toggleStatus(Long ID) {
+        manager = managersFacade.find(ID);
+        System.out.println("init id: " + manager.getId() + "---------- status: " + manager.getStatus());
+        if (manager.getStatus()) {
+            manager.setStatus(false);
+        } else {
+            manager.setStatus(true);
+        }
+        managersFacade.edit(manager);
+        return "manager";
+    }
+
+    // Delete Manager
+    public String deleteManager(Long id) {
+        managersFacade.remove(managersFacade.find(id));
+        message_delete = "Deleted employee successfully!";
+        return null;
+    }
+    
+    //Handle File
     private void handleFileUploadException(IOException ex) {
         Logger.getLogger(ManagerBean.class.getName()).log(Level.SEVERE, null, ex);
 
@@ -280,36 +286,47 @@ public class ManagerBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, null));
     }
 
-    public EmployeesFacadeLocal getEmployeesFacade() {
-        return employeesFacade;
+    public void backIndex() {
+        FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "/webapp/webapp.administrator/partials/index.xhtml");
     }
-
-    public void setEmployeesFacade(EmployeesFacadeLocal employeesFacade) {
-        this.employeesFacade = employeesFacade;
+    
+    public void backToEmployee() {
+//        // Huỷ session trước đó
+//        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        // Chuyển về trang employee.xhtml
+        FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "/webapp/webapp.administrator/employee/employee.xhtml");
     }
-
-    public Employees getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employees employee) {
-        this.employee = employee;
-    }
-
-    public EmployeeGendersFacadeLocal getEmployeeGendersFacade() {
-        return employeeGendersFacade;
-    }
-
-    public void setEmployeeGendersFacade(EmployeeGendersFacadeLocal employeeGendersFacade) {
-        this.employeeGendersFacade = employeeGendersFacade;
-    }
-
+    
     public GendersFacadeLocal getGendersFacade() {
         return gendersFacade;
     }
 
     public void setGendersFacade(GendersFacadeLocal gendersFacade) {
         this.gendersFacade = gendersFacade;
+    }
+
+    public ManagerGendersFacadeLocal getManagerGendersFacade() {
+        return managerGendersFacade;
+    }
+
+    public void setManagerGendersFacade(ManagerGendersFacadeLocal managerGendersFacade) {
+        this.managerGendersFacade = managerGendersFacade;
+    }
+
+    public ManagersFacadeLocal getManagersFacade() {
+        return managersFacade;
+    }
+
+    public void setManagersFacade(ManagersFacadeLocal managersFacade) {
+        this.managersFacade = managersFacade;
+    }
+
+    public Managers getManager() {
+        return manager;
+    }
+
+    public void setManager(Managers manager) {
+        this.manager = manager;
     }
 
     public Genders getGender() {
@@ -320,20 +337,20 @@ public class ManagerBean implements Serializable {
         this.gender = gender;
     }
 
-    public EmployeeGenders getEg() {
-        return eg;
+    public ManagerGenders getMg() {
+        return mg;
     }
 
-    public void setEg(EmployeeGenders eg) {
-        this.eg = eg;
+    public void setMg(ManagerGenders mg) {
+        this.mg = mg;
     }
 
-    public EmployeeGendersPK getIdEG() {
-        return idEG;
+    public ManagerGendersPK getIdMG() {
+        return idMG;
     }
 
-    public void setIdEG(EmployeeGendersPK idEG) {
-        this.idEG = idEG;
+    public void setIdMG(ManagerGendersPK idMG) {
+        this.idMG = idMG;
     }
 
     public Long getId() {
@@ -342,6 +359,14 @@ public class ManagerBean implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getUsername() {
@@ -358,6 +383,14 @@ public class ManagerBean implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getNew_password() {
+        return new_password;
+    }
+
+    public void setNew_password(String new_password) {
+        this.new_password = new_password;
     }
 
     public String getPhone() {
@@ -384,36 +417,12 @@ public class ManagerBean implements Serializable {
         this.address = address;
     }
 
-    public Date getDayOfBirth() {
-        return dayOfBirth;
-    }
-
-    public void setDayOfBirth(Date dayOfBirth) {
-        this.dayOfBirth = dayOfBirth;
-    }
-
-    public Timestamp getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(Timestamp birthdate) {
-        this.birthdate = birthdate;
-    }
-
     public boolean isStatus() {
         return status;
     }
 
     public void setStatus(boolean status) {
         this.status = status;
-    }
-
-    public String getSalt_pass() {
-        return salt_pass;
-    }
-
-    public void setSalt_pass(String salt_pass) {
-        this.salt_pass = salt_pass;
     }
 
     public String getPepper_pass() {
@@ -464,22 +473,6 @@ public class ManagerBean implements Serializable {
         this.selected_gender = selected_gender;
     }
 
-    public String getFullname() {
-        return fullname;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
-
-    public String getNew_password() {
-        return new_password;
-    }
-
-    public void setNew_password(String new_password) {
-        this.new_password = new_password;
-    }
-
     public long getGenderValue() {
         return genderValue;
     }
@@ -496,4 +489,27 @@ public class ManagerBean implements Serializable {
         this.genderLabel = genderLabel;
     }
 
+    public String getUser_message() {
+        return user_message;
+    }
+
+    public void setUser_message(String user_message) {
+        this.user_message = user_message;
+    }
+
+    public String getMessage_delete() {
+        return message_delete;
+    }
+
+    public void setMessage_delete(String message_delete) {
+        this.message_delete = message_delete;
+    }
+
+    public String getBasicBase64format() {
+        return BasicBase64format;
+    }
+
+    public void setBasicBase64format(String BasicBase64format) {
+        this.BasicBase64format = BasicBase64format;
+    }
 }

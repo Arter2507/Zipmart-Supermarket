@@ -29,4 +29,11 @@ public interface ManagersFacadeLocal {
 
     int count();
     
+    Long findByUsername(String username);
+    
+    Managers loadByUsername(String username, String password);
+
+    long getCountByUsernamePassword(String username, String password);
+
+    Managers getfindByUsername(String username);
 }

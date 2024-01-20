@@ -33,4 +33,17 @@ public interface EmployeesFacadeLocal {
     
     public long findByUsername(String username);
     
+     public boolean checkLoginEmployee(String username, String password);
+
+    Employees getfindByUsername(String username);
+
+    Long loginEmployee(String username, String password);
+
+    Employees loadByUsername(String username, String password);
+
+    long getCountByUsernamePassword(String username, String password);
+
+    public Employees checkExistLogin(String username);
+    
+    long getCountByUsername(String username);
 }

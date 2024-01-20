@@ -25,6 +25,7 @@
                                                     <span class="d-none d-sm-block">Upload new photo</span>
                                                     <i class="mdi mdi-tray-arrow-up d-block d-sm-none"></i>
                                                     <h:inputFile a:hidden="" id="upload" class="account-file-input" value="#{employeeBean.file}"/>
+                                                    <h:message for="upload" style="color: red;"/>
                                                 </h:outputLabel>
                                             </div>
                                         </div>
@@ -61,19 +62,23 @@
                                                     <h:inputText class="form-control" id="username" value="#{employeeBean.username}" required="true" requiredMessage="This field cannot be empty!"/>
                                                     <h:outputLabel for="username">Username</h:outputLabel>
                                                     <h:message for = "username" style = "color: red;" />
-                                                    <h:outputText value="#{empManagedBean.usernameMessage}"/>
+                                                    <h:outputText value="#{empManagedBean.user_message}"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:inputSecret styleClass="form-control" id="password" value="#{employeeBean.password}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:inputSecret styleClass="form-control" id="password" value="#{employeeBean.password}" required="true" validatorMessage="Your password must between 3 and 16" requiredMessage="This field cannot be empty!">
+                                                    <f:validateLength for = "password" minimum = "3" maximum = "16" />
+                                                    </h:inputSecret>
                                                     <h:outputLabel for="password">Password</h:outputLabel>
                                                     <h:message for = "password" style = "color: red;" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:inputText a:type="number" class="form-control" id="phone" value="#{employeeBean.phone}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:inputText a:type="number" class="form-control" id="phone" value="#{employeeBean.phone}" required="true" validatorMessage="Number phone can't higher 11 number" requiredMessage="This field cannot be empty!">
+                                                    <f:validateRegex pattern="^[0-9]{10,11}$" />
+                                                    </h:inputText>
                                                     <h:outputLabel for="phone">Phone Number</h:outputLabel>
                                                     <h:message for = "phone" style = "color: red;" />
                                                 </div>
@@ -89,7 +94,9 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:inputText a:type="email" class="form-control" id="email" value="#{employeeBean.email}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:inputText a:type="email" class="form-control" id="email" value="#{employeeBean.email}" required="true" validatorMessage="Your email not true format. Exp: example@gmail.com" requiredMessage="This field cannot be empty!">
+                                                    <f:validateRegex pattern="^[a-z][a-z0-9]+(?:[.][a-z0-9]+)*@[a-z]+(?:[.][a-z]+)?" />  
+                                                    </h:inputText>
                                                     <h:outputLabel for="email">Email</h:outputLabel>
                                                     <h:message for = "email" style = "color: red;" />
                                                 </div>
@@ -113,7 +120,6 @@
                         </div>
                     </div>
                 </div>               
-                <h:outputScript name="js/js.admin/resetForm.js"/>
             </ui:define>
         </ui:composition>
     </h:body>

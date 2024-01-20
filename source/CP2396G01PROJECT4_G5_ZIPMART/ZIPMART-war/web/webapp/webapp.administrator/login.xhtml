@@ -9,7 +9,8 @@
       dir="ltr"
       data-theme="theme-default"
       data-assets-path="#{resource['/images/admin/']}"
-      data-template="vertical-menu-template-free">
+      data-template="vertical-menu-template-free"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <meta charset="utf-8"/>
         <title>Zip Mart | Supermarket System</title>
@@ -67,17 +68,19 @@
                         <div class="card-body mt-2">
                             <h4 class="mb-2">Welcome to Zip Mart! 👋</h4>
                             <p class="mb-4">Please sign-in to your account and start the adventure</p>
-
+                            <c:if test="#{loginAdminManagedBean.statusLogin == 3}">
+                                <p style="color: red;">Username or password incorrect!</p>
+                            </c:if>
                             <h:form id="formAuthentication" class="mb-3">
                                 <div class="form-floating form-floating-outline mb-3">
-                                    <h:inputText styleClass="form-control" id="email" a:placeholder="Enter your email or username"/>                                                                     
+                                    <h:inputText styleClass="form-control" id="email" value="#{loginAdminManagedBean.username}" a:placeholder="Enter your email or username"/>                                                                     
                                     <h:outputLabel for="email">Email or Username</h:outputLabel>
                                 </div>
                                 <div class="mb-3">
                                     <div class="form-password-toggle">
                                         <div class="input-group input-group-merge">
                                             <div class="form-floating form-floating-outline">
-                                                <h:inputText styleClass="form-control" id="password" a:placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"/>
+                                                <h:inputSecret styleClass="form-control" id="password" value="#{loginAdminManagedBean.password}" a:placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"/>
                                                 <h:outputLabel for="password">Password</h:outputLabel>
                                             </div>
                                             <span class="input-group-text cursor-pointer"><i class="mdi mdi-eye-off-outline"></i></span>
@@ -94,10 +97,10 @@
                                     </h:link>
                                 </div>
                                 <div class="mb-3">
-                                    <h:commandButton class="btn btn-outline-primary d-grid" value="Sign in"></h:commandButton>
+                                    <h:commandButton class="btn btn-outline-primary d-grid" action="#{loginAdminManagedBean.checkEmp()}" value="Sign in"></h:commandButton>
                                 </div>
                             </h:form>
-                          
+
                         </div>
                     </div>
                     <!-- /Login -->
@@ -118,7 +121,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Core JS -->
         <!-- build:js assets/vendor/js/core.js -->
         <h:outputScript name="otherpackages/op.admin/vendor/libs/jquery/jquery.js"></h:outputScript>
@@ -127,10 +130,10 @@
         <h:outputScript name="otherpackages/op.admin/vendor/libs/node-waves/node-waves.js"></h:outputScript>
         <h:outputScript name="otherpackages/op.admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></h:outputScript>
         <h:outputScript name="otherpackages/op.admin/vendor/js/menu.js"></h:outputScript>
-        
+
         <!-- Main JS -->
         <h:outputScript name="js/js.admin/main.js"></h:outputScript>
-        
+
         <!-- Place this tag in your head or just before your close body tag. -->
         <script async="true" defer="true" src="https://buttons.github.io/buttons.js"></script>
     </h:body>
