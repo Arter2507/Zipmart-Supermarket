@@ -4,9 +4,12 @@ import com.zipmart.ejb.entities.EmployeeGenders;
 import com.zipmart.ejb.entities.EmployeeGendersPK;
 import com.zipmart.ejb.entities.Employees;
 import com.zipmart.ejb.entities.Genders;
+import com.zipmart.ejb.entities.Permissions;
 import com.zipmart.ejb.session_beans.EmployeeGendersFacadeLocal;
 import com.zipmart.ejb.session_beans.EmployeesFacadeLocal;
 import com.zipmart.ejb.session_beans.GendersFacadeLocal;
+import com.zipmart.ejb.session_beans.PermissionsFacadeLocal;
+import com.zipmart.util.CryptUltil;
 import com.zipmart.util.FileUltil;
 import java.io.IOException;
 import javax.inject.Named;
@@ -15,7 +18,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -23,7 +25,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Part;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -34,6 +36,9 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 public class EmployeeBean implements Serializable {
 
     @EJB
+    private PermissionsFacadeLocal permissionsFacade;
+
+    @EJB
     private EmployeeGendersFacadeLocal employeeGendersFacade;
 
     @EJB
@@ -41,11 +46,13 @@ public class EmployeeBean implements Serializable {
 
     @EJB
     private EmployeesFacadeLocal employeesFacade;
+     
 
     private Employees employee = new Employees();
     private Genders gender = new Genders();
     private EmployeeGenders eg = new EmployeeGenders();
     private EmployeeGendersPK idEG = new EmployeeGendersPK();
+    private Permissions per = new Permissions();
 
     private Long id;
     private String fullname;
@@ -59,9 +66,9 @@ public class EmployeeBean implements Serializable {
     private Timestamp birthdate;
     private boolean status = true;
 
-    private String pepper_pass = "secret_employee";
-    private String salt = BCrypt.gensalt(12).concat(pepper_pass);
-    private String hashPassword = BCrypt.hashpw(password, salt);
+    private String pepper_pass = CryptUltil.getCrypt().getPepper_pass();   
+    private String salt = CryptUltil.getCrypt().getSalt_pass();
+    private String hashPassword;
 
     private Part file;
     private String imageURL;
@@ -142,6 +149,7 @@ public class EmployeeBean implements Serializable {
             return "addEmployee";
         } else {
             imageURL = FileUltil.getInstance().uploadFile(file);
+            hashPassword = CryptUltil.getCrypt().enCodePass(password);
             employee.setFullname(fullname);
             employee.setUsername(username);
             employee.setPassword(hashPassword);
@@ -190,6 +198,7 @@ public class EmployeeBean implements Serializable {
             System.out.println("Full name: " + fullname);
             System.out.println("Username: " + username);
             System.out.println("Password: " + password);
+            System.out.println("Pass Hash: " + hashPassword);
             System.out.println("Salt: " + salt);
             System.out.println("Pepper: " + pepper_pass);
             System.out.println("Address: " + address);
@@ -202,14 +211,15 @@ public class EmployeeBean implements Serializable {
     public String updateEmp() {
         Employees empUp = employee;
         gender = gendersFacade.find(selected_gender);
-        imageURL = FileUltil.getInstance().uploadFile(file);
+        Long idp = 2L;
+        
+        hashPassword = CryptUltil.getCrypt().enCodePass(new_password);
 
-        hashPassword = BCrypt.hashpw(new_password, salt);
-
-        if (imageURL == null) {
-            empUp.setImageURL(empUp.getImageURL());
-        } else {
+        if (empUp.getImageURL() == null) {
+            imageURL = FileUltil.getInstance().uploadFile(file);
             empUp.setImageURL(imageURL);
+        } else {
+            empUp.setImageURL(empUp.getImageURL());
         }
 
         if (gender != null) {
@@ -235,12 +245,19 @@ public class EmployeeBean implements Serializable {
         empUp.setUsername(empUp.getUsername());
         empUp.setPassword(hashPassword);
         empUp.setSaltPassword(salt);
+        empUp.setPepperPassword(pepper_pass);
         empUp.setAddress(empUp.getAddress());
         empUp.setPhone(empUp.getPhone());
         empUp.setEmail(empUp.getEmail());
         empUp.setBirthDate(empUp.getBirthDate());
         empUp.setNotes(empUp.getNotes());
         empUp.setImageURL(empUp.getImageURL());
+        if (empUp.getStatus() == null) {
+                empUp.setStatus(Boolean.TRUE);
+            }
+        if(empUp.getEmployeeGroup() == null){
+        empUp.setEmployeeGroup(permissionsFacade.find(idp));
+        }
         employeesFacade.edit(empUp);
         return "employee";
     }
@@ -263,7 +280,7 @@ public class EmployeeBean implements Serializable {
         return null;
     }
 
-    public void backToEmployee() {
+    public void backToIndex() {
 //        // Huỷ session trước đó
 //        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         // Chuyển về trang employee.xhtml
@@ -492,6 +509,30 @@ public class EmployeeBean implements Serializable {
 
     public void setGenderLabel(String genderLabel) {
         this.genderLabel = genderLabel;
+    }
+
+    public String getUser_message() {
+        return user_message;
+    }
+
+    public void setUser_message(String user_message) {
+        this.user_message = user_message;
+    }
+
+    public PermissionsFacadeLocal getPermissionsFacade() {
+        return permissionsFacade;
+    }
+
+    public void setPermissionsFacade(PermissionsFacadeLocal permissionsFacade) {
+        this.permissionsFacade = permissionsFacade;
+    }
+
+    public Permissions getPer() {
+        return per;
+    }
+
+    public void setPer(Permissions per) {
+        this.per = per;
     }
 
 }

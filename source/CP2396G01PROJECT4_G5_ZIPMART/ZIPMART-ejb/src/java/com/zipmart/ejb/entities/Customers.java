@@ -23,6 +23,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -63,7 +64,7 @@ public class Customers implements Serializable {
     @Column(name = "ID")
     private Long id;
     @Column(name = "customer_gender")
-    private BigInteger customerGender;
+    private Long customerGender;
     @Column(name = "customer_card")
     private BigInteger customerCard;
     @Size(max = 50)
@@ -126,6 +127,15 @@ public class Customers implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customers")
     private Collection<CustomerGenders> customerGendersCollection;
 
+    @Transient
+    private String active;
+    
+    @Transient
+    private String oldPass;
+    
+    @Transient
+    private String newPass;
+    
     public Customers() {
     }
 
@@ -141,11 +151,11 @@ public class Customers implements Serializable {
         this.id = id;
     }
 
-    public BigInteger getCustomerGender() {
+    public Long getCustomerGender() {
         return customerGender;
     }
 
-    public void setCustomerGender(BigInteger customerGender) {
+    public void setCustomerGender(Long customerGender) {
         this.customerGender = customerGender;
     }
 
@@ -353,6 +363,30 @@ public class Customers implements Serializable {
     @Override
     public String toString() {
         return "com.zipmart.ejb.entities.Customers[ id=" + id + " ]";
+    }
+
+    public String getActive() {
+        return status == null ? "null" : status ? "Enabled" : "Disabled";
+    }
+
+    public void setActive(String active) {
+        this.active = active;
+    }
+
+    public String getOldPass() {
+        return oldPass;
+    }
+
+    public void setOldPass(String oldPass) {
+        this.oldPass = oldPass;
+    }
+
+    public String getNewPass() {
+        return newPass;
+    }
+
+    public void setNewPass(String newPass) {
+        this.newPass = newPass;
     }
     
 }

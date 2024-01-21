@@ -11,6 +11,8 @@ import com.zipmart.ejb.entities.Managers;
 import com.zipmart.ejb.session_beans.GendersFacadeLocal;
 import com.zipmart.ejb.session_beans.ManagerGendersFacadeLocal;
 import com.zipmart.ejb.session_beans.ManagersFacadeLocal;
+import com.zipmart.ejb.session_beans.PermissionsFacadeLocal;
+import com.zipmart.util.CryptUltil;
 import com.zipmart.util.FileUltil;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +26,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Part;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 
 /**
  *
@@ -33,6 +34,9 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 @Named(value = "managerBean")
 @RequestScoped
 public class ManagerBean {
+
+    @EJB
+    private PermissionsFacadeLocal permissionsFacade;
 
     @EJB
     private GendersFacadeLocal gendersFacade;
@@ -58,11 +62,9 @@ public class ManagerBean {
     private String address;
     private boolean status = true;
 
-    private String pepper_pass = "secret_employee";
-    private String salt = BCrypt.gensalt();
-    private String hashPassword = BCrypt.hashpw(password, salt);
-    private String BasicBase64format;
-            
+    private String pepper_pass = CryptUltil.getCrypt().getPepper_pass();
+    private String salt = CryptUltil.getCrypt().getSalt_pass();
+    private String hashPassword;            
 
     private Part file;
     private String imageURL;
@@ -148,11 +150,11 @@ public class ManagerBean {
             System.out.println("Username already exists!" + username + "-------" + status + "=====" + checkUser);
             return "addManager";
         } else {
-            BasicBase64format = Base64.getEncoder().encodeToString(password.getBytes());
             imageURL = FileUltil.getInstance().uploadFile(file);
+            hashPassword = CryptUltil.getCrypt().enCodePass(password);
             manager.setFullname(fullname);
             manager.setUsername(username);
-            manager.setPassword(BasicBase64format);
+            manager.setPassword(hashPassword);
             manager.setSaltPassword(salt);
             manager.setPepperPassword(pepper_pass);
             manager.setAddress(address);
@@ -209,14 +211,15 @@ public class ManagerBean {
     public String updateManager() {
         Managers managerUp = manager;
         gender = gendersFacade.find(selected_gender);
-        imageURL = FileUltil.getInstance().uploadFile(file);
+        Long idp = 1L;
+        
+        hashPassword = CryptUltil.getCrypt().enCodePass(new_password);
 
-        hashPassword = BCrypt.hashpw(new_password, salt);
-
-        if (imageURL == null) {
-            managerUp.setImageURL(managerUp.getImageURL());
-        } else {
+        if (managerUp.getImageURL() == null) {
+            imageURL = FileUltil.getInstance().uploadFile(file);
             managerUp.setImageURL(imageURL);
+        } else {
+            managerUp.setImageURL(managerUp.getImageURL());
         }
 
         if (gender != null) {
@@ -242,10 +245,17 @@ public class ManagerBean {
         managerUp.setUsername(managerUp.getUsername());
         managerUp.setPassword(hashPassword);
         managerUp.setSaltPassword(salt);
+        managerUp.setPepperPassword(pepper_pass);
         managerUp.setAddress(managerUp.getAddress());
         managerUp.setPhone(managerUp.getPhone());
         managerUp.setEmail(managerUp.getEmail());
         managerUp.setImageURL(managerUp.getImageURL());
+        if (managerUp.getStatus() == null) {
+                managerUp.setStatus(Boolean.TRUE);
+            }
+        if(managerUp.getManagerGroup()== null){
+        managerUp.setManagerGroup(permissionsFacade.find(idp));
+        }
         managersFacade.edit(managerUp);
         return "manager";
     }
@@ -503,13 +513,5 @@ public class ManagerBean {
 
     public void setMessage_delete(String message_delete) {
         this.message_delete = message_delete;
-    }
-
-    public String getBasicBase64format() {
-        return BasicBase64format;
-    }
-
-    public void setBasicBase64format(String BasicBase64format) {
-        this.BasicBase64format = BasicBase64format;
     }
 }

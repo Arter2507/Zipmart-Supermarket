@@ -2,7 +2,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       lang="en"
       class="light-style layout-wide customizer-hide"
@@ -71,6 +70,9 @@
                             <c:if test="#{loginAdminManagedBean.statusLogin == 3}">
                                 <p style="color: red;">Username or password incorrect!</p>
                             </c:if>
+                            <c:if test="#{loginAdminManagedBean.check == 4 || loginAdminManagedBean.check == 5}">
+                                <h:message for="password" style="color: red;"/>
+                            </c:if>
                             <h:form id="formAuthentication" class="mb-3">
                                 <div class="form-floating form-floating-outline mb-3">
                                     <h:inputText styleClass="form-control" id="email" value="#{loginAdminManagedBean.username}" a:placeholder="Enter your email or username"/>                                                                     
@@ -80,7 +82,7 @@
                                     <div class="form-password-toggle">
                                         <div class="input-group input-group-merge">
                                             <div class="form-floating form-floating-outline">
-                                                <h:inputSecret styleClass="form-control" id="password" value="#{loginAdminManagedBean.password}" a:placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"/>
+                                                <h:inputSecret styleClass="form-control" id="password" value="#{loginAdminManagedBean.loginPassword}" a:placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"/>
                                                 <h:outputLabel for="password">Password</h:outputLabel>
                                             </div>
                                             <span class="input-group-text cursor-pointer"><i class="mdi mdi-eye-off-outline"></i></span>

@@ -10,7 +10,7 @@
                     <file>${reference.ZIPMART-ejb.dist}</file>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.spring-security-crypto-5.1.13.RELEASE.jar}</file>
+                    <file>${file.reference.commons-codec-1.16.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>

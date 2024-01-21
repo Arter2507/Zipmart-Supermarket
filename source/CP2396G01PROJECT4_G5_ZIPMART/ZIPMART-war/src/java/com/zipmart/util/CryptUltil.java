@@ -1,48 +1,52 @@
 package com.zipmart.util;
 
-import java.util.UUID;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.apache.commons.codec.digest.DigestUtils;
 
 public class CryptUltil {
 
     private static CryptUltil crypt = null;
 
-    private String salt_pass = UUID.randomUUID().toString();
-    private String pepper_pass = "secret_employee";
-    private String salt = BCrypt.gensalt(12).concat(pepper_pass);
-    public static CryptUltil getInstance() {
+    public static CryptUltil getCrypt() {
         if (crypt == null) {
             crypt = new CryptUltil();
         }
         return crypt;
     }
 
-    public String enCodePass(String password){              
-        String hashedPassword = BCrypt.hashpw(password, salt);
-        return hashedPassword;
+    public static void setCrypt(CryptUltil aCrypt) {
+        crypt = aCrypt;
+    }
+
+    private final String salt_pass = "dhapsowidnshywipldkhtsb@&ndjaspsad|";
+    private final String pepper_pass = "secretrandom";
+
+    public String enCodePass(String pass) {
+        String str = pass + salt_pass + pepper_pass;
+        String md5_hex = DigestUtils.md5Hex(str).toUpperCase();
+        return md5_hex;
+    }
+
+    public String deCodePass(String pass) {
+        String str = pass + salt_pass + pepper_pass;
+        String md5_hex = DigestUtils.md5Hex(str).toUpperCase();
+        return md5_hex;
+    }
+
+    public boolean checkPass(String pass, String hash_pass) {
+        if (pass.equals(hash_pass)) {
+            System.out.println("Verify");
+            return true;
+        } else {
+            System.out.println("Invalid password.");
+            return false;
+        }
     }
 
     public String getSalt_pass() {
         return salt_pass;
     }
 
-    public void setSalt_pass(String salt_pass) {
-        this.salt_pass = salt_pass;
-    }
-
     public String getPepper_pass() {
         return pepper_pass;
-    }
-
-    public void setPepper_pass(String pepper_pass) {
-        this.pepper_pass = pepper_pass;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
     }
 }
