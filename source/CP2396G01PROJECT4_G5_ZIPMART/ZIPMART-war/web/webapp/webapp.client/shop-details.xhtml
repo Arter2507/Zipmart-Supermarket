@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a = "http://java.sun.com/jsf/passthrough">
     <h:body>
         <ui:composition template="/webapp/webapp.layout/_mainLayout.xhtml">
             <ui:define name="content">
@@ -11,7 +13,7 @@
                     <h1 class="text-center text-white display-6">Shop Detail</h1>
                     <ol class="breadcrumb justify-content-center mb-0">
                         <li class="breadcrumb-item"><h:link outcome="/webapp/webapp.client/index.xhtml">Home</h:link></li>
-                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Pages</a></li>
                         <li class="breadcrumb-item active text-white">Shop Detail</li>
                     </ol>
                 </div>
@@ -25,15 +27,17 @@
                                 <div class="row g-4">
                                     <div class="col-lg-6">
                                         <div class="border rounded">
-                                            <a href="#">
-                                                <img src="img/single-item.jpg" class="img-fluid rounded" alt="Image"/>
+                                            <a href="javascript:void(0);">
+                                                <h:graphicImage value="#{resource[productBean.product.imageURL]}" class="img-fluid rounded" alt="Image"/>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <h4 class="fw-bold mb-3">Brocoli</h4>
-                                        <p class="mb-3">Category: Vegetables</p>
-                                        <h5 class="fw-bold mb-3">3,35 $</h5>
+                                        <h4 class="fw-bold mb-3">#{productBean.product.productName}</h4>
+                                        <p class="mb-3">Category: #{productBean.product.categoryID.categoryName}</p>
+                                        <h:outputText value="#{productBean.product.price_discout}" class="fw-bold mb-3">
+                                            <f:convertNumber type="currency" currencySymbol="$" locale="en_US"/>
+                                        </h:outputText>
                                         <div class="d-flex mb-4">
                                             <i class="fa fa-star text-secondary"></i>
                                             <i class="fa fa-star text-secondary"></i>
@@ -43,20 +47,24 @@
                                         </div>
                                         <p class="mb-4">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc.</p>
                                         <p class="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish</p>
-                                        <div class="input-group quantity mb-5" style="width: 100px;">
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
-                                                    <i class="fa fa-minus"></i>
-                                                </button>
+                                        <h:form>
+                                            <div class="input-group quantity mb-5" style="width: 100px;">
+                                                <div class="input-group-btn">
+                                                    <h:commandLink class="btn btn-sm btn-minus rounded-circle bg-light border" action="#{cartBean.upCart(productBean.product.id, false)}">
+                                                        <i class="fa fa-minus"></i>
+                                                        <f:ajax execute="@form" render="@form"/>
+                                                    </h:commandLink>
+                                                </div>
+                                                <h:inputText a:type="number" class="form-control form-control-sm text-center border-0" value="#{cartBean.cart.quantity}" maxlength="10"/>
+                                                <div class="input-group-btn">
+                                                    <h:commandLink class="btn btn-sm btn-plus rounded-circle bg-light border" action="#{cartBean.upCart(productBean.product.id, true)}">
+                                                        <i class="fa fa-plus"></i>
+                                                        <f:ajax execute="@form" render="@form"/>
+                                                    </h:commandLink>
+                                                </div>
                                             </div>
-                                            <input type="text" class="form-control form-control-sm text-center border-0" value="1"/>
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                            <h:commandLink action="#{cartBean.addCart(productBean.product.id, cartBean.cart.quantity)}" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</h:commandLink>
+                                        </h:form>
                                     </div>
                                     <div class="col-lg-12">
                                         <nav>
@@ -214,156 +222,44 @@
                                         </div>
                                         <div class="mb-4">
                                             <h4>Categories</h4>
-                                            <ul class="list-unstyled fruite-categorie">
-                                                <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Apples</a>
-                                                        <span>(3)</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Oranges</a>
-                                                        <span>(5)</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Strawbery</a>
-                                                        <span>(2)</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Banana</a>
-                                                        <span>(8)</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Pumpkin</a>
-                                                        <span>(5)</span>
-                                                    </div>
-                                                </li>
-                                            </ul>
+                                            <ui:repeat var="cate" value="#{categoryBean.showAllCate()}">
+                                                <ul class="list-unstyled fruite-categorie">
+                                                    <li>
+                                                        <div class="d-flex justify-content-between fruite-name">
+                                                            <a href="#"><i class="fas fa-apple-alt me-2"></i>#{cate.categoryName}</a>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </ui:repeat>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
-                                        <h4 class="mb-4">Featured products</h4>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="rounded" style="width: 100px; height: 100px;">
-                                                <img src="img/featur-1.jpg" class="img-fluid rounded" alt="Image"/>
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-2">Big Banana</h6>
-                                                <div class="d-flex mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
+                                        <h4 class="mb-4">Related products</h4>
+                                        <ui:repeat var="pros" value="#{productBean.showSame(productBean.product.id)}">
+                                            <div class="d-flex align-items-center justify-content-start">
+                                                <div class="rounded" style="width: 100px; height: 100px;">
+                                                    <h:graphicImage value="#{resource[pros.imageURL]}"  class="img-fluid rounded" alt="Image"/>
                                                 </div>
-                                                <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="rounded" style="width: 100px; height: 100px;">
-                                                <img src="img/featur-2.jpg" class="img-fluid rounded" alt=""/>
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-2">Big Banana</h6>
-                                                <div class="d-flex mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
+                                                <div>
+                                                    <h6 class="mb-2">#{pros.productName}</h6>
+                                                    <div class="d-flex mb-2">
+                                                        <i class="fa fa-star text-secondary"></i>
+                                                        <i class="fa fa-star text-secondary"></i>
+                                                        <i class="fa fa-star text-secondary"></i>
+                                                        <i class="fa fa-star text-secondary"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                    <div class="d-flex mb-2">
+                                                        <h:outputText value="#{pros.price_discout > 0 ? pros.price_discout : pros.unitPrice}" class="fw-bold me-2">
+                                                            <f:convertNumber type="currency" currencySymbol="$" locale="en_US"/>
+                                                        </h:outputText>
+                                                        <h:outputText value="#{pros.price_discout > 0 ? pros.unitPrice : ''}" class="h5 text-danger text-decoration-line-through">
+                                                            <f:convertNumber type="currency" currencySymbol="$" locale="en_US"/>
+                                                        </h:outputText>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="rounded" style="width: 100px; height: 100px;">
-                                                <img src="img/featur-3.jpg" class="img-fluid rounded" alt=""/>
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-2">Big Banana</h6>
-                                                <div class="d-flex mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                                <img src="img/vegetable-item-4.jpg" class="img-fluid rounded" alt=""/>
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-2">Big Banana</h6>
-                                                <div class="d-flex mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                                <img src="img/vegetable-item-5.jpg" class="img-fluid rounded" alt=""/>
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-2">Big Banana</h6>
-                                                <div class="d-flex mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                                <img src="img/vegetable-item-6.jpg" class="img-fluid rounded" alt=""/>
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-2">Big Banana</h6>
-                                                <div class="d-flex mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </ui:repeat>
                                         <div class="d-flex justify-content-center my-4">
                                             <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">Vew More</a>
                                         </div>
@@ -380,121 +276,29 @@
                             </div>
                         </div>
                     </div>
-                    <h1 class="fw-bold mb-0">Related products</h1>
+                    <h1 class="fw-bold mb-0">Featured products</h1>
                     <div class="vesitable">
                         <div class="owl-carousel vegetable-carousel justify-content-center">
-                            <div class="border border-primary rounded position-relative vesitable-item">
-                                <div class="vesitable-img">
-                                    <img src="img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt=""/>
-                                </div>
-                                <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                                <div class="p-4 pb-0 rounded-bottom">
-                                    <h4>Parsely</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                    <div class="d-flex justify-content-between flex-lg-wrap">
-                                        <p class="text-dark fs-5 fw-bold">$4.99 / kg</p>
-                                        <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                            <ui:repeat var="repro" value="#{productBean.showFeaDetail()}">
+                                <div class="border border-primary rounded position-relative vesitable-item">
+                                    <div class="vesitable-img">
+                                        <h:graphicImage value="#{resource[repro.imageURL]}" class="img-fluid w-100 rounded-top" alt=""/>
+                                    </div>
+                                    <h:outputText value="#{repro.discount > 0 ? 'SAFE OFF ' .concat(repro.discount.toString()).concat('%') : ''}" class="text-white bg-danger px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;" rendered="#{repro.discount > 0}"/>
+                                    <div class="p-4 pb-0 rounded-bottom">
+                                        <h4>#{repro.productName}</h4>
+                                        <h:outputText value="#{repro.price_discout > 0 ? repro.unitPrice : ''}" class="text-danger text-decoration-line-through">
+                                            <f:convertNumber type="currency" currencySymbol="$" locale="en_US"/>
+                                        </h:outputText>
+                                        <div class="d-flex justify-content-between flex-lg-wrap">
+                                            <h:outputText value="$#{repro.price_discout > 0 ? repro.price_discout : repro.unitPrice}/#{repro.unit}" class="text-dark fs-5 fw-bold">
+                                                <f:convertNumber type="currency" currencySymbol="$" locale="en_US"/>
+                                            </h:outputText>
+                                            <a href="#" class="btn border border-secondary rounded-pill px-2 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-1 text-primary"></i> Add to cart</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="border border-primary rounded position-relative vesitable-item">
-                                <div class="vesitable-img">
-                                    <img src="img/vegetable-item-1.jpg" class="img-fluid w-100 rounded-top" alt=""/>
-                                </div>
-                                <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                                <div class="p-4 pb-0 rounded-bottom">
-                                    <h4>Parsely</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                    <div class="d-flex justify-content-between flex-lg-wrap">
-                                        <p class="text-dark fs-5 fw-bold">$4.99 / kg</p>
-                                        <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border border-primary rounded position-relative vesitable-item">
-                                <div class="vesitable-img">
-                                    <img src="img/vegetable-item-3.png" class="img-fluid w-100 rounded-top bg-light" alt=""/>
-                                </div>
-                                <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                                <div class="p-4 pb-0 rounded-bottom">
-                                    <h4>Banana</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                    <div class="d-flex justify-content-between flex-lg-wrap">
-                                        <p class="text-dark fs-5 fw-bold">$7.99 / kg</p>
-                                        <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border border-primary rounded position-relative vesitable-item">
-                                <div class="vesitable-img">
-                                    <img src="img/vegetable-item-4.jpg" class="img-fluid w-100 rounded-top" alt=""/>
-                                </div>
-                                <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                                <div class="p-4 pb-0 rounded-bottom">
-                                    <h4>Bell Papper</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                    <div class="d-flex justify-content-between flex-lg-wrap">
-                                        <p class="text-dark fs-5 fw-bold">$7.99 / kg</p>
-                                        <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border border-primary rounded position-relative vesitable-item">
-                                <div class="vesitable-img">
-                                    <img src="img/vegetable-item-5.jpg" class="img-fluid w-100 rounded-top" alt=""/>
-                                </div>
-                                <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                                <div class="p-4 pb-0 rounded-bottom">
-                                    <h4>Potatoes</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                    <div class="d-flex justify-content-between flex-lg-wrap">
-                                        <p class="text-dark fs-5 fw-bold">$7.99 / kg</p>
-                                        <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border border-primary rounded position-relative vesitable-item">
-                                <div class="vesitable-img">
-                                    <img src="img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt=""/>
-                                </div>
-                                <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                                <div class="p-4 pb-0 rounded-bottom">
-                                    <h4>Parsely</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                    <div class="d-flex justify-content-between flex-lg-wrap">
-                                        <p class="text-dark fs-5 fw-bold">$7.99 / kg</p>
-                                        <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border border-primary rounded position-relative vesitable-item">
-                                <div class="vesitable-img">
-                                    <img src="img/vegetable-item-5.jpg" class="img-fluid w-100 rounded-top" alt=""/>
-                                </div>
-                                <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                                <div class="p-4 pb-0 rounded-bottom">
-                                    <h4>Potatoes</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                    <div class="d-flex justify-content-between flex-lg-wrap">
-                                        <p class="text-dark fs-5 fw-bold">$7.99 / kg</p>
-                                        <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border border-primary rounded position-relative vesitable-item">
-                                <div class="vesitable-img">
-                                    <img src="img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt=""/>
-                                </div>
-                                <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                                <div class="p-4 pb-0 rounded-bottom">
-                                    <h4>Parsely</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                    <div class="d-flex justify-content-between flex-lg-wrap">
-                                        <p class="text-dark fs-5 fw-bold">$7.99 / kg</p>
-                                        <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
+                            </ui:repeat>
                         </div>
                     </div>
                 </div>

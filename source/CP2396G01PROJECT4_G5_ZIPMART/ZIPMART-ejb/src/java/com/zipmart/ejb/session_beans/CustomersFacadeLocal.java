@@ -29,4 +29,7 @@ public interface CustomersFacadeLocal {
 
     int count();
     
+    long findByUsername(String username);
+    
+    Customers getFindByUsername(String username);
 }

@@ -29,4 +29,10 @@ public interface ProductsFacadeLocal {
 
     int count();
     
+    List<Products> getFeaturedProducts ();
+    
+    List<Products> getProSameCate(long id);
+    
+    List<Products> getFeaturedProductDetails ();
+    
 }

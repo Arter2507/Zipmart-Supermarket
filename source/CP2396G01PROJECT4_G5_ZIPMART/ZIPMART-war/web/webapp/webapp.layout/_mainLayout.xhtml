@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <ui:include src="../../resources/includes.configlayouts/includes.client/css.xhtml"/>
     </h:head>
@@ -47,21 +48,27 @@
                                 <i class="fa fa-shopping-bag fa-2x"></i>
                                 <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                             </h:link>
-                            <h:link outcome="/webapp/webapp.client/login.xhtml" class="my-auto">
-                                <i class="fas fa-user fa-2x"></i>
-                            </h:link>
-                            <div class="dropdown my-auto">
-                                <a class="btn btn-outline-secondary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-user text-primary"></i> <span class="text-primary">Profile</span>
-                                </a>
+                            <c:if test="#{loginManagedBean.status_login == 4}">
+                                <h:link outcome="/webapp/webapp.client/login.xhtml" class="my-auto">
+                                    <i class="fas fa-user fa-2x"></i>
+                                </h:link>
+                            </c:if>
+                            <c:if test="#{loginManagedBean.status_login == 1}">
+                                <h:form>
+                                <div class="dropdown my-auto">
+                                    <a class="btn btn-outline-secondary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-user text-primary"></i> <span class="text-primary">Profile</span>
+                                    </a>
 
-                                <ul class="dropdown-menu">
-                                    <li><h:link class="dropdown-item" outcome="/webapp/webapp.client/profile.xhtml"><i class="fas fa-user text-primary"></i> Edit Profile</h:link></li>
-                                    <li><h:link class="dropdown-item" outcome="/webapp/webapp.client/pages-misc-under-maintenance.xhtml"><i class="fas fa-receipt text-primary"></i> Order History</h:link></li>
-                                    <li><h:link class="dropdown-item" outcome="/webapp/webapp.client/pages-misc-under-maintenance.xhtml"><i class="fas fa-lock text-primary"></i> Change Password</h:link></li>
-                                    <li><h:link class="dropdown-item" outcome="/webapp/webapp.client/pages-misc-under-maintenance.xhtml"><i class="fas fa-gear text-primary"></i> Log Out</h:link></li>
-                                </ul>
-                            </div>
+                                    <ul class="dropdown-menu">
+                                        <li><h:link class="dropdown-item" outcome="/webapp/webapp.client/profile.xhtml"><i class="fas fa-user text-primary"></i> Edit Profile</h:link></li>
+                                        <li><h:link class="dropdown-item" outcome="/webapp/webapp.client/pages-misc-under-maintenance.xhtml"><i class="fas fa-receipt text-primary"></i> Order History</h:link></li>
+                                        <li><h:link class="dropdown-item" outcome="/webapp/webapp.client/pages-misc-under-maintenance.xhtml"><i class="fas fa-lock text-primary"></i> Change Password</h:link></li>
+                                        <li><h:commandLink class="dropdown-item" action="#{loginManagedBean.logout()}" ><i class="fas fa-gear text-primary"></i> Log Out</h:commandLink></li>
+                                    </ul>
+                                </div>
+                                </h:form>
+                            </c:if>
                         </div>
                     </div>
                 </nav>

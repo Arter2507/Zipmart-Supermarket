@@ -598,6 +598,7 @@ CREATE TABLE [dbo].[Blogs](
 	[imageURL] [nvarchar](max) NULL,
 	[content] [nvarchar](max) NULL,
 	[category] [nvarchar](255) NULL,
+	[sortcontent] [nvarchar](max) NULL,
 	[createdate] [datetime] NULL,
 	[modifiedate] [datetime] NULL,
 	[createby] [nvarchar](255) NULL,
@@ -929,6 +930,7 @@ CREATE TABLE [dbo].[Products](
 	[quantityInStock] [int] NULL,
 	[unit] [nvarchar](50) NULL,
 	[description] [nvarchar](max) NULL,
+	[sortdescription] [nvarchar](max) NULL,
 	[viewCount] [int] NULL,
 	[discount] [int] NULL,
 	[avaliable] [bit] NULL,
@@ -1825,8 +1827,21 @@ set quoted_identifier on
 go
 ALTER TABLE "Products" NOCHECK CONSTRAINT ALL
 go
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (1, 1, 1,'Iron', 'images\products\homeelectric\banuikho.jpg',15.0000,50,150,'unit',
+INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, sortdescription ,description, viewCount, discount, avaliable, inventoryStatus)
+VALUES (1, 1, 1, 'Iron', 'images\products\homeelectric\banuikho.jpg', 15.0000, 50, 150, 'unit',
+'<p>
+	<span >Goldsun Gir2202 Dry Iron will be an indispensable device in the family, considered a modern iron, helping to iron clothes quickly, saving time and effort for the user.</span>
+</p>' +
+'<p>
+	<span >Outstanding features: Anti-slip handle design. The table top is covered with high quality non-stick Teflon. Remove wrinkles from all fabrics. 3 levels of temperature adjustment. Automatically turns off power when not in use.</span>
+</p>' +
+'<p>
+	<span >Technical specifications: Power: 1000W, 3 temperature adjustment levels, 3 ironing temperature levels. Surface covered with Teflon non-stick coating. Power source 220V~50HZ. Weight: 0.6kg</span>
+</p>' + 
+'<p>
+	<span >Note when using: Low temperature for synthetic fibers/silk. Average temperature used for fabrics. High temperature for linen and cotton. Place of production: Vietnam.</span>
+</p>', 
+
 '<p>
 	<span >Goldsun Gir2202 Dry Iron will be an indispensable device in the family, considered a modern iron, helping to iron clothes quickly, saving time and effort for the user.</span>
 </p>' +
@@ -1839,311 +1854,6 @@ VALUES (1, 1, 1,'Iron', 'images\products\homeelectric\banuikho.jpg',15.0000,50,1
 '<p>
 	<span >Note when using: Low temperature for synthetic fibers/silk. Average temperature used for fabrics. High temperature for linen and cotton. Place of production: Vietnam.</span>
 </p>', 200, 15, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (1, 1, 1,'Mini Gas Stove', 'images\products\homeelectric\bepgasmini.jpg',8.4300,50,150,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>NaMilux Mini gas stove NH-P3031PF</strong> is a convenient gas stove model with new improvements in extremely strong capacity, shortening cooking time and minimizing gas waste.
-        </li>
-        <li aria-level="1" >
-          Use an automatic gas shut-off valve assembly to ensure safety when used.
-        </li>
-        <li aria-level="1" >The heat transfer plate design keeps the pressure in the gas can stable, giving a strong, blue fire throughout the cooking process.</li>
-        <li aria-level="1" >Anti-slip tripod legs provide sturdy support, can be used for many sizes of pots and pans, and limit heat transfer to gas cans to avoid causing fires and explosions when in use.</li>
-        <li aria-level="1" >The product uses eyelid rolling technology <i class="fa-thin fa-arrow-right"></i> creates sturdiness and easy cleaning.</li>
-		<li aria-level="1" >Heat-resistant electroplated brackets (3500 degrees Celsius), bracket trays to prevent water from spilling into gas cans.</li>
-</ul>', 200, 15, 0, 3);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (1, 1, 1,'Kitchen infrared', 'images\products\homeelectric\bephongngoai.jpg',17.5000,20,100,'unit',
-'<p>
-	<span >Sunhouse SHD6014 Infrared Stove is simply designed, super thin with a weight of 2kg, you can move it anywhere conveniently. The product is designed with two eye-catching main colors: black and white, the kitchen surface is made from a super durable material that is heat-resistant and durable, easy to observe.</span>
-</p>' +
-'<p>
-	<span >Infrared stoves use modern technology, do not radiate heat, so they are very safe for users''health. The stove has a safety lock so you can rest assured when children come near. The super durable glass surface can withstand 800 degrees Celsius, prevents scratches and cracks at high temperatures, and the cooling fan helps radiate heat quickly, prevents short circuits, and increases the life of the stove.</span>
-</p>' +
-'<p>
-	<span >Operating with a capacity of 2000W to cook food faster, smart timer function helps save energy and time</span>
-</p>' + 
-'<p>
-	<span >Using electronic chips to control, many different cooking modes such as stir-frying, stewing, hot pot, frying,... make cooking easier and simpler.</span>
-</p>', 100, 27, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (1, 2, 1,'Lock&Lock Grill EJG232 - Black', 'images\products\homeelectric\noichienkhongdau.jpg',15.0000,50,150,'unit',
-'<p>
-	<span >Lock&Lock Grill EJG232 Black has a compact, simple but modern design, suitable for your kitchen space.</span>
-</p>' +
-'<p>
-	<span >The product is used to grill food, with an effective non-stick grill surface, creating dishes with less oil, still retaining a delicious taste, ensuring the health of the user.</span>
-</p>' +
-'<p>
-	<span >Product specifications: Dimensions: 560x330x85mm; Weight: 2kg/ including 2.8kg packaging.</span>
-</p>' + 
-'<p>
-	<span >Notes when using: - Keep out of reach of children. Do not leave the product near places containing water or humid air, and avoid direct sunlight. - Avoid strong impacts, dropping the product and pay attention to electrical leakage incidents. - Only use the product for basic purposes, do not use it for other commercial purposes.</span>
-</p>', 50, 0, 1, 2);
-----------------------------------------
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (2, 3, 3,'Simply Pure 100% Soybean Oil Bottle', 'images\products\spice\dauanhatcaiSimply.jpg',0.5300,50,150,'unit',
-'<p>
-	<span >Simply Pure 100% Canola Oil 1L Bottle is produced from premium imported ingredients, retaining high levels of unsaturated fat (> 88%) to help protect heart health. The product also adds a rich source of vitamin A in sunflower oil that can prevent cataracts.</span>
-</p>' +
-'<p>
-	<span >Simply Canola Oil is produced using modern refining technology from Europe, strictly complying with international standards on food safety and hygiene: FSSC 22000, HACCP and AIB. The product does not contain cholesterol and trans fatty acids, preservatives and colorants.</span>
-</p>' +
-'<p>
-	<span >The product is conveniently bottled, the bottle is made from clean ingredients, free of impurities, ensuring consumer health.Simply is a cooking oil brand recommended by the Vietnam Heart Association.</span>
-</p>' + 
-'<p>
-	<span >Instructions for use: Fry, stir-fry, mix salad, make cakes, cook vegetarian dishes. Store in a cool and dry place, away from direct sunlight. Close the lid tightly after use.</span>
-</p>', 500, 0, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (2, 3, 5,'Cholimex Char Siu Sauce', 'images\products\spice\sotxaxiuCholimex.jpg',2.2100,97,234,'unit',
-'<p>
-	<span >Cholimex Char Xiu Sauce 200G is packaged beautifully, neatly, and is easy to preserve. The product helps housewives save a lot of time when cooking.</span>
-</p>' +
-'<p>
-	<span >The product does not contain toxic chemicals or preservatives, ensuring safety for consumers health.</span>
-</p>' +
-'<p>
-	<span >Cholimex sauce is produced using modern, closed technology under strict supervision and inspection, helping to cook char siu meat faster and more convenient.</span>
-</p>' , 434, 0, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (2, 3, 5,'Fuji Soy Sauce Chai', 'images\products\spice\nuoctuongPhuSi.jpg',0.6900,100,543,'unit',
-'<p>
-	<span >Fuji Soy Sauce is extracted from soybeans, bringing a delicious, attractive taste to your family meals.</span>
-</p>' +
-'<p>
-	<span >Manufactured using modern, advanced Japanese technology. Ingredients: Water, salt, naturally fermented soybean extract (kiage), vegetable protein,...Use directly or marinate meat, fish, braised dishes, stir-fry, and cook.</span>
-</p>' +
-'<p>
-	<span >Storage: Dry, cool place, avoid direct sunlight, cover tightly after use. Made in Viet Nam.</span>
-</p>' , 234, 5, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (2, 3, 5,'Chinsu Chili Sauce', 'images\products\spice\tuongotChinsu.jpg',1.5600,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>NaMilux Mini gas stove NH-P3031PF</strong> Chili sauce is made from ripe red chili peppers with the strong aroma of garlic and subtle variations of spices to fill each chili sauce line of the Chinsu chili sauce brand.
-        </li>
-        <li aria-level="1" >
-          Chinsu chili sauce 1kg large bottle is convenient and suitable for large families, helping to save money.
-        </li>
-</ul>', 223, 0, 1, 1);
---------------------------
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (3, 4, 9,'Tam Nong whole chicken', 'images\products\meat\gatanguyenconTamNong.jpg',0.2200,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>Tam Nong whole chicken 1.4kg is raised according to strict standards, under the supervision of experts.
-        </li>
-        <li aria-level="1" >Chickens are healthy, guaranteed not to be infected with flu or disease. Closed and safe livestock farming system. Raising livestock safely, using clean, high-quality food sources. Do not use weight gain substances or stimulants to help chickens grow bigger. The finished chicken processing factory system is clean, using modern technology, ensuring food hygiene and safety requirements.</li>
-		<li aria-level="1" >Chicken is carefully packaged and preserved to deliver to consumers, keeping product quality always the best. Tam Nong chicken can be used to prepare many delicious dishes such as: boiled chicken, stewed chicken, grilled chicken, fried chicken, fried chicken.</li>
-</ul>', 223, 0, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (3, 4, 9,'Imported beef shoulder core', 'images\products\meat\loivaibo.jpg',0.2300,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>The shoulder core is cut from the meat area between the shoulder and neck of the cow. In the middle of the tenderloin there is a thin, crispy and not tough tendon.
-        </li>
-        <li aria-level="1" >
-          The meat is dark red in color, the shoulder core is moderately soft because it has an evenly distributed amount of fat and lean and is sweet and fragrant with a characteristic grain flavor.
-        </li>
-        <li aria-level="1" >Beef shoulder steak contains several essential nutrients including protein, iron, zinc, selenium, riboflavin, niacin, vitamin B6, vitamin B12, phosphorus, pantothenate, magnesium and potassium.</li>
-</ul>', 223, 0, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (3, 5, 9,'CP chicken fillet', 'images\products\meat\philega.jpg',0.2400,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>CP Chicken Fillet 500g (ea) is made from clean chicken sources, raised in a farm system that meets strict standards.</li>
-        <li aria-level="1" >
-          The preliminary processing and preservation process is carried out in a closed process, ensuring food hygiene and safety.
-        </li>
-        <li aria-level="1" >Chicken is rich in vitamins A, B1, B2, C, E, acid, calcium, phosphorus, iron that the human body easily absorbs and digests. Good for the heart, fights depression, supports teeth and bones, promotes eye health.</li>
-		<li aria-level="1" >The nutritional content of chicken breast is high and the amount of fat is low. Suitable for people who are in the process of losing weight and babies who are weaning.</li>
-</ul>', 223, 0, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (3, 4, 9,'Pork Ribs', 'images\products\meat\suonnonheo.jpg',0.2500,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>Pork ribs are a very popular cut of meat with soft meat, balanced with fat, keeping the meat from drying out. In particular, the cartilage is both soft and crunchy, bringing a pleasant feeling when eating.</li>
-        <li aria-level="1" >
-          Pork ribs are a good source of protein, providing essential amino acids for muscle growth and maintenance, as well as other body functions. Pork contains selenium, an important mineral that has antioxidant properties and supports the immune system.
-        </li>
-        <li aria-level="1" >Pork ribs are often used to cook many delicious and diverse dishes such as grilled, stir-fried, braised, steamed, cooked in soup, grilled, or processed into different dishes.</li>
-		<li aria-level="1" >Pigs are raised using advanced technology and a closed meat collection process, ensuring food safety and hygiene. The product is packaged in a convenient, hygienic tray when it reaches the consumer.</li>
-</ul>', 223, 0, 1, 1);
-------------------------------
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (4, 4, 9,'Fresh Octopus', 'images\products\aquaticproducts\bachtuoctuoi.jpg',0.2600,89,132,'unit',
-'<p>
-	<span >Fresh octopus meat provides essential vitamins for the body such as: A, B1, B2, PP, C and some other minerals such as calcium, phosphorus...</span>
-</p>' +
-'<p>
-	<span >Octopus meat has many nutrients for body development such as zinc, copper, iron, iodine - very good for brain development.</span>
-</p>' +
-'<p>
-	<span >Octopus meat has almost no fat and is very beneficial for muscles. This type of seafood is also rich in nutrients and has the effect of strengthening physical strength.</span>
-</p>', 223, 0, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (4, 4, 9,'Tuna fillet', 'images\products\aquaticproducts\cangudaiduongphile.jpg',0.2700,89,132,'unit',
-'<p>
-	<span >Ocean tuna is prepared from fresh ocean tuna, going through a careful selection process, closed processing and packaging process, ensuring all food hygiene and safety standards, safe for health.</span>
-</p>' +
-'<p>
-	<span >Ocean tuna has high protein content, contains a lot of magnesium minerals, a mixture of B vitamins, potassium, a source of omega 3,... bringing great health benefits such as helping to: lose weight; eye health; prevent atherosclerosis; Activate brain cells and promote brain activities;....</span>
-</p>' , 223, 0, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (4, 4, 9,'Saury', 'images\products\aquaticproducts\cathudao.jpg',0.3000,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>Saury (sanma) caught mainly in September-October contains many healthy oils and is considered a famous specialty of Japanese autumn. During the Edo period (1603 - 1868), this shiny green-skinned fish was considered a low-grade food, while white fish were much more popular.</li>
-        <li aria-level="1" >
-          Fish contains a lot of fat and nutrients that are beneficial for health. Fish fat contains DHA and EPA, which are substances that have the ability to prevent cardiovascular diseases such as myocardial infarction and stroke. In addition, saury meat contains a lot of vitamins that are good for health such as Vitamin E, vitamin A, and vitamin D.
-        </li>
-        <li aria-level="1" >How to prepare saury: After buying saury, clean the fish belly. However, mackerel has the characteristic of having firm meat (a lot of meat), so the intestines are not much, making it very easy to clean. Soak the fish in diluted salt water, use a knife to gently scrape the fish skin to remove plaque. Then, cut the mackerel gills into bite-sized pieces or chop them to suit your cooking needs. Delicious dishes from saury: Mackerel in tomato sauce, fragrant braised mackerel, braised mackerel with tomatoes, grilled mackerel...</li>
-		<li aria-level="1" >How to preserve fresh saury: Saury should be prepared immediately to maintain its freshness, but if you can use it in time, you can store it in the refrigerator.</li>
-</ul>', 223, 0, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (4, 4, 9,'Red tilapia', 'images\products\aquaticproducts\cadieuhong.jpg',0.9800,89,132,'unit',
-'<p>
-	<span >Red tilapia or red tilapia, also known as red tilapia, is a freshwater fish belonging to the tilapia family. As a type of fish with delicious meat quality, red tilapia meat is white, clean, the meat fibers are firmly structured and especially the meat does not have too many bones.</span>
-</p>' +
-'<p>
-	<span >Red tilapia is prepared from raw red tilapia, removing scales and internal organs, helping housewives save time in cleaning and easily prepare delicious dishes for the family quickly.</span>
-</p>' +
-'<p>
-	<span >Red tilapia meat contains selenium content that helps enhance the function of white blood cells. Supports the thyroid gland and increases antioxidants to help prevent cancer, rheumatism and cardiovascular disease. Potassium reduces the risk of stroke, osteoporosis, kidney stones and high blood pressure. Selenium is a compound that helps reduce pain and prevent disease. In addition, red tilapia meat also contains vitamins, especially Vitamin A supports beauty and enhances vision.</span>
-</p>', 223, 0, 1, 1);
------------------------------
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (5, 5, 2,'Broccoli', 'images\products\vegetable\bongcaixanh.jpg',0.5400,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>Broccoli (also known as broccoli) is a vegetable belonging to the cruciferous family with the scientific name Brassica Oleracea. Broccoli is a green vegetable shaped like a miniature tree, along with kale and cauliflower and are both cruciferous vegetables.</li>
-        <li aria-level="1" >
-          Broccoli is high in nutrients, including fiber, vitamin C, vitamin K, iron and potassium. Broccoli also contains more protein than most other vegetables.</li>
-        <li aria-level="1" >The product does not contain harmful chemicals or growth stimulants, ensuring safety for consumers health. Therefore, you can completely feel secure when choosing this product for every meal your family has, making meals more delicious.</li>
-</ul>', 223, 0, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (5, 5, 2,'Da Lat Beets', 'images\products\vegetable\cudenDaLat.jpg',0.5600,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>Dalat Beetroot is a clean food, containing many nutrients such as fiber, vitamin A, potassium... good for the body. The active ingredients in fresh beets have the effect of nourishing the blood, strengthening the body immune components, helping to detect and eliminate abnormal cells before they can transform into cancer cells.</li>
-        <li aria-level="1" >Products are grown using modern technology, ensuring freshness and food hygiene and safety.</li>
-</ul>', 223, 0, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (5, 5, 2,'Iceberg Lettuce', 'images\products\vegetable\xalachIceberg.jpg',3.4300,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>Iceberg Lettuce (also known as head lettuce) is a type of lettuce originating from America. Ice Berg Lettuce is tightly rolled into large, heavy heads, similar to cabbage buds.</li>
-        <li aria-level="1" >Lettuce is considered one of the healthiest vegetables, rich in vitamins C, K and anthocyanin polyphenols, which help prevent oxidation, reduce the risk of cardiovascular disease, diabetes and some cancers.</li>
-		<li aria-level="1" >Thanks to being rich in antioxidants, regular use of the product also makes your skin softer and brighter.</li>
-</ul>', 223, 0, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (5, 5, 2,'Da Lat Beef Tomatoes', 'images\products\vegetable\cachuaBeefDaLat.jpg',2.3100,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>Beef tomatoes are large fruits, with an average fruit weight of 110-200 grams. The fruit is red, ripens early, and has a dense flesh. This type of tomato has won and won the American AAS (All-Amer Selections) award.</li>
-        <li aria-level="1" >Beef tomatoes are thick, firm, have few seeds, and have few gaps when slicing. Beef tomatoes weigh more than regular tomatoes. Tomatoes are grown using modern technology, ensuring freshness and food hygiene and safety.</li>
-</ul>', 223, 10, 1, 1);
----------------------------
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (6, 5, 4,'Happycook HEK-180PW 1.8L Electric Kettle', 'images\products\convenientproduct\amdunsieutoc.jpg',5.9800,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>Compact design, light weight, a familiar household appliance in every Vietnamese family today. Capacity of 1.8 liters is suitable for families of 2 - 4 members or in offices, companies,...</li>
-        <li aria-level="1" >
-          The device is simply constructed and made from highly durable 201 stainless steel inside. The device will automatically shut off when it reaches a certain boiling point, ensuring anti-overheating and safety when boiling. The kettle shell is multi-layered with a hard, shiny plastic outer shell.</li>
-        <li aria-level="1" >Large capacity heating plate: The Happy Cook kettle electric heating plate operates stably with a capacity of up to 1,500W, allowing water heating time to be shortened, meeting hot water needs in just a few minutes.</li>
-</ul>', 223, 15, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (6, 5, 6,'Nano Cyclone Wet Towels 20 Pieces', 'images\products\convenientproduct\khanuotnano.jpg',4.3200,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>Nano Popular Premium Wet Towels 20 Pieces are soft, smooth wet towels and are a useful product for your life, helping you save time and shopping costs.</li>
-        <li aria-level="1" >
-          The product does not contain alcohol and does not cause skin sensitivity but has a gentle fragrance that creates a feeling of coolness, comfort and confidence.</li>
-        <li aria-level="1" >The product is made from non-woven fabric, purified water, natural fragrances, and humectants that help keep and provide necessary moisture to the skin, keeping the skin fresh, clean, and not dry after wiping.</li>
-</ul>', 223, 0, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (6, 5, 6,'Nestlé Milo Breakfast Cereal Box', 'images\products\convenientproduct\ngucocansang.jpg',2.1100,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>Nestlé MILO breakfast cereal 300g box is extracted from barley germ and grains containing many minerals, iron, vitamins, calcium and iodized salt to give your baby abundant energy to start a new day.</li>
-        <li aria-level="1" >
-          The cake has the familiar Milo flavor, is crispy and fragrant and is loved by children. It is easy to eat and not boring. It can be used with milk to increase appetite and create an attractive breakfast.</li>
-        <li aria-level="1" >The product is conveniently packaged, mothers can easily prepare it for their children to take to school or on family picnics. Ingredients: Cereal flour, oatmeal, rice flour, sugar, glucose syrup, palm oil, honey, minerals...</li>
-</ul>', 223, 20, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (6, 5, 6,'Lipton Lemon Honey Lemon Tea Box', 'images\products\convenientproduct\trachanhLipton.jpg',1.8900,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>Lipton Lemon Honey Lemon Tea Box of 16 Packs 12G is made from natural ingredients with a great combination of black tea leaves and natural lemon flavor to bring a refreshing feeling when enjoying.</li>
-        <li aria-level="1" >It great to enjoy a cool cup of honey lemon tea after stressful working hours or in hot sunny weather. Lemon tea provides vitamin C to help strengthen the immune system, and the delicious lemon scent will bring a refreshing feeling full of vitality.</li>        <li aria-level="1" >The product is conveniently packaged, mothers can easily prepare it for their children to take to school or on family picnics. Ingredients: Cereal flour, oatmeal, rice flour, sugar, glucose syrup, palm oil, honey, minerals...</li>
-        <li aria-level="1" >The product is produced using a closed technology to help preserve the full flavor of the leaves as well as the cool taste of lemon.</li>
-</ul>', 223, 5, 1, 1);
---------------------------------------
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (7, 5, 8,'Boys Short-Sleeved T-shirt with 2-sided Print in Light Blue Size 11-14', 'images\products\fashion\aothuntayngan.jpg',3.4200,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>Baby Boy T-shirt with 2-sided Print in Light Blue Size 11-14 is a simple short-sleeved, round-neck shirt, but the print on the front and back of the shirt makes your baby look very stylish, the fabric Breathable and absorbent cotton provides comfort when outdoors, helping your baby feel comfortable and confident when moving.</li>
-        <li aria-level="1" >Mothers can combine the shirt with jeans, boy shorts, etc. with children sports shoes and sandals to give the baby a unique personality.</li>  
-</ul>', 223, 5, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (7, 5, 8,'Automatic Folding Umbrella (Random Color Delivery)', 'images\products\fashion\ogap3Ocean.jpg',0.21,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>Automatic Folding Umbrella (Random Color) has a sturdy, durable metal frame, durable and water-resistant umbrella material. The Automatic Folding Umbrella is designed to be compact and lightweight, easy to install quickly, and easy to carry with you.</li>
-        <li aria-level="1" >The product has a 2-way automatic folding and opening design that is convenient for users. The product comes in many colors and is delivered randomly. Made in Viet Nam.</li>  
-</ul>', 223, 0, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (7, 5, 8,'Women Onoff Collarless Socks with Star Floral Pattern 146-Sw01 (Random Color)', 'images\products\fashion\vonukhongco.jpg',0.2100,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>Women OnOff Collarless Socks with Star Floral Pattern 146-SW01 use natural Cotton material with OEKO-Tex safety material certification, the socks are soft and sweat-absorbent, keeping feet dry and comfortable.</li>
-        <li aria-level="1" >Y-shaped heel design keeps the socks close to the feet, soft elastic collar, light hug, antibacterial and deodorizing. Freesize socks; Colors include: white with gray collar, pink collar, white with pink collar, blue with gray collar, pink with gray collar, black delivered randomly.</li>  
-        <li aria-level="1" >Care instructions: Wash with water below 40 degrees Celsius, do not dry at high temperatures, do not iron, do not use strong detergents. Made in Viet Nam.</li>  
-</ul>', 223, 0, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (7, 14, 8,'Women Double Striped Elastic Shorts Size L (Random Color Delivery)', 'images\products\fashion\quanshortthun.jpg',0.2100,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>Women double-striped elastic shorts use soft, smooth fish skin elastic material, with air holes created by overlapping layers of fish skin, giving the wearer a cool, sweat-absorbing feeling. Besides, the pants have meticulous seams, providing standard form, high durability as well as a dynamic and comfortable feeling for girls to wear.</li>
-        <li aria-level="1" >The pants have a comfortable shorts design, an elastic waistband with a youthful and stylish drawstring, and double stripes on the side to create a personality and dynamism for girls to wear.</li>  
-        <li aria-level="1" >Many fashionable, youthful colors, allowing women to easily mix & match with different types of shirts. Care instructions: Wash at normal temperature, do not use bleach, dry in the shade. Made in Viet Nam.</li>  
-</ul>', 223, 0, 1, 1);
-------------------------------
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (8, 5, 9,'Chinese Soft Red Pomegranate', 'images\products\fruit\luuhatdoTrungQuoc.jpg',0.2100,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>The Chinese soft red pomegranate is a fruit rich in antioxidants and has a delicious flavor, so it is very popular. It has red flesh, thick, succulent flesh, soft edible seeds, and a pink-yellow skin.</li>
-        <li aria-level="1" >Pomegranate contains many nutrients, especially high fiber content that is good for the digestive system. Calcium, vitamin A, vitamin E and folic acid in pomegranates are very beneficial in strengthening the body resistance.</li>  
-        <li aria-level="1" >Plant compounds in pomegranates have anti-inflammatory effects. Studies show that pomegranate extract can block enzymes that cause joint damage in people with osteoarthritis.</li>  
-</ul>', 223, 0, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (8, 5, 9,'Cantaloupes of the Dutch variety', 'images\products\fruit\dualuoiHaLan.jpg',5.3200,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>Dutch Cantaloupes are grown using Israeli technology with strict supervision, creating cantaloupe varieties with high sugar content, firm flesh, green flesh, round fruit, and longer-lasting sweetness.</li>
-        <li aria-level="1" >Cantaloupe is a source of polyphenol antioxidants, which are beneficial for health in preventing cancer and strengthening the immune system.
-Besides, cantaloupe contains a lot of fiber so it has a laxative effect and prevents constipation. Melon contains the largest amount of digestive enzymes among fresh fruits, more than papaya and mango. In addition, cantaloupe is also a rich source of beta-carotene, folic acid, potassium and vitamins C and A.</li>  
-</ul>', 223, 20, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (8, 5, 7,'Cripps Red apples imported from South Africa', 'images\products\fruit\taoNamPhi.jpg',0.2100,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>South African Cripps Red apples are one of the imported South African apple varieties that are loved by many consumers with unique characteristics. Cripps Red apples are crunchy, sweet imported fruits with a mildly sour taste.</li>
-        <li aria-level="1" >Apples contain many important nutrients, including fiber, vitamins, minerals and antioxidants. In addition, apples contain a lot of vitamin A, vitamin B, vitamin D, etc.</li>  
-</ul>', 223, 0, 1, 1);
-INSERT INTO dbo.Products (categoryID, brandID, supplierID, productName, imageURL, unitPrice, quantity, quantityInStock, unit, description, viewCount, discount, avaliable, inventoryStatus)
-VALUES (8, 5, 7,'Guava variety from Taiwan', 'images\products\fruit\oiDaiLoan.jpg',0.2100,89,132,'unit',
-'<ul>
-        <li aria-level="1" >
-          <strong>Taiwanese guava is also known as Taiwanese pear guava because the fruit is large like a pear. Taiwanese guavas have large, shiny fruits that are very crunchy, sweet and have very few seeds, so they are very popular.</li>
-        <li aria-level="1" >This guava fruit contains many beneficial nutrients for the body such as Vitamin C and B vitamins that increase disinfection of the digestive system and are beneficial for the stomach and intestines.
-Guava Pear can be eaten directly or made into juice to supplement nutrition for the body. You should especially eat guava peel because guava peel contains a lot of vitamin C, which is very good for beautifying the skin.</li>  
-</ul>', 223, 0, 1, 1);
 
 GO
 

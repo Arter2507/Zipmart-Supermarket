@@ -19,10 +19,10 @@
                     <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
                 </div>
                 <span>or use your username password</span>
-                <h:inputText a:placeholder="Username"/>
-                <h:inputSecret a:placeholder="Password"/>
+                <h:inputText value="#{loginManagedBean.username}" a:placeholder="Username"/>
+                <h:inputSecret value="#{loginManagedBean.password}" a:placeholder="Password"/>
                 <a href="#">Forget Your Password?</a>
-                <h:commandButton styleClass="btn btn-info btnIn" value="Sign In"></h:commandButton>
+                <h:commandButton styleClass="btn btn-info btnIn" action="#{loginManagedBean.processLogin()}" value="Sign In"></h:commandButton>
             </h:form>
         </div>
         <div class="toggle-container">
@@ -38,3 +38,4 @@
 
     </h:body>
 </html>
+ 

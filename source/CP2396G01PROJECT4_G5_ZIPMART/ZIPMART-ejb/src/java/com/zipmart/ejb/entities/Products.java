@@ -23,6 +23,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -67,7 +68,7 @@ public class Products implements Serializable {
     private String imageURL;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "unitPrice")
-    private BigDecimal unitPrice;
+    private Double unitPrice;
     @Column(name = "quantity")
     private Integer quantity;
     @Column(name = "quantityInStock")
@@ -111,6 +112,9 @@ public class Products implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "products")
     private Collection<OrderDetails> orderDetailsCollection;
 
+    @Transient
+    private Double price_discout;
+
     public Products() {
     }
 
@@ -142,11 +146,11 @@ public class Products implements Serializable {
         this.imageURL = imageURL;
     }
 
-    public BigDecimal getUnitPrice() {
+    public Double getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(BigDecimal unitPrice) {
+    public void setUnitPrice(Double unitPrice) {
         this.unitPrice = unitPrice;
     }
 
@@ -303,5 +307,13 @@ public class Products implements Serializable {
     public String toString() {
         return "com.zipmart.ejb.entities.Products[ id=" + id + " ]";
     }
-    
+
+    public Double getPrice_discout() {
+        return price_discout;
+    }
+
+    public void setPrice_discout(Double price_discout) {
+        this.price_discout = price_discout;
+    }
+
 }
