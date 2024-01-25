@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://java.sun.com/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/webapp/webapp.layout/_adminLayout.xhtml">
+            <ui:define name="content">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h1 class="h3 mb-2 text-gray-800">Employee Management</h1>
+                    <p class="mb-4">The <a href="javascript:void(0);">"Software Employee Management"</a> is a robust software solution meticulously crafted to streamline and automate the intricacies of employee-related processes within an organization.</p>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card mb-4">
+                                <!-- Add Form -->
+                                <h:form id="formAccountSettings" enctype="multipart/form-data">
+                                    <h:inputHidden value="#{employeeBean.employee.id}"/>
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                            <h:graphicImage value="#{resource[employeeBean.employee.imageURL]}" alt="user-avatar" styleClass="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar" height="200px" width="200px"  />                                          
+                                        </div>
+                                    </div>                                   
+
+                                    <div class="card-body pt-2 mt-1">
+                                        <div class="row mt-2 gy-4">
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText class="form-control" id="fullname" value="#{employeeBean.employee.fullname}"/>  
+                                                    <h:outputLabel for="fullname">Full Name</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText class="form-control" id="gender" value="#{employeeBean.genderLabel}"/>  
+                                                    <h:outputLabel for="gender">Gender</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText class="form-control" id="email" value="#{employeeBean.employee.email}"/>
+                                                    <h:outputLabel for="email">Email</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText styleClass="form-control" id="phone" value="#{employeeBean.employee.phone}"/>
+                                                    <h:outputLabel for="phone">Number Phone</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText class="form-control" id="address" value="#{employeeBean.employee.address}"/>
+                                                    <h:outputLabel for="address">Address</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText a:type="date" class="form-control" id="birthday" value="#{employeeBean.employee.birthDate}">
+                                                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                                                    </h:outputText>
+                                                    <h:outputLabel for="birthday">Birthday</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText class="form-control" id="notes" value="#{employeeBean.employee.notes}"/>
+                                                    <h:outputLabel for="notes">Notes</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText a:type="username" class="form-control" id="username" value="#{employeeBean.employee.username}"/>
+                                                    <h:outputLabel for="username">Username</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+<!--                                                    <h:inputText a:type="password"  id="password" value="#{employeeBean.employee.password}"/>-->
+                                                    <h:outputText value="************" class="form-control"/>
+                                                    <h:outputLabel for="password">Password</h:outputLabel>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4">
+                                            <h:commandButton styleClass="btn btn-primary me-2 text-white" value="Edit" action="#{employeeBean.showListID(employeeBean.employee.id)}"/>
+                                            <h:link value="Back" outcome="/webapp/webapp.administrator/employee/employee.xhtml" class="btn btn-outline-secondary"/>
+                                        </div>
+                                    </div>
+                                </h:form>
+                                <!-- /Form Add -->
+                            </div>                          
+                        </div>
+                    </div>
+                </div>               
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
