@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <h:outputStylesheet name="css/css.client/blog.css"/>
     </h:head>
@@ -20,130 +22,34 @@
                 </div>
                 <!-- Single Page Header End -->
 
-                <!-- Blog Content Start-->
-                <div class="post-filter containerb">
-                    <span class="filter-item active-filter" data-filter="all">All</span>
-                    <span class="filter-item" data-filter="cate">Category</span>
-                    <span class="filter-item" data-filter="br">Branch</span>
-                    <span class="filter-item" data-filter="brd">Brand</span>
-                </div>
+                                <div class="post-filter containerb">
+                                    <span class="filter-item active-filter" data-filter="all">All</span>
+                                    <span class="filter-item" data-filter="cate">Ẩm thực</span>
+                                    <span class="filter-item" data-filter="cate">Văn Hóa</span>
+                                </div>
 
-                <!-- Post -->
                 <section class="post containerb">
-                    <!-- Post 1 -->
-                    <div class="post-box cate">
-                        <img src="https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn" alt="" class="post-img" />
-                        <h2 class="category">Category</h2>
-                        <h:link outcome="/webapp/webapp.client/blog-details.xhtml" class="post-title">
-                            Lorem ipsum dolor sit amet consectetur
-                        </h:link>
-                        <span class="post-date">12 Jan 2024</span>
-                        <p class="post-decription"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cumque eum facere,
-                            eveniet
-                            eligendi ea quo officia hic consequatur? Tenetur dolor recusandae quas doloribus placeat quae quibusdam
-                            adipisci velit qui. Excepturi?</p>
-                        <!-- Profile -->
-                        <div class="profile">
-                            <img src="#" alt="" class="profile-img" />
-                            <span class="profile-name">Lorem Ipsum</span>
+                    <c:forEach items="#{blogMB.showAllBlogs()}" var="blog">
+                        <!-- Post 1 -->
+                        <div class="post-box cate">
+                            <h:graphicImage url="../../resources/images/blog/#{blog.imageURL}" alt="" class="post-img" />
+                            <h:form>
+                                <h:outputText class="category" value="#{blog.category}"/><br></br>
+                                <h:commandLink action="#{blogMB.showblogbyID(blog.id)}" value="#{blog.title}"/>
+                                <h:outputText class="post-date" value="#{blog.createdate}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                                <h:outputText class="post-decription" value="#{blog.shortcontent}"/>
+                                <!-- Profile -->
+                                <div class="profile">
+                                    <!--                                    <img src="#" alt="" class="profile-img" />-->
+                                    <h:outputText class="profile-name" value="Create by: #{blog.createby}"/>
+                                </div>
+                            </h:form>
                         </div>
-                    </div>
-                    <!-- Post 2 -->
-                    <div class="post-box cate">
-                        <img src="#" alt="" class="post-img" />
-                        <h2 class="category">Category</h2>
-                        <a href="#" class="post-title">
-                            Lorem ipsum dolor sit amet consectetur
-                        </a>
-                        <span class="post-date">12 Jan 2024</span>
-                        <p class="post-decription"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cumque eum facere,
-                            eveniet
-                            eligendi ea quo officia hic consequatur? Tenetur dolor recusandae quas doloribus placeat quae quibusdam
-                            adipisci velit qui. Excepturi?</p>
-                        <!-- Profile -->
-                        <div class="profile">
-                            <img src="#" alt="" class="profile-img" />
-                            <span class="profile-name">Lorem Ipsum</span>
-                        </div>
-                    </div>
-                    <!-- Post 3 -->
-                    <div class="post-box cate">
-                        <img src="#" alt="" class="post-img" />
-                        <h2 class="category">Category</h2>
-                        <a href="#" class="post-title">
-                            Lorem ipsum dolor sit amet consectetur
-                        </a>
-                        <span class="post-date">12 Jan 2024</span>
-                        <p class="post-decription"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cumque eum facere,
-                            eveniet
-                            eligendi ea quo officia hic consequatur? Tenetur dolor recusandae quas doloribus placeat quae quibusdam
-                            adipisci velit qui. Excepturi?</p>
-                        <!-- Profile -->
-                        <div class="profile">
-                            <img src="#" alt="" class="profile-img" />
-                            <span class="profile-name">Lorem Ipsum</span>
-                        </div>
-                    </div>
-
-                    <!-- Post 4 -->
-                    <div class="post-box br">
-                        <img src="#" alt="" class="post-img" />
-                        <h2 class="category">Branch</h2>
-                        <a href="#" class="post-title">
-                            Lorem ipsum dolor sit amet consectetur
-                        </a>
-                        <span class="post-date">12 Jan 2024</span>
-                        <p class="post-decription"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cumque eum facere,
-                            eveniet
-                            eligendi ea quo officia hic consequatur? Tenetur dolor recusandae quas doloribus placeat quae quibusdam
-                            adipisci velit qui. Excepturi?</p>
-                        <!-- Profile -->
-                        <div class="profile">
-                            <img src="#" alt="" class="profile-img" />
-                            <span class="profile-name">Lorem Ipsum</span>
-                        </div>
-                    </div>
-
-                    <!-- Post 5 -->
-                    <div class="post-box br">
-                        <img src="#" alt="" class="post-img" />
-                        <h2 class="category">Branch</h2>
-                        <a href="#" class="post-title">
-                            Lorem ipsum dolor sit amet consectetur
-                        </a>
-                        <span class="post-date">12 Jan 2024</span>
-                        <p class="post-decription"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cumque eum facere,
-                            eveniet
-                            eligendi ea quo officia hic consequatur? Tenetur dolor recusandae quas doloribus placeat quae quibusdam
-                            adipisci velit qui. Excepturi?</p>
-                        <!-- Profile -->
-                        <div class="profile">
-                            <img src="#" alt="" class="profile-img" />
-                            <span class="profile-name">Lorem Ipsum</span>
-                        </div>
-                    </div>
-
-                    <!-- Post 6 -->
-                    <div class="post-box brd">
-                        <img src="#" alt="" class="post-img" />
-                        <h2 class="category">Brand</h2>
-                        <a href="#" class="post-title">
-                            Lorem ipsum dolor sit amet consectetur
-                        </a>
-                        <span class="post-date">12 Jan 2024</span>
-                        <p class="post-decription"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cumque eum facere,
-                            eveniet
-                            eligendi ea quo officia hic consequatur? Tenetur dolor recusandae quas doloribus placeat quae quibusdam
-                            adipisci velit qui. Excepturi?</p>
-                        <!-- Profile -->
-                        <div class="profile">
-                            <img src="#" alt="" class="profile-img" />
-                            <span class="profile-name">Lorem Ipsum</span>
-                        </div>
-                    </div>
+                    </c:forEach>
                 </section>
                 <!-- Blog Content End -->
-
             </ui:define>
         </ui:composition>
     </h:body>

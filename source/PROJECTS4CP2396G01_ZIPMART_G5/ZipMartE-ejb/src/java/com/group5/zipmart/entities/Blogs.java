@@ -6,10 +6,8 @@ package com.group5.zipmart.entities;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,17 +15,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author TUONG
+ * @author phnha
  */
 @Entity
 @Table(name = "Blogs")
@@ -38,6 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Blogs.findByEmployeeID", query = "SELECT b FROM Blogs b WHERE b.employeeID = :employeeID"),
     @NamedQuery(name = "Blogs.findByTitle", query = "SELECT b FROM Blogs b WHERE b.title = :title"),
     @NamedQuery(name = "Blogs.findByImageURL", query = "SELECT b FROM Blogs b WHERE b.imageURL = :imageURL"),
+    @NamedQuery(name = "Blogs.findByShortcontent", query = "SELECT b FROM Blogs b WHERE b.shortcontent = :shortcontent"),
     @NamedQuery(name = "Blogs.findByContent", query = "SELECT b FROM Blogs b WHERE b.content = :content"),
     @NamedQuery(name = "Blogs.findByCategory", query = "SELECT b FROM Blogs b WHERE b.category = :category"),
     @NamedQuery(name = "Blogs.findByCreatedate", query = "SELECT b FROM Blogs b WHERE b.createdate = :createdate"),
@@ -61,6 +58,9 @@ public class Blogs implements Serializable {
     @Column(name = "imageURL")
     private String imageURL;
     @Size(max = 2147483647)
+    @Column(name = "shortcontent")
+    private String shortcontent;
+    @Size(max = 2147483647)
     @Column(name = "content")
     private String content;
     @Size(max = 255)
@@ -78,8 +78,6 @@ public class Blogs implements Serializable {
     @Size(max = 255)
     @Column(name = "modifieby")
     private String modifieby;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "blogs")
-    private Collection<EmployeeBlog> employeeBlogCollection;
 
     public Blogs() {
     }
@@ -118,6 +116,14 @@ public class Blogs implements Serializable {
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public String getShortcontent() {
+        return shortcontent;
+    }
+
+    public void setShortcontent(String shortcontent) {
+        this.shortcontent = shortcontent;
     }
 
     public String getContent() {
@@ -166,15 +172,6 @@ public class Blogs implements Serializable {
 
     public void setModifieby(String modifieby) {
         this.modifieby = modifieby;
-    }
-
-    @XmlTransient
-    public Collection<EmployeeBlog> getEmployeeBlogCollection() {
-        return employeeBlogCollection;
-    }
-
-    public void setEmployeeBlogCollection(Collection<EmployeeBlog> employeeBlogCollection) {
-        this.employeeBlogCollection = employeeBlogCollection;
     }
 
     @Override

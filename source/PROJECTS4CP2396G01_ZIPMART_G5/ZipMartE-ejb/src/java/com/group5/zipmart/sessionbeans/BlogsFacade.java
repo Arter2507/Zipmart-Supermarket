@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author TUONG
+ * @author phnha
  */
 @Stateless
 public class BlogsFacade extends AbstractFacade<Blogs> implements BlogsFacadeLocal {

@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/webapp/webapp.layout/_adminLayout.xhtml">
+            <ui:define name="content">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h4 class="py-3 mb-4"><span class="text-muted fw-light">Customers Management /</span> Create Customer</h4>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card mb-4">
+                                <h4 class="card-header m-0 font-weight-bold text-primary">Customer Information</h4>
+                                <div class="card-body pt-2 mt-1">
+                                    <h:form id="formAccountSettings" enctype="multipart/form-data">
+                                        <div class="row mt-2 gy-4">
+
+<!--                                            <div class="card-body">
+                                                <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                                    <h:graphicImage url="#{resource['/images/logo/photo-camera-gray.svg']}" alt="user-avatar" styleClass="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar" height="200px" width="200px"/>
+                                                    <div class="button-wrapper">
+                                                        <h:outputLabel for="upload" class="btn btn-primary me-2 mb-3" tabindex="0">
+                                                            <span class="d-none d-sm-block">Upload photo customer</span>
+                                                            <i class="mdi mdi-tray-arrow-up d-block d-sm-none"></i>
+                                                            <h:inputFile id="upload" style="display: none;" class="account-file-input" onchange="setImagePreview(this)" value="#{customerMB.customers.imageURL}"/>
+                                                        </h:outputLabel>
+                                                    </div>
+                                                </div>
+                                            </div>-->
+
+<!--                                            <div class="">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:graphicImage class="form-control" id="imageurl" library="../resources/images/customer" name="customericon.png" value="#{customerMB.fileImage}"/>  
+                                                    <h:outputLabel for="imageurl">Image URL</h:outputLabel>
+                                                </div>
+                                            </div>-->
+
+                                            <div class="">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="fullname" value="#{customerMB.customers.fullname}"/>  
+                                                    <h:outputLabel for="fullname">Full Name</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="address" value="#{customerMB.customers.address}"/>
+                                                    <h:outputLabel for="address">Address</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="phone"  value="#{customerMB.customers.phone}"/>
+                                                    <h:outputLabel for="phone">Phone</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="email" value="#{customerMB.customers.email}"/>
+                                                    <h:outputLabel for="email">Email</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="birthday" value="#{customerMB.customers.birthDate}">
+                                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                    </h:inputText>
+                                                    <h:outputLabel for="birthday">Birth Day</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="createby" value="#{customerMB.customers.createby}"/>
+                                                    <h:outputLabel for="createby">Create By</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="creatdate" value="#{customerMB.customers.createdate}">
+                                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                    </h:inputText>
+                                                    <h:outputLabel for="createdate">Create Day</h:outputLabel>
+                                                </div>
+                                            </div>
+<!--                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="username" value="#{customerMB.customers.username}"/>
+                                                    <h:outputLabel for="username">User Name</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="password" value="#{customerMB.customers.password}"/>
+                                                    <h:outputLabel for="pasword">Password</h:outputLabel>
+                                                </div>
+                                            </div>-->
+                                        </div>
+                                        <div class="mt-4">
+                                            <h:commandButton type="submit" class="btn btn-primary me-2 text-white" value="Create Customer" action="#{customerMB.createCus()}"/>
+                                            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

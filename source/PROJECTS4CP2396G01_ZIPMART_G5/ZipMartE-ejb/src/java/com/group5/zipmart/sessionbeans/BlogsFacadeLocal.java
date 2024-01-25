@@ -10,7 +10,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author TUONG
+ * @author phnha
  */
 @Local
 public interface BlogsFacadeLocal {

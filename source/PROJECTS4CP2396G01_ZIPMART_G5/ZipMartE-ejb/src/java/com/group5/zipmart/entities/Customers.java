@@ -119,8 +119,6 @@ public class Customers implements Serializable {
     @JoinColumn(name = "customer_group", referencedColumnName = "ID")
     @ManyToOne
     private Permissions customerGroup;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerID")
-    private Collection<Feedbacks> feedbacksCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customers")
     private Collection<CustomerGenders> customerGendersCollection;
 
@@ -308,15 +306,6 @@ public class Customers implements Serializable {
 
     public void setCustomerGroup(Permissions customerGroup) {
         this.customerGroup = customerGroup;
-    }
-
-    @XmlTransient
-    public Collection<Feedbacks> getFeedbacksCollection() {
-        return feedbacksCollection;
-    }
-
-    public void setFeedbacksCollection(Collection<Feedbacks> feedbacksCollection) {
-        this.feedbacksCollection = feedbacksCollection;
     }
 
     @XmlTransient
