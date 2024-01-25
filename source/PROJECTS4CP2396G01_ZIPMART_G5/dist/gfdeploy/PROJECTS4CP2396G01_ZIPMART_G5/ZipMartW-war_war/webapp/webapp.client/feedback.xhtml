@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+         <ui:composition template="/webapp/webapp.layout/_mainLayout.xhtml">
+            <ui:define name="content">
+                <!-- Single Page Header start -->
+        <div class="container-fluid page-header py-5">
+            <h1 class="text-center text-white display-6">Feedback</h1>
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><h:link outcome="/webapp/webapp.client/index.xhtml">Home</h:link></li>
+                <li class="breadcrumb-item active text-white">Feedback</li>
+            </ol>
+        </div>      
+                <div class="layout-wrapper layout-content-navbar">
+                    <div class="layout-container">      
+                        <!-- Layout container -->
+                        <div class="layout-page">        
+                            <!-- Content wrapper -->
+                            <div class="content-wrapper">
+                                <!-- Content -->
+                                <div class="container-xxl flex-grow-1 container-p-y">
+                                    <div class="row">
+                                        <div class="col-md-12"><br/><br/>
+                                            <div class="card mb-4">
+                                                <h4 class="card-header">Feedback Form</h4>
+                                                <!-- Account -->
+                                                <div class="card-body pt-2 mt-1">
+                                                    <h:form id="formAccountSettings">
+                                                        <div class="row mt-2 gy-4">
+                                                            <div class="">
+                                                                <div class="form-floating form-floating-outline">
+                                                                    <h:inputText class="form-control" id="title"/>  
+                                                                    <h:outputLabel for="title">Title</h:outputLabel>
+                                                                </div>
+                                                            </div>
+                                                            <div class="">
+                                                                <div class="form-floating form-floating-outline">
+                                                                    <h:inputTextarea class="form-control" id="contentfb"/>
+                                                                    <h:outputLabel for="contentfb">Content Feedback</h:outputLabel>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-floating form-floating-outline">
+                                                                    <h:selectOneMenu styleClass="select2 form-select"> 
+                                                                        <f:selectItem/> 
+                                                                    </h:selectOneMenu> 
+                                                                    <h:outputLabel for="country">Product</h:outputLabel>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-floating form-floating-outline">
+                                                                    <h:selectOneMenu styleClass="select2 form-select"> 
+                                                                        <f:selectItem itemValue = "1" itemLabel = "5 Star" /> 
+                                                                        <f:selectItem itemValue = "2" itemLabel = "4 Star" />
+                                                                        <f:selectItem itemValue = "3" itemLabel = "3 Star" />
+                                                                        <f:selectItem itemValue = "4" itemLabel = "2 Star" />
+                                                                        <f:selectItem itemValue = "5" itemLabel = "1 Star" />
+                                                                    </h:selectOneMenu> 
+                                                                    <h:outputLabel for="language">Rate</h:outputLabel>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mt-4">
+                                                            <button type="submit" class="btn btn-primary me-2 text-white">Save changes</button>
+                                                            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                                                        </div>
+                                                    </h:form>
+                                                </div>
+                                                <!-- /Account -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- / Content -->           
+
+                                <div class="content-backdrop fade"></div>
+                            </div>
+                            <!-- Content wrapper -->
+                        </div>
+                        <!-- / Layout page -->
+                    </div>
+
+                    <!-- Overlay -->
+                    <div class="layout-overlay layout-menu-toggle"></div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
