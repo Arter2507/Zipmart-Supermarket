@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <ui:include src="../../resources/includes.configlayouts/includes.client/login.xhtml"/>
+    </h:head>
+    <h:body>
+        <div class="container active" id="container">
+            <div class="form-container sign-up">
+                <h:form>
+                    <h1>Join With Us</h1>
+                    <div class="social-icons">
+                        <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                        <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                        <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                    <span>or use your username for registeration</span>
+                    <div class="row g-3">
+                        <div class="col-12">                            
+                            <h:inputText class="form-control" id="username" value="#{loginManagedBean.username}" a:placeholder="Username"/>
+                        </div>
+                        <div class="col-12">
+                            <h:inputSecret class="form-control" id="password" value="#{loginManagedBean.password}" a:placeholder="Password"/>
+                        </div>                        
+                        <div class="col-12">
+                            <h:inputSecret class="form-control" id="re-pass" value="#{loginManagedBean.confirm_password}" a:placeholder="Confirm Password"/>
+                        </div>
+                    </div>
+                    <h:commandButton styleClass="btn btn-info btnIn" action="#{loginManagedBean.processSignup()}" value="Sign up"></h:commandButton>
+                </h:form>
+            </div>       
+            <div class="toggle-container">
+                <div class="toggle">
+                    <div class="toggle-panel toggle-left">
+                        <h1>Welcome Back!</h1>
+                        <strong><p>Enter your personal details to use all of site features</p></strong>
+                        <h:link id="login" outcome="/webapp/webapp.client/login.xhtml"><button class="hidden">Sign In</button></h:link>
+                    </div>                
+                </div>
+            </div>
+        </div>
+
+    </h:body>
+</html>
