@@ -1,0 +1,5 @@
+com/zipmart/ejb/entities/ImportOrder_.java
+com/zipmart/ejb/entities/OrderDetails_.java
+com/zipmart/ejb/entities/Brand_.java
+com/zipmart/ejb/entities/Suppliers_.java
+com/zipmart/ejb/entities/ThresholdAdjustment_.java

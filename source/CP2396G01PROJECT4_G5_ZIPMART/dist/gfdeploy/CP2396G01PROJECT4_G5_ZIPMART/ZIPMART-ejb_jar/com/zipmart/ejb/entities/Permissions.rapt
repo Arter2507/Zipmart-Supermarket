@@ -1,0 +1,5 @@
+com/zipmart/ejb/entities/Orders_.java
+com/zipmart/ejb/entities/CustomerFeedback_.java
+com/zipmart/ejb/entities/CustomerGenders_.java
+com/zipmart/ejb/entities/Permissions_.java
+com/zipmart/ejb/entities/CustomerCard_.java
