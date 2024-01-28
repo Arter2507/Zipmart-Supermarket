@@ -57,14 +57,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Customers.findByStatus", query = "SELECT c FROM Customers c WHERE c.status = :status")})
 public class Customers implements Serializable {
 
+    @Column(name = "customer_gender")
+    private Long customerGender;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
-    @Column(name = "customer_gender")
-    private Long customerGender;
     @Column(name = "customer_card")
     private BigInteger customerCard;
     @Size(max = 50)

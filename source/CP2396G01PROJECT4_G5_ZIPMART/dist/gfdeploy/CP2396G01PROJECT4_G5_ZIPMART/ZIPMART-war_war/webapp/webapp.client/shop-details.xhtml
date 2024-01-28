@@ -5,9 +5,6 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:a = "http://java.sun.com/jsf/passthrough">
-    <h:head>
-        <h:outputStylesheet name="css/css.client/viewmore.css"/>
-    </h:head>
     <h:body>
         <ui:composition template="/webapp/webapp.layout/_mainLayout.xhtml">
             <ui:define name="content">
@@ -31,7 +28,7 @@
                                     <div class="col-lg-6">
                                         <div class="border rounded">
                                             <a href="javascript:void(0);">
-                                                <h:graphicImage value="#{resource[productBean.product.imageURL]}" width="500px" height="350px" class="img-fluid rounded" alt="Image"/>
+                                                <h:graphicImage value="#{resource[productBean.product.imageURL]}" class="img-fluid rounded" alt="Image"/>
                                             </a>
                                         </div>
                                     </div>
@@ -48,9 +45,8 @@
                                             <i class="fa fa-star text-secondary"></i>
                                             <i class="fa fa-star"></i>
                                         </div>
-
-                                        <h:outputFormat escape="false" value="#{productBean.product.sortDescription}"/>
-
+                                        <p class="mb-4">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc.</p>
+                                        <p class="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish</p>
                                         <h:form>
                                             <div class="input-group quantity mb-5" style="width: 100px;">
                                                 <div class="input-group-btn">
@@ -77,62 +73,63 @@
                                                         id="nav-about-tab" data-bs-toggle="tab" data-bs-target="#nav-about"
                                                         aria-controls="nav-about" aria-selected="true">Description</button>
                                                 <button class="nav-link border-white border-bottom-0" type="button" role="tab"
-                                                        id="nav-specifications-tab" data-bs-toggle="tab"
-                                                        data-bs-target="#nav-specifications" aria-controls="nav-specifications"
-                                                        aria-selected="false">Specifications</button>
-                                                <button class="nav-link border-white border-bottom-0" type="button" role="tab"
                                                         id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-mission"
                                                         aria-controls="nav-mission" aria-selected="false">Reviews</button>
                                             </div>
                                         </nav>
-
                                         <div class="tab-content mb-5">
-                                            <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab" style="overflow: hidden; height: 250px;">
-                                                <h:outputFormat escape="false" value="#{productBean.product.description}"/>
-                                            </div>
-
-                                            <div class="text-center mt-4" style="text-align: center;">
-                                                <button class="btn btn-link btnview" type="button">View more</button>
-                                            </div>
-
-                                            <div class="tab-pane" id="nav-specifications" role="tabpanel"
-                                                 aria-labelledby="nav-specifications-tab">
+                                            <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                                                <p>The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc. 
+                                                    Susp endisse ultricies nisi vel quam suscipit </p>
+                                                <p>Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish filefish Antarctic 
+                                                    icefish goldeye aholehole trumpetfish pilot fish airbreathing catfish, electric ray sweeper.</p>
                                                 <div class="px-2">
-                                                    <div class="row g-4 d-flex justify-content-center">
-                                                        <div class="col-lg-8">
-                                                            <table class="table table-striped">
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <th>Manufactured place</th>
-                                                                        <td>#{productBean.product.manufacturedPlace}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th>Origin</th>
-                                                                        <td>Vietnam</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th>SKU</th>
-                                                                        <td>#{productBean.product.sku}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th>Weight (g)</th>
-                                                                        <td>#{productBean.product.weight}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th>Storage instruction	</th>
-                                                                        <td>#{productBean.product.storageInstruction}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th>Usage notes</th>
-                                                                        <td>#{productBean.product.usageNotes}</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
+                                                    <div class="row g-4">
+                                                        <div class="col-6">
+                                                            <div class="row bg-light align-items-center text-center justify-content-center py-2">
+                                                                <div class="col-6">
+                                                                    <p class="mb-0">Weight</p>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <p class="mb-0">1 kg</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row text-center align-items-center justify-content-center py-2">
+                                                                <div class="col-6">
+                                                                    <p class="mb-0">Country of Origin</p>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <p class="mb-0">Agro Farm</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row bg-light text-center align-items-center justify-content-center py-2">
+                                                                <div class="col-6">
+                                                                    <p class="mb-0">Quality</p>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <p class="mb-0">Organic</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row text-center align-items-center justify-content-center py-2">
+                                                                <div class="col-6">
+                                                                    <p class="mb-0">Сheck</p>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <p class="mb-0">Healthy</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row bg-light text-center align-items-center justify-content-center py-2">
+                                                                <div class="col-6">
+                                                                    <p class="mb-0">Min Weight</p>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <p class="mb-0">250 Kg</p>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
                                                 <div class="d-flex">
                                                     <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt=""/>
@@ -305,7 +302,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Single Product End -->                
+                <!-- Single Product End -->
             </ui:define>
         </ui:composition>
     </h:body>

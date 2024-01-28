@@ -2,11 +2,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <h:outputStylesheet name="css/css.client/blog.css"/>
+    </h:head>
     <h:body>
         <ui:composition template="/webapp/webapp.layout/_mainLayout.xhtml">
             <ui:define name="content">
-                <h:outputStylesheet name="css/css.client/blog.css"/>
                 <!-- Single Page Header start -->
                 <div class="container-fluid page-header py-5">
                     <h1 class="text-center text-white display-6">Blogs</h1>
@@ -18,23 +22,22 @@
                 </div>
                 <!-- Single Page Header End -->
 
-                <!-- Blog Content Start-->
                 <div class="post-filter containerb">
                     <span class="filter-item active-filter" data-filter="all">All</span>
-                    <span class="filter-item" data-filter="cate">Category</span>
-                    <span class="filter-item" data-filter="br">Branch</span>
-                    <span class="filter-item" data-filter="brd">Brand</span>
+                    <ui:repeat var="cateblog" value="#{blogBean.showAllCategory()}">
+                        <span class="filter-item" data-filter="#{cateblog.name}">#{cateblog.name}</span>
+                    </ui:repeat>
                 </div>
 
                 <!-- Post -->
                 <section class="post containerb">
                     <!-- Post 1 -->
-                    <div class="post-box cate">
-                        <img src="https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn" alt="" class="post-img" />
+                    <div class="post-box category">
+                        <img src="#" alt="" class="post-img" />
                         <h2 class="category">Category</h2>
-                        <h:link outcome="/webapp/webapp.client/blog-details.xhtml" class="post-title">
+                        <a href="test2.html" class="post-title">
                             Lorem ipsum dolor sit amet consectetur
-                        </h:link>
+                        </a>
                         <span class="post-date">12 Jan 2024</span>
                         <p class="post-decription"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cumque eum facere,
                             eveniet
@@ -47,7 +50,7 @@
                         </div>
                     </div>
                     <!-- Post 2 -->
-                    <div class="post-box cate">
+                    <div class="post-box branch">
                         <img src="#" alt="" class="post-img" />
                         <h2 class="category">Category</h2>
                         <a href="#" class="post-title">
@@ -65,7 +68,7 @@
                         </div>
                     </div>
                     <!-- Post 3 -->
-                    <div class="post-box cate">
+                    <div class="post-box brand">
                         <img src="#" alt="" class="post-img" />
                         <h2 class="category">Category</h2>
                         <a href="#" class="post-title">
@@ -84,9 +87,9 @@
                     </div>
 
                     <!-- Post 4 -->
-                    <div class="post-box br">
+                    <div class="post-box">
                         <img src="#" alt="" class="post-img" />
-                        <h2 class="category">Branch</h2>
+                        <h2 class="category">Category</h2>
                         <a href="#" class="post-title">
                             Lorem ipsum dolor sit amet consectetur
                         </a>
@@ -103,9 +106,9 @@
                     </div>
 
                     <!-- Post 5 -->
-                    <div class="post-box br">
+                    <div class="post-box">
                         <img src="#" alt="" class="post-img" />
-                        <h2 class="category">Branch</h2>
+                        <h2 class="category">Category</h2>
                         <a href="#" class="post-title">
                             Lorem ipsum dolor sit amet consectetur
                         </a>
@@ -122,9 +125,9 @@
                     </div>
 
                     <!-- Post 6 -->
-                    <div class="post-box brd">
+                    <div class="post-box">
                         <img src="#" alt="" class="post-img" />
-                        <h2 class="category">Brand</h2>
+                        <h2 class="category">Category</h2>
                         <a href="#" class="post-title">
                             Lorem ipsum dolor sit amet consectetur
                         </a>
@@ -141,7 +144,6 @@
                     </div>
                 </section>
                 <!-- Blog Content End -->
-
             </ui:define>
         </ui:composition>
     </h:body>

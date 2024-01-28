@@ -3,16 +3,16 @@ package com.zipmart.ejb.entities;
 import com.zipmart.ejb.entities.CustomerCard;
 import com.zipmart.ejb.entities.CustomerFeedback;
 import com.zipmart.ejb.entities.CustomerGenders;
-import com.zipmart.ejb.entities.Feedbacks;
 import com.zipmart.ejb.entities.Orders;
 import com.zipmart.ejb.entities.Permissions;
+import java.math.BigInteger;
 import java.util.Date;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2024-01-26T05:42:19")
+@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2024-01-28T08:17:03")
 @StaticMetamodel(Customers.class)
 public class Customers_ { 
 
@@ -27,8 +27,7 @@ public class Customers_ {
     public static volatile SingularAttribute<Customers, String> pepperPassword;
     public static volatile CollectionAttribute<Customers, Orders> ordersCollection;
     public static volatile CollectionAttribute<Customers, CustomerCard> customerCardCollection;
-    public static volatile CollectionAttribute<Customers, Feedbacks> feedbacksCollection;
-    public static volatile SingularAttribute<Customers, Long> customerCard;
+    public static volatile SingularAttribute<Customers, BigInteger> customerCard;
     public static volatile SingularAttribute<Customers, Date> birthDate;
     public static volatile SingularAttribute<Customers, String> password;
     public static volatile SingularAttribute<Customers, String> createby;

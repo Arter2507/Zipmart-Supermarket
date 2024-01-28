@@ -120,7 +120,7 @@
                                                     <div class="col-md-6 col-lg-6 col-xl-4 cart-content">
                                                         <div class="rounded position-relative fruite-item">
                                                             <div class="fruite-img">
-                                                                <h:graphicImage value="#{resource[pro.imageURL]}" class="img-fluid w-100 rounded-top" alt=""/>
+                                                                <h:graphicImage value="#{resource[pro.imageURL]}" height="336" width="336" class="img-fluid w-100 rounded-top" alt=""/>
                                                             </div>
                                                             <h:outputText value="#{pro.discount > 0 ? 'SAFE OFF ' .concat(pro.discount.toString()).concat('%') : ''}" class="text-white bg-danger px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;" rendered="#{pro.discount > 0}"/>
                                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">

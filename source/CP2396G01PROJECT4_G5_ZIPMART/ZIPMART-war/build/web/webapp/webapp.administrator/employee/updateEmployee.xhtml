@@ -31,27 +31,6 @@
                                         </div>
                                     </div>
 
-                                    <script>
-                                        window.onload = function () {
-                                            console.log(document.getElementById("formUpdate:upload"));
-                                            document.getElementById("formUpdate:upload").onchange = function () {
-                                                var reader = new FileReader();
-
-                                                reader.onload = function (e) {
-                                                    // get loaded data and render thumbnail.
-                                                    document.getElementById("formUpdate:uploadedAvatar").src = e.target.result;
-                                                };
-
-                                                // read the image file as a data URL.
-                                                reader.readAsDataURL(this.files[0]);
-                                            };
-                                            var inputFile = document.getElementById("formUpdate:upload");
-                                            inputFile.hidden = true;
-                                             var birthday = document.getElementById("formUpdate:birthday");
-                                            birthday.type = "date";
-                                        };
-                                    </script>
-
                                     <div class="card-body pt-2 mt-1">
                                         <div class="row mt-2 gy-4">
                                             <div class="col-md-6">
@@ -132,7 +111,14 @@
                             </div>                          
                         </div>
                     </div>
-                </div>               
+                </div>
+                <h:outputScript name="js/configfile.js"/>
+                <script>
+                    window.onload = function () {
+                        var birthday = document.getElementById("formUpdate:birthday");
+                        birthday.type = "date";
+                    };
+                </script>
             </ui:define>
         </ui:composition>
     </h:body>

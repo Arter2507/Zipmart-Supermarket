@@ -31,26 +31,6 @@
                                         </div>
                                     </div>
 
-                                    <script>
-                                        window.onload = function () {
-                                            console.log(document.getElementById("formAccountSettings:upload"));
-                                            document.getElementById("formAccountSettings:upload").onchange = function () {
-                                                var reader = new FileReader();
-
-                                                reader.onload = function (e) {
-                                                    // get loaded data and render thumbnail.
-                                                    document.getElementById("formAccountSettings:uploadedAvatar").src = e.target.result;
-                                                };
-
-                                                // read the image file as a data URL.
-                                                reader.readAsDataURL(this.files[0]);
-                                                
-                                                var inputFile = document.getElementById("formAccountSettings:upload");
-                                            inputFile.hidden = true;
-                                            };
-                                        };
-                                    </script>
-
                                     <div class="card-body pt-2 mt-1">
                                         <div class="row mt-2 gy-4">
                                             <div class="col-md-12">
@@ -71,7 +51,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
                                                     <h:inputSecret styleClass="form-control" id="password" value="#{managerBean.password}" required="true" validatorMessage="Your password must between 3 and 16" requiredMessage="This field cannot be empty!">
-                                                    <f:validateLength for = "password" minimum = "3" maximum = "16" />
+                                                        <f:validateLength for = "password" minimum = "3" maximum = "16" />
                                                     </h:inputSecret>
                                                     <h:outputLabel for="password">Password</h:outputLabel>
                                                     <h:message for = "password" style = "color: red;" />
@@ -80,7 +60,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-floating form-floating-outline">
                                                     <h:inputText a:type="number" class="form-control" id="phone" value="#{managerBean.phone}" required="true" validatorMessage="Number phone can't higher 11 number" requiredMessage="This field cannot be empty!">
-                                                    <f:validateRegex pattern="^[0-9]{10,11}$" />
+                                                        <f:validateRegex pattern="^[0-9]{10,11}$" />
                                                     </h:inputText>
                                                     <h:outputLabel for="phone">Phone Number</h:outputLabel>
                                                     <h:message for = "phone" style = "color: red;" />
@@ -89,7 +69,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-floating form-floating-outline">
                                                     <h:inputText a:type="email" class="form-control" id="email" value="#{managerBean.email}" required="true" validatorMessage="Your email not true format. Exp: example@gmail.com" requiredMessage="This field cannot be empty!">
-                                                    <f:validateRegex pattern="^[a-z][a-z0-9]+(?:[.][a-z0-9]+)*@[a-z]+(?:[.][a-z]+)?" />  
+                                                        <f:validateRegex pattern="^[a-z][a-z0-9]+(?:[.][a-z0-9]+)*@[a-z]+(?:[.][a-z]+)?" />  
                                                     </h:inputText>
                                                     <h:outputLabel for="email">Email</h:outputLabel>
                                                     <h:message for = "email" style = "color: red;" />
@@ -113,7 +93,8 @@
                             </div>                          
                         </div>
                     </div>
-                </div>               
+                </div>
+                <h:outputScript name="js/configfile.js"/>
             </ui:define>
         </ui:composition>
     </h:body>

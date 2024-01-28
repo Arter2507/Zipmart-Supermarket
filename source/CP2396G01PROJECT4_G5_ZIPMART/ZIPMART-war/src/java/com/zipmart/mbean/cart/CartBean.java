@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 /**
@@ -40,31 +42,30 @@ public class CartBean implements Serializable {
     private int quantity_sell;
     private int num;
     private List<Integer> num_cart = new ArrayList<>();
+    private List<Cart> list_cart;
     private double total_moneycart;
     private double price_dis = 0.00;
     private double total_pr;
     private int total_procart;
     private String message = "";
     private Double ship = 2.00;
+    private Double subtotal = 1.00;
 
     public CartBean() {
     }
 
     public String addCart(Long id, int quantity) {
         try {
-            System.out.println("=============================1 " + id + " " + quantity);
             cartSessionBean.addCart(id, quantity);
-            System.out.println("=============================" + id + " " + quantity);
             return "cart";
         } catch (Exception e) {
             System.out.println(e);
-            System.out.println("=============================" + id + " " + quantity);
         }
         return "cart";
     }
 
     public List<Cart> showCart() {
-        List<Cart> list_cart = new ArrayList<>();
+        list_cart = new ArrayList<>();
         Set<Map.Entry<Long, Integer>> setCart = cartSessionBean.showCartMap().entrySet();
         total_moneycart = 0.0;
         total_procart = 0;
@@ -91,10 +92,19 @@ public class CartBean implements Serializable {
         return list_cart;
     }
 
+    public double totalPrice() {
+        double total_cart = 0;
+        for (Cart cart_item : list_cart) {
+            total_cart += cart_item.getTotal_price();
+        }
+        total_cart += ship + subtotal;
+        return total_cart;
+    }
+
     public void updateCart(Long id, boolean flag) {
         cartSessionBean.upCart(id, flag);
     }
-    
+
     public void upCart(Long id, boolean flag) {
         cartSessionBean.uCart(id, flag, cart);
     }
@@ -103,6 +113,16 @@ public class CartBean implements Serializable {
         cartSessionBean.removeCart(id);
         message = "Delete product success!";
         return "cart";
+    }
+
+    public void clearCart() {
+        cartSessionBean.emptyCart();
+    }
+
+    public int countItem() {
+        String message_count = "Your cart is empty!!";
+        FacesContext.getCurrentInstance().addMessage("emptycart", new FacesMessage(FacesMessage.SEVERITY_ERROR, message_count, "Cart is empty"));
+        return cartSessionBean.countCart();
     }
 
     public Cart getCart() {
@@ -234,5 +254,21 @@ public class CartBean implements Serializable {
 
     public void setTotal_procart(int total_procart) {
         this.total_procart = total_procart;
+    }
+
+    public List<Cart> getList_cart() {
+        return list_cart;
+    }
+
+    public void setList_cart(List<Cart> list_cart) {
+        this.list_cart = list_cart;
+    }
+
+    public Double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(Double subtotal) {
+        this.subtotal = subtotal;
     }
 }

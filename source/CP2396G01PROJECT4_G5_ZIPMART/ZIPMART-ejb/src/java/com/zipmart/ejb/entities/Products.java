@@ -6,10 +6,8 @@ package com.zipmart.ejb.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,14 +17,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -45,6 +41,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Products.findByQuantityInStock", query = "SELECT p FROM Products p WHERE p.quantityInStock = :quantityInStock"),
     @NamedQuery(name = "Products.findByUnit", query = "SELECT p FROM Products p WHERE p.unit = :unit"),
     @NamedQuery(name = "Products.findByDescription", query = "SELECT p FROM Products p WHERE p.description = :description"),
+    @NamedQuery(name = "Products.findBySortDescription", query = "SELECT p FROM Products p WHERE p.sortDescription = :sortDescription"),
+    @NamedQuery(name = "Products.findBySku", query = "SELECT p FROM Products p WHERE p.sku = :sku"),
+    @NamedQuery(name = "Products.findByWeight", query = "SELECT p FROM Products p WHERE p.weight = :weight"),
+    @NamedQuery(name = "Products.findByManufacturedPlace", query = "SELECT p FROM Products p WHERE p.manufacturedPlace = :manufacturedPlace"),
+    @NamedQuery(name = "Products.findByStorageInstruction", query = "SELECT p FROM Products p WHERE p.storageInstruction = :storageInstruction"),
+    @NamedQuery(name = "Products.findByUsageNotes", query = "SELECT p FROM Products p WHERE p.usageNotes = :usageNotes"),
     @NamedQuery(name = "Products.findByViewCount", query = "SELECT p FROM Products p WHERE p.viewCount = :viewCount"),
     @NamedQuery(name = "Products.findByDiscount", query = "SELECT p FROM Products p WHERE p.discount = :discount"),
     @NamedQuery(name = "Products.findByAvaliable", query = "SELECT p FROM Products p WHERE p.avaliable = :avaliable"),
@@ -79,6 +81,24 @@ public class Products implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "description")
     private String description;
+    @Size(max = 2147483647)
+    @Column(name = "sort_description")
+    private String sortDescription;
+    @Size(max = 25)
+    @Column(name = "sku")
+    private String sku;
+    @Size(max = 50)
+    @Column(name = "weight")
+    private String weight;
+    @Size(max = 50)
+    @Column(name = "manufactured_place")
+    private String manufacturedPlace;
+    @Size(max = 200)
+    @Column(name = "storage_instruction")
+    private String storageInstruction;
+    @Size(max = 200)
+    @Column(name = "usage_notes")
+    private String usageNotes;
     @Column(name = "viewCount")
     private Integer viewCount;
     @Column(name = "discount")
@@ -91,10 +111,10 @@ public class Products implements Serializable {
     @Column(name = "modifiedate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedate;
-    @Size(max = 255)
+    @Size(max = 80)
     @Column(name = "createby")
     private String createby;
-    @Size(max = 255)
+    @Size(max = 80)
     @Column(name = "modifieby")
     private String modifieby;
     @JoinColumn(name = "brandID", referencedColumnName = "ID")
@@ -109,11 +129,12 @@ public class Products implements Serializable {
     @JoinColumn(name = "supplierID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Suppliers supplierID;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "products")
-    private Collection<OrderDetails> orderDetailsCollection;
 
     @Transient
     private Double price_discout;
+    
+    @Transient
+    private String active;
 
     public Products() {
     }
@@ -184,6 +205,54 @@ public class Products implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getSortDescription() {
+        return sortDescription;
+    }
+
+    public void setSortDescription(String sortDescription) {
+        this.sortDescription = sortDescription;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public String getManufacturedPlace() {
+        return manufacturedPlace;
+    }
+
+    public void setManufacturedPlace(String manufacturedPlace) {
+        this.manufacturedPlace = manufacturedPlace;
+    }
+
+    public String getStorageInstruction() {
+        return storageInstruction;
+    }
+
+    public void setStorageInstruction(String storageInstruction) {
+        this.storageInstruction = storageInstruction;
+    }
+
+    public String getUsageNotes() {
+        return usageNotes;
+    }
+
+    public void setUsageNotes(String usageNotes) {
+        this.usageNotes = usageNotes;
     }
 
     public Integer getViewCount() {
@@ -274,15 +343,6 @@ public class Products implements Serializable {
         this.supplierID = supplierID;
     }
 
-    @XmlTransient
-    public Collection<OrderDetails> getOrderDetailsCollection() {
-        return orderDetailsCollection;
-    }
-
-    public void setOrderDetailsCollection(Collection<OrderDetails> orderDetailsCollection) {
-        this.orderDetailsCollection = orderDetailsCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -307,13 +367,21 @@ public class Products implements Serializable {
     public String toString() {
         return "com.zipmart.ejb.entities.Products[ id=" + id + " ]";
     }
-
+    
     public Double getPrice_discout() {
         return price_discout;
-    }
+}
 
     public void setPrice_discout(Double price_discout) {
         this.price_discout = price_discout;
+    }
+
+    public String getActive() {
+        return avaliable == null ? "null" : avaliable ? "Is Selling" : "Stop Selling";
+    }
+
+    public void setActive(String active) {
+        this.active = active;
     }
 
 }

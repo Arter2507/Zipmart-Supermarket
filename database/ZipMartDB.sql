@@ -1720,8 +1720,18 @@ GO
 --GO
 --ALTER TABLE "Feedbacks" CHECK CONSTRAINT ALL
 --go
+--------------------------------
 --GO
-
+set quoted_identifier on
+go
+ALTER TABLE "blog_categories" NOCHECK CONSTRAINT ALL
+go
+INSERT INTO "blog_categories" (name, description) VALUES('Cuisine','cuisine');
+INSERT INTO "blog_categories" (name, description) VALUES('Culture','culture')
+GO
+ALTER TABLE "blog_categories" CHECK CONSTRAINT ALL
+go
+GO
 --------------------------------------
 set quoted_identifier on
 go

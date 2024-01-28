@@ -20,7 +20,7 @@ public class CartSessionBean implements CartSessionBeanLocal {
     @Override
     public void addCart(Long id, Integer qual) {
         if (mycart.containsKey(id)) {
-            mycart.replace(id, mycart.get(id) + 1);
+            mycart.replace(id, mycart.get(id));
         } else {
             mycart.put(id, qual);
         }
@@ -77,7 +77,7 @@ public class CartSessionBean implements CartSessionBeanLocal {
         if (flag) {
             if (mycart.get(id) < max) {
                 mycart.replace(id, mycart.get(id) + 1);
-                System.out.println("tang");
+                System.out.println("increase");
             }
             System.out.println(mycart.get(id));
         } else {
@@ -99,17 +99,11 @@ public class CartSessionBean implements CartSessionBeanLocal {
     }
 
     @Override
-    public void uCart(Long id, boolean flag, Cart cart) {  // Truyền đối tượng cart vào
-        int newQuantity;
-        if (flag) {
-            newQuantity = mycart.getOrDefault(id, 0) + 1;
-        } else {
-            newQuantity = mycart.getOrDefault(id, 0) - 1;
-            if (newQuantity < 0) {
-                newQuantity = 0;
-            }
-        }
+    public void uCart(Long id, boolean flag, Cart cart) {
+        int increment = flag ? 1 : -1;
+        int newQuantity = mycart.getOrDefault(id, 0) + increment;
         newQuantity = Math.max(newQuantity, 0);
+        mycart.put(id, newQuantity);
         cart.setQuantity(newQuantity);  // Cập nhật đối tượng cart được truyền vào
     }
 

@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://java.sun.com/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/webapp/webapp.layout/_adminLayout.xhtml">
+            <ui:define name="content">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h1 class="h3 mb-2 text-gray-800">Product Management</h1>
+                    <p class="mb-4">The <a href="javascript:void(0);">"Software Product Management"</a> is a robust software solution meticulously crafted to streamline and automate the intricacies of product-related processes within an organization.</p>
+
+                    <div class="row">
+                        <h:form id="formAccountSettings" enctype="multipart/form-data">
+                            <div class="col-md-12">
+                                <div class="card mb-4">
+                                    <!-- Add Form -->
+
+                                    <h:inputHidden value="#{productAdminBean.product.id}"/>
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                            <h:graphicImage value="#{resource[productAdminBean.product.imageURL]}" alt="user-avatar" styleClass="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar" height="200px" width="200px"  />                                          
+                                            <div class="button-wrapper">
+                                                <h:outputLabel for="status" class="#{productAdminBean.product.inventoryStatus.id == 1 ? 'btn btn-success me-2 mb-3' : 'btn btn-warning me-2 mb-3'}" tabindex="0">
+                                                    <span class="d-none d-sm-block">#{productAdminBean.product.inventoryStatus.statusName}</span>
+                                                </h:outputLabel>
+                                            </div>
+                                        </div>
+                                    </div>                                   
+
+                                    <div class="card-body pt-2 mt-1">
+                                        <div class="row mt-2 gy-4">
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText class="form-control" id="productname" value="#{productAdminBean.product.productName}"/>  
+                                                    <h:outputLabel for="productname">Product Name</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText class="form-control" id="category" value="#{productAdminBean.product.categoryID.categoryName}"/>  
+                                                    <h:outputLabel for="category">Category</h:outputLabel>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText class="form-control" id="brand" value="#{productAdminBean.product.brandID.brandName}"/>  
+                                                    <h:outputLabel for="brand">Brand</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText styleClass="form-control" id="supplier" value="#{productAdminBean.product.supplierID.companyName}"/>
+                                                    <h:outputLabel for="supplier">Supplier</h:outputLabel>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText class="form-control" id="unitprice" value="#{productAdminBean.product.unitPrice}">
+                                                        <f:convertNumber type="currency" currencySymbol="$" locale="en_US"/>
+                                                    </h:outputText>
+                                                    <h:outputLabel for="unitprice">Unit Price</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText class="form-control" id="discount" value="#{productAdminBean.product.discount}%"/>
+                                                    <h:outputLabel for="discount">Discount</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText class="form-control" id="unit" value="#{productAdminBean.product.unit}"/>
+                                                    <h:outputLabel for="unit">Unit</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText class="form-control" id="quantity" value="#{productAdminBean.product.quantity}"/>
+                                                    <h:outputLabel for="quantity">Quantity</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText a:type="username" class="form-control" id="quantitystock" value="#{productAdminBean.product.quantityInStock}"/>
+                                                    <h:outputLabel for="quantitystock">Quantity In Stock</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText value="#{productAdminBean.product.viewCount == null ? '0' : productAdminBean.product.viewCount} Views" class="form-control" id="viewcount"/>
+                                                    <h:outputLabel for="viewcount">View</h:outputLabel>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- /Form Add -->
+                                </div>
+                                <div class="card mb-4">
+                                    <ul class="nav nav-pills mt-4 m-4" id="pills-tab" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="pills-sort-tab" data-bs-toggle="pill" data-bs-target="#pills-sort" type="button" role="tab" aria-controls="pills-sort" aria-selected="false">Sort Description</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="pills-description-tab" data-bs-toggle="pill" data-bs-target="#pills-description" type="button" role="tab" aria-controls="pills-description" aria-selected="true">Description</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="pills-specifications-tab" data-bs-toggle="pill" data-bs-target="#pills-specifications" type="button" role="tab" aria-controls="pills-specifications" aria-selected="false">Specifications</button>
+                                        </li>
+                                    </ul>
+                                    <div class="card-body">
+                                        <div class="tab-content" id="pills-tabContent">
+                                            <div class="tab-pane fade show active" id="pills-sort" role="tabpanel" aria-labelledby="pills-sort-tab">
+                                                <h:outputFormat escape="false" value="#{productAdminBean.product.sortDescription == null ? 'In Process Of Update' : productAdminBean.product.sortDescription}"/>
+                                            </div>
+
+                                            <div class="tab-pane fade show" id="pills-description" role="tabpanel" aria-labelledby="pills-description-tab" style="overflow: hidden; height: 250px;">
+                                                <h:outputFormat escape="false" value="#{productAdminBean.product.description == null ? 'In Process Of Update' : productAdminBean.product.description}"/>
+                                            </div>
+
+                                            <div class="text-center mt-4" style="text-align: center;">
+                                                <button class="btn btn-link btnview" type="button">View more <i class="fas fa-caret-up"></i> </button>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="pills-specifications" role="tabpanel" aria-labelledby="pills-specifications-tab">
+                                                <div class="px-2">
+                                                    <div class="row g-4 d-flex justify-content-center">
+                                                        <div class="col-lg-8">
+                                                            <table class="table table-striped">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th>Manufactured Place</th>
+                                                                        <td>#{productAdminBean.product.manufacturedPlace == null ? 'In Process Of Update' : productAdminBean.product.manufacturedPlace}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Origin</th>
+                                                                        <td>Vietnam</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>SKU</th>
+                                                                        <td>#{productAdminBean.product.sku == null ? 'In Process Of Update' : productAdminBean.product.sku}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Weight (g)</th>
+                                                                        <td>#{productAdminBean.product.weight == null ? 'In Process Of Update' : productAdminBean.product.weight}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Storage Instruction</th>
+                                                                        <td>#{productAdminBean.product.storageInstruction == null ? 'In Process Of Update' : productAdminBean.product.storageInstruction}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Usage Notes</th>
+                                                                        <td>#{productAdminBean.product.usageNotes == null ? 'In Process Of Update' : productAdminBean.product.usageNotes}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                    <div class="mt-4 mb-4">
+                                        <h:commandButton styleClass="btn btn-primary me-2 text-white font-weight-bold" value="Edit" action="#{productAdminBean.updateProduct(productAdminBean.product.id)}" style="width: 70px; height: 43px"/>
+                                        <h:link value="Back" outcome="/webapp/webapp.administrator/product/product.xhtml" class="btn btn-outline-secondary me-2 font-weight-bold align-items-center" style="width: 70px; height: 43px"/>
+                                    </div>
+
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

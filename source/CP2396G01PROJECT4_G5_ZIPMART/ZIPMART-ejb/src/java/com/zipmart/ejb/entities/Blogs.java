@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -23,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author phnha
+ * @author TUONG
  */
 @Entity
 @Table(name = "Blogs")
@@ -34,9 +36,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Blogs.findByEmployeeID", query = "SELECT b FROM Blogs b WHERE b.employeeID = :employeeID"),
     @NamedQuery(name = "Blogs.findByTitle", query = "SELECT b FROM Blogs b WHERE b.title = :title"),
     @NamedQuery(name = "Blogs.findByImageURL", query = "SELECT b FROM Blogs b WHERE b.imageURL = :imageURL"),
-    @NamedQuery(name = "Blogs.findByShortcontent", query = "SELECT b FROM Blogs b WHERE b.shortcontent = :shortcontent"),
     @NamedQuery(name = "Blogs.findByContent", query = "SELECT b FROM Blogs b WHERE b.content = :content"),
-    @NamedQuery(name = "Blogs.findByCategory", query = "SELECT b FROM Blogs b WHERE b.category = :category"),
+    @NamedQuery(name = "Blogs.findBySortcontent", query = "SELECT b FROM Blogs b WHERE b.sortcontent = :sortcontent"),
     @NamedQuery(name = "Blogs.findByCreatedate", query = "SELECT b FROM Blogs b WHERE b.createdate = :createdate"),
     @NamedQuery(name = "Blogs.findByModifiedate", query = "SELECT b FROM Blogs b WHERE b.modifiedate = :modifiedate"),
     @NamedQuery(name = "Blogs.findByCreateby", query = "SELECT b FROM Blogs b WHERE b.createby = :createby"),
@@ -58,26 +59,26 @@ public class Blogs implements Serializable {
     @Column(name = "imageURL")
     private String imageURL;
     @Size(max = 2147483647)
-    @Column(name = "shortcontent")
-    private String shortcontent;
-    @Size(max = 2147483647)
     @Column(name = "content")
     private String content;
-    @Size(max = 255)
-    @Column(name = "category")
-    private String category;
+    @Size(max = 2147483647)
+    @Column(name = "sortcontent")
+    private String sortcontent;
     @Column(name = "createdate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdate;
     @Column(name = "modifiedate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedate;
-    @Size(max = 255)
+    @Size(max = 80)
     @Column(name = "createby")
     private String createby;
-    @Size(max = 255)
+    @Size(max = 80)
     @Column(name = "modifieby")
     private String modifieby;
+    @JoinColumn(name = "category", referencedColumnName = "ID")
+    @ManyToOne
+    private BlogCategories category;
 
     public Blogs() {
     }
@@ -118,14 +119,6 @@ public class Blogs implements Serializable {
         this.imageURL = imageURL;
     }
 
-    public String getShortcontent() {
-        return shortcontent;
-    }
-
-    public void setShortcontent(String shortcontent) {
-        this.shortcontent = shortcontent;
-    }
-
     public String getContent() {
         return content;
     }
@@ -134,12 +127,12 @@ public class Blogs implements Serializable {
         this.content = content;
     }
 
-    public String getCategory() {
-        return category;
+    public String getSortcontent() {
+        return sortcontent;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setSortcontent(String sortcontent) {
+        this.sortcontent = sortcontent;
     }
 
     public Date getCreatedate() {
@@ -172,6 +165,14 @@ public class Blogs implements Serializable {
 
     public void setModifieby(String modifieby) {
         this.modifieby = modifieby;
+    }
+
+    public BlogCategories getCategory() {
+        return category;
+    }
+
+    public void setCategory(BlogCategories category) {
+        this.category = category;
     }
 
     @Override
