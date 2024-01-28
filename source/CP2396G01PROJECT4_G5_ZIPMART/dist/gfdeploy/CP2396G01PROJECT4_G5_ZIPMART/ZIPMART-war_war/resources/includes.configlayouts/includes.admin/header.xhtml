@@ -35,6 +35,7 @@
         <!-- Custom styles for this template-->
         <h:outputStylesheet name="css/css.admin/old/sb-admin-2.css"/>
         <h:outputStylesheet name="css/css.admin/old/sb-admin-2.min.css"/>
+        
         <style>
             .select,
             #locale {
@@ -42,6 +43,29 @@
             }
             .like {
                 margin-right: 10px;
+            }
+            .ck-editor__editable[role="textbox"] {
+                /* Editing area */
+                min-height: 200px;
+            }
+            .ck-content .image {
+                /* Block images */
+                display: flex;
+                max-width: 80%;
+                margin: 20px auto;
+                justify-content: center;
+            }
+            .ck-content .image img{
+                display: flex;
+                justify-content: center;
+                justify-items: center;
+                text-align: center;
+                align-content: center;
+            }
+            .ck-content figure .image img{
+                display: flex;
+                justify-content: center;
+                text-align: center;
             }
         </style>
     </h:head>   

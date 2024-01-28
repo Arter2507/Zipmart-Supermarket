@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/webapp/webapp.layout/_adminLayout.xhtml">
+            <ui:define name="content">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h4 class="py-3 mb-4"><span class="text-muted fw-light">Feedbacks Management /</span> Update Feedback</h4>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card mb-4">
+                                <h4 class="card-header m-0 font-weight-bold text-primary">Feedback Information</h4>
+                                <div class="card-body pt-2 mt-1">
+                                    <h:form id="formAccountSettings" enctype="multipart/form-data">
+                                        <div class="row mt-2 gy-4">
+
+                                            <!--                                            <div class="card-body">
+                                                                                            <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                                                                                <h:graphicImage url="#{resource['/images/logo/photo-camera-gray.svg']}" alt="user-avatar" styleClass="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar" height="200px" width="200px"/>
+                                                                                                <div class="button-wrapper">
+                                                                                                    <h:outputLabel for="upload" class="btn btn-primary me-2 mb-3" tabindex="0">
+                                                                                                        <span class="d-none d-sm-block">Upload photo customer</span>
+                                                                                                        <i class="mdi mdi-tray-arrow-up d-block d-sm-none"></i>
+                                                                                                        <h:inputFile id="upload" style="display: none;" class="account-file-input" onchange="setImagePreview(this)" value="#{customerMB.customers.imageURL}"/>
+                                                                                                    </h:outputLabel>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>-->
+
+                                            <!--                                            <div class="">
+                                                                                            <div class="form-floating form-floating-outline">
+                                                                                                <h:graphicImage class="form-control" id="imageurl" library="../resources/images/customer" name="customericon.png" value="#{customerMB.fileImage}"/>  
+                                                                                                <h:outputLabel for="imageurl">Image URL</h:outputLabel>
+                                                                                            </div>
+                                                                                        </div>-->
+
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText class="form-control" id="fbid" value="#{feedbackMB.feedbacks.id}"/>
+                                                    <h:outputLabel for="fbid">Feedback ID</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="title" value="#{feedbackMB.feedbacks.title}" requiredMessage="Title not empty" required="true"/>
+                                                    <h:message for="title" style="color: red"/>
+                                                    <h:outputLabel for="title">Title</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="createdate" value="#{feedbackMB.feedbacks.createdate}" requiredMessage="Create day not empty" required="true">
+                                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                    </h:inputText>
+                                                    <h:message for="createdate" style="color: red"/>
+                                                    <h:outputLabel for="createdate">Create Date</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:selectOneMenu styleClass="select2 form-select" value="#{feedbackMB.feedbacks.rate}"> 
+                                                        <f:selectItem itemValue = "5" itemLabel = "5 Star"/> 
+                                                        <f:selectItem itemValue = "4" itemLabel = "4 Star" />
+                                                        <f:selectItem itemValue = "3" itemLabel = "3 Star" />
+                                                        <f:selectItem itemValue = "2" itemLabel = "2 Star" />
+                                                        <f:selectItem itemValue = "1" itemLabel = "1 Star" />
+                                                    </h:selectOneMenu> 
+                                                    <h:outputLabel for="rate">Rate</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputTextarea class="form-control" id="fbcontent" style="height: 500px" value="#{feedbackMB.feedbacks.content}" requiredMessage="Content not empty" required="true"/>
+                                                    <h:message for="fbcontent" style="color: red"/>
+                                                    <h:outputLabel for="fbcontent">Content</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <!--                                            <div class="col-md-6">
+                                                                                            <div class="form-floating form-floating-outline">
+                                                                                                <h:inputText class="form-control" id="username" value="#{customerMB.customers.username}"/>
+                                                                                                <h:outputLabel for="username">User Name</h:outputLabel>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="form-floating form-floating-outline">
+                                                                                                <h:inputText class="form-control" id="password" value="#{customerMB.customers.password}"/>
+                                                                                                <h:outputLabel for="pasword">Password</h:outputLabel>
+                                                                                            </div>
+                                                                                        </div>-->
+                                        </div>
+                                        <div class="mt-4">
+                                            <h:commandButton type="submit" class="btn btn-primary me-2 text-white" value="Update Feedback" action="#{feedbackMB.updateFeedback()}"/>
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

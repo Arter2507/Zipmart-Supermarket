@@ -51,7 +51,7 @@ public class Blogs implements Serializable {
     @Column(name = "ID")
     private Long id;
     @Column(name = "employee_ID")
-    private BigInteger employeeID;
+    private Long employeeID;
     @Size(max = 255)
     @Column(name = "title")
     private String title;
@@ -95,11 +95,11 @@ public class Blogs implements Serializable {
         this.id = id;
     }
 
-    public BigInteger getEmployeeID() {
+    public Long getEmployeeID() {
         return employeeID;
     }
 
-    public void setEmployeeID(BigInteger employeeID) {
+    public void setEmployeeID(Long employeeID) {
         this.employeeID = employeeID;
     }
 

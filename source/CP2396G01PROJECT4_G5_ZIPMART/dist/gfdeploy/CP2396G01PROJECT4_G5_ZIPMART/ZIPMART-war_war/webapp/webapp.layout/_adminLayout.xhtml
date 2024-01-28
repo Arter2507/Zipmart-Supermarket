@@ -79,8 +79,8 @@
                             <a class="collapse-item" href="login.html">Branch</a>
                             <a class="collapse-item" href="register.html">Supplier</a>
                             <a class="collapse-item" href="register.html">Brand</a>
-                            <h:link class="collapse-item">Blogs</h:link>
-                            <h:link class="collapse-item">Feedback</h:link>
+                            <h:link class="collapse-item" outcome="webapp/webapp.administrator/blog/displayblog.xhtml">Blogs</h:link>
+                            <h:link class="collapse-item" outcome="webapp/webapp.administrator/feedback/displayfeedback.xhtml">Feedback</h:link>
                         </div>
                     </div>
                 </li>
@@ -102,7 +102,7 @@
                     <div id="collapsePro" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="login.html">Categories</a>
-                            <a class="collapse-item" href="register.html">Products</a>
+                            <h:link class="collapse-item" outcome="/webapp/webapp.administrator/product/product.xhtml">Products</h:link>
                             <a class="collapse-item" href="register.html">Inventory Status</a>
                         </div>
                     </div>
@@ -413,5 +413,10 @@
         </div>
 
         <ui:include src="../../resources/includes.configlayouts/includes.admin/js.xhtml"/>
+        <h:outputScript name="js/configfile.js"/>
+
+        <!-- CKeditor 5 CDN -->
+        <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/super-build/ckeditor.js"></script>
+        <h:outputScript name="js/js.admin/ckeditor5.js"/>
     </h:body>
 </html>

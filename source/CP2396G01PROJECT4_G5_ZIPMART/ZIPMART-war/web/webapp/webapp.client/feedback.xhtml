@@ -33,39 +33,41 @@
                                                         <div class="row mt-2 gy-4">
                                                             <div class="">
                                                                 <div class="form-floating form-floating-outline">
-                                                                    <h:inputText class="form-control" id="title"/>  
+                                                                    <h:inputText class="form-control" id="title" value="#{feedbackMB.feedbacks.title}" requiredMessage="Title not empty" required="true"/>
+                                                                    <h:message for="title" style="color: red"/>
                                                                     <h:outputLabel for="title">Title</h:outputLabel>
                                                                 </div>
                                                             </div>
                                                             <div class="">
                                                                 <div class="form-floating form-floating-outline">
-                                                                    <h:inputTextarea class="form-control" id="contentfb"/>
-                                                                    <h:outputLabel for="contentfb">Content Feedback</h:outputLabel>
+                                                                    <h:inputTextarea class="form-control" id="contentfb" style="height: 500px" value="#{feedbackMB.feedbacks.content}" requiredMessage="Content not empty" required="true"/>
+                                                                    <h:message for="contentfb" style="color: red"/>
+                                                                    <h:outputLabel for="content">Content</h:outputLabel>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-floating form-floating-outline">
-                                                                    <h:selectOneMenu styleClass="select2 form-select"> 
-                                                                        <f:selectItem/> 
-                                                                    </h:selectOneMenu> 
-                                                                    <h:outputLabel for="country">Product</h:outputLabel>
+                                                                    <h:outputText class="form-control" id="createdate" value="#{feedbackMB.feedbacks.createdate}">
+                                                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                                    </h:outputText>
+                                                                    <h:outputLabel for="createdate">Create Date</h:outputLabel>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-floating form-floating-outline">
-                                                                    <h:selectOneMenu styleClass="select2 form-select"> 
-                                                                        <f:selectItem itemValue = "1" itemLabel = "5 Star" /> 
-                                                                        <f:selectItem itemValue = "2" itemLabel = "4 Star" />
+                                                                    <h:selectOneMenu styleClass="select2 form-select" value="#{feedbackMB.feedbacks.rate}"> 
+                                                                        <f:selectItem itemValue = "5" itemLabel = "5 Star"/> 
+                                                                        <f:selectItem itemValue = "4" itemLabel = "4 Star" />
                                                                         <f:selectItem itemValue = "3" itemLabel = "3 Star" />
-                                                                        <f:selectItem itemValue = "4" itemLabel = "2 Star" />
-                                                                        <f:selectItem itemValue = "5" itemLabel = "1 Star" />
+                                                                        <f:selectItem itemValue = "2" itemLabel = "2 Star" />
+                                                                        <f:selectItem itemValue = "1" itemLabel = "1 Star" />
                                                                     </h:selectOneMenu> 
                                                                     <h:outputLabel for="language">Rate</h:outputLabel>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="mt-4">
-                                                            <button type="submit" class="btn btn-primary me-2 text-white">Save changes</button>
+                                                            <h:commandButton type="submit" class="btn btn-primary me-2 text-white" value="Send Feedback" action="#{feedbackMB.createFeedback()}"/>
                                                             <button type="reset" class="btn btn-outline-secondary">Reset</button>
                                                         </div>
                                                     </h:form>

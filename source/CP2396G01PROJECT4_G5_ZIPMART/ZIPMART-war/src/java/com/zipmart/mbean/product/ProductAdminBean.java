@@ -6,10 +6,12 @@ package com.zipmart.mbean.product;
 
 import com.zipmart.ejb.entities.Brand;
 import com.zipmart.ejb.entities.Categories;
+import com.zipmart.ejb.entities.InventoryStatus;
 import com.zipmart.ejb.entities.Products;
 import com.zipmart.ejb.entities.Suppliers;
 import com.zipmart.ejb.session_beans.BrandFacadeLocal;
 import com.zipmart.ejb.session_beans.CategoriesFacadeLocal;
+import com.zipmart.ejb.session_beans.InventoryStatusFacadeLocal;
 import com.zipmart.ejb.session_beans.ProductsFacadeLocal;
 import com.zipmart.ejb.session_beans.SuppliersFacadeLocal;
 import com.zipmart.util.FileUltil;
@@ -29,6 +31,9 @@ import javax.servlet.http.Part;
 public class ProductAdminBean {
 
     @EJB
+    private InventoryStatusFacadeLocal inventoryStatusFacade;
+
+    @EJB
     private CategoriesFacadeLocal categoriesFacade;
 
     @EJB
@@ -40,10 +45,9 @@ public class ProductAdminBean {
     @EJB
     private BrandFacadeLocal brandFacade;
 
-//    private Categories category = new Categories();
-//    private Brand brand = new Brand();
-//    private Suppliers supplier = new Suppliers();
     private Products product;
+
+    private Long id;
 
     private Part file;
     private String image_url;
@@ -51,9 +55,7 @@ public class ProductAdminBean {
     private Long selected_brand;
     private Long selected_supplier;
     private Long selected_category;
-
-    public ProductAdminBean() {
-    }
+    private Long selected_inventorystatus;
 
     public List<Brand> showAllBrand() {
         return brandFacade.findAll();
@@ -67,6 +69,10 @@ public class ProductAdminBean {
         return categoriesFacade.findAll();
     }
 
+    public List<InventoryStatus> showAllSatus() {
+        return inventoryStatusFacade.findAll();
+    }
+
     public List<Products> showAllProduct() {
         List<Products> list_pro = new ArrayList<>();
         for (Products product : productsFacade.findAll()) {
@@ -78,7 +84,6 @@ public class ProductAdminBean {
     }
 
     public String addNewProduct() {
-        product = new Products();
         image_url = FileUltil.getInstance().uploadFile(file);
         product.setBrandID(brandFacade.find(selected_brand));
         product.setCategoryID(categoriesFacade.find(selected_category));
@@ -95,22 +100,37 @@ public class ProductAdminBean {
 
     public String updateProduct(Long id) {
         product = productsFacade.find(id);
+        id = product.getId();
+        System.out.println("----ID Product------>" + id);
         return "updateProduct";
     }
 
     public String updateProductProcess() {
         Products pro = product;
-        if (pro.getImageURL() != null) {
-            pro.setImageURL(pro.getImageURL());
-        } else {
+        System.out.println("------------->" + pro.getId());
+        Products p = productsFacade.find(pro.getId());
+        if (image_url == null && file != null) {
             image_url = FileUltil.getInstance().uploadFile(file);
             pro.setImageURL(image_url);
+            System.out.println("------------->" + pro.getImageURL());
+        } else if (image_url == null && file == null) {
+            pro.setImageURL(p.getImageURL());
+            System.out.println("------------->" + pro.getImageURL());
         }
-        pro.setBrandID(brandFacade.find(selected_brand));
-        pro.setCategoryID(categoriesFacade.find(selected_category));
-        pro.setSupplierID(suppliersFacade.find(selected_supplier));
+        pro.setViewCount(p.getViewCount());
+        pro.setBrandID(selected_brand == null ? p.getBrandID() : brandFacade.find(selected_brand));
+        pro.setCategoryID(selected_category == null ? p.getCategoryID() : categoriesFacade.find(selected_category));
+        pro.setSupplierID(selected_supplier == null ? p.getSupplierID() : suppliersFacade.find(selected_supplier));
+        pro.setInventoryStatus(selected_inventorystatus == null ? p.getInventoryStatus() : inventoryStatusFacade.find(selected_inventorystatus));
+        if (pro.getAvaliable() == null) {
+            pro.setAvaliable(Boolean.TRUE);
+        }
         productsFacade.edit(pro);
         return "product";
+    }
+
+    public ProductAdminBean() {
+        product = new Products();
     }
 
     public CategoriesFacadeLocal getCategoriesFacade() {
@@ -191,5 +211,29 @@ public class ProductAdminBean {
 
     public void setSelected_category(Long selected_category) {
         this.selected_category = selected_category;
+    }
+
+    public InventoryStatusFacadeLocal getInventoryStatusFacade() {
+        return inventoryStatusFacade;
+    }
+
+    public void setInventoryStatusFacade(InventoryStatusFacadeLocal inventoryStatusFacade) {
+        this.inventoryStatusFacade = inventoryStatusFacade;
+    }
+
+    public Long getSelected_inventorystatus() {
+        return selected_inventorystatus;
+    }
+
+    public void setSelected_inventorystatus(Long selected_inventorystatus) {
+        this.selected_inventorystatus = selected_inventorystatus;
+    }
+
+    public Long getIdpro() {
+        return id;
+    }
+
+    public void setIdpro(Long id) {
+        this.id = id;
     }
 }
