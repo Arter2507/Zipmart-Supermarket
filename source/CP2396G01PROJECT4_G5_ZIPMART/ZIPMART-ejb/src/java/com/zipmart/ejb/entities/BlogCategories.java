@@ -5,29 +5,27 @@
 package com.zipmart.ejb.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author TUONG
  */
 @Entity
-@Table(name = "blog_categories")
+@Table(name = "Blog_Categories")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "BlogCategories.findAll", query = "SELECT b FROM BlogCategories b"),
@@ -40,19 +38,16 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "BlogCategories.findByModifieby", query = "SELECT b FROM BlogCategories b WHERE b.modifieby = :modifieby")})
 public class BlogCategories implements Serializable {
 
-    @OneToMany(mappedBy = "category")
-    private Collection<Blogs> blogsCollection;
-
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID")
     private Long id;
-    @Size(max = 75)
+    @Size(max = 50)
     @Column(name = "name")
     private String name;
-    @Size(max = 200)
+    @Size(max = 150)
     @Column(name = "description")
     private String description;
     @Column(name = "createdate")
@@ -61,10 +56,10 @@ public class BlogCategories implements Serializable {
     @Column(name = "modifiedate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedate;
-    @Size(max = 80)
+    @Size(max = 255)
     @Column(name = "createby")
     private String createby;
-    @Size(max = 80)
+    @Size(max = 255)
     @Column(name = "modifieby")
     private String modifieby;
 
@@ -154,15 +149,6 @@ public class BlogCategories implements Serializable {
     @Override
     public String toString() {
         return "com.zipmart.ejb.entities.BlogCategories[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Blogs> getBlogsCollection() {
-        return blogsCollection;
-    }
-
-    public void setBlogsCollection(Collection<Blogs> blogsCollection) {
-        this.blogsCollection = blogsCollection;
     }
     
 }

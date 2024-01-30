@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://java.sun.com/jsf/passthrough">
     <h:body>
         <ui:composition template="/webapp/webapp.layout/_adminLayout.xhtml">
             <ui:define name="content">
@@ -67,7 +68,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:inputText class="form-control" id="birthday" value="#{customerMB.customers.birthDate}" requiredMessage="Birth day not empty" required="true">
+                                                    <h:inputText a:type="date" class="form-control" id="birthday" value="#{customerMB.customers.birthDate}" requiredMessage="Birth day not empty" required="true">
                                                         <f:convertDateTime pattern="dd/MM/yyyy" />
                                                     </h:inputText>
                                                     <h:message for="birthday" style="color: red"/>

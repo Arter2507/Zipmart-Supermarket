@@ -38,20 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Categories.findByRestockThreshold", query = "SELECT c FROM Categories c WHERE c.restockThreshold = :restockThreshold"),
     @NamedQuery(name = "Categories.findByNewAdjustment", query = "SELECT c FROM Categories c WHERE c.newAdjustment = :newAdjustment"),
     @NamedQuery(name = "Categories.findByDescription", query = "SELECT c FROM Categories c WHERE c.description = :description")})
-public class Categories implements Serializable {
-
-    @Column(name = "createdate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdate;
-    @Column(name = "modifiedate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date modifiedate;
-    @Size(max = 80)
-    @Column(name = "createby")
-    private String createby;
-    @Size(max = 80)
-    @Column(name = "modifieby")
-    private String modifieby;
+public class Categories implements Serializable {   
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -69,12 +56,22 @@ public class Categories implements Serializable {
     @Size(max = 255)
     @Column(name = "description")
     private String description;
+    @Column(name = "createdate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdate;
+    @Column(name = "modifiedate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date modifiedate;
+    @Size(max = 80)
+    @Column(name = "createby")
+    private String createby;
+    @Size(max = 80)
+    @Column(name = "modifieby")
+    private String modifieby;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryID")
     private Collection<Products> productsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryID")
     private Collection<ThresholdAdjustment> thresholdAdjustmentCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryID")
-    private Collection<ImportOrder> importOrderCollection;
 
     public Categories() {
     }
@@ -139,15 +136,6 @@ public class Categories implements Serializable {
 
     public void setThresholdAdjustmentCollection(Collection<ThresholdAdjustment> thresholdAdjustmentCollection) {
         this.thresholdAdjustmentCollection = thresholdAdjustmentCollection;
-    }
-
-    @XmlTransient
-    public Collection<ImportOrder> getImportOrderCollection() {
-        return importOrderCollection;
-    }
-
-    public void setImportOrderCollection(Collection<ImportOrder> importOrderCollection) {
-        this.importOrderCollection = importOrderCollection;
     }
 
     @Override

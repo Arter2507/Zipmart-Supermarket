@@ -7,9 +7,12 @@ package com.zipmart.ejb.entities;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -29,8 +32,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "OrderDetails.findAll", query = "SELECT o FROM OrderDetails o"),
-    @NamedQuery(name = "OrderDetails.findByOrderID", query = "SELECT o FROM OrderDetails o WHERE o.orderDetailsPK.orderID = :orderID"),
-    @NamedQuery(name = "OrderDetails.findByProductID", query = "SELECT o FROM OrderDetails o WHERE o.orderDetailsPK.productID = :productID"),
     @NamedQuery(name = "OrderDetails.findByUnitPrice", query = "SELECT o FROM OrderDetails o WHERE o.unitPrice = :unitPrice"),
     @NamedQuery(name = "OrderDetails.findByQuantity", query = "SELECT o FROM OrderDetails o WHERE o.quantity = :quantity"),
     @NamedQuery(name = "OrderDetails.findByDiscount", query = "SELECT o FROM OrderDetails o WHERE o.discount = :discount"),
@@ -38,21 +39,19 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "OrderDetails.findByOrderDate", query = "SELECT o FROM OrderDetails o WHERE o.orderDate = :orderDate"),
     @NamedQuery(name = "OrderDetails.findByShipDate", query = "SELECT o FROM OrderDetails o WHERE o.shipDate = :shipDate"),
     @NamedQuery(name = "OrderDetails.findByShipAddress", query = "SELECT o FROM OrderDetails o WHERE o.shipAddress = :shipAddress"),
-    @NamedQuery(name = "OrderDetails.findByPaymentMethod", query = "SELECT o FROM OrderDetails o WHERE o.paymentMethod = :paymentMethod")})
+    @NamedQuery(name = "OrderDetails.findById", query = "SELECT o FROM OrderDetails o WHERE o.id = :id")})
 public class OrderDetails implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected OrderDetailsPK orderDetailsPK;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "unitPrice")
-    private BigDecimal unitPrice;
+    private Double unitPrice;
     @Column(name = "quantity")
     private Integer quantity;
     @Column(name = "discount")
     private Integer discount;
     @Column(name = "totalPrice")
-    private BigDecimal totalPrice;
+    private Double totalPrice;
     @Column(name = "orderDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
@@ -62,40 +61,30 @@ public class OrderDetails implements Serializable {
     @Size(max = 255)
     @Column(name = "shipAddress")
     private String shipAddress;
-    @Size(max = 255)
-    @Column(name = "paymentMethod")
-    private String paymentMethod;
-    @JoinColumn(name = "orderID", referencedColumnName = "ID", insertable = false, updatable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID")
+    private Long id;
+    @JoinColumn(name = "orderID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
-    private Orders orders;
-    @JoinColumn(name = "productID", referencedColumnName = "ID", insertable = false, updatable = false)
+    private Orders orderID;
+    @JoinColumn(name = "productID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
-    private Products products;
+    private Products productID;
 
     public OrderDetails() {
     }
 
-    public OrderDetails(OrderDetailsPK orderDetailsPK) {
-        this.orderDetailsPK = orderDetailsPK;
+    public OrderDetails(Long id) {
+        this.id = id;
     }
 
-    public OrderDetails(long orderID, long productID) {
-        this.orderDetailsPK = new OrderDetailsPK(orderID, productID);
-    }
-
-    public OrderDetailsPK getOrderDetailsPK() {
-        return orderDetailsPK;
-    }
-
-    public void setOrderDetailsPK(OrderDetailsPK orderDetailsPK) {
-        this.orderDetailsPK = orderDetailsPK;
-    }
-
-    public BigDecimal getUnitPrice() {
+    public Double getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(BigDecimal unitPrice) {
+    public void setUnitPrice(Double unitPrice) {
         this.unitPrice = unitPrice;
     }
 
@@ -115,11 +104,11 @@ public class OrderDetails implements Serializable {
         this.discount = discount;
     }
 
-    public BigDecimal getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
@@ -147,34 +136,34 @@ public class OrderDetails implements Serializable {
         this.shipAddress = shipAddress;
     }
 
-    public String getPaymentMethod() {
-        return paymentMethod;
+    public Long getId() {
+        return id;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Orders getOrders() {
-        return orders;
+    public Orders getOrderID() {
+        return orderID;
     }
 
-    public void setOrders(Orders orders) {
-        this.orders = orders;
+    public void setOrderID(Orders orderID) {
+        this.orderID = orderID;
     }
 
-    public Products getProducts() {
-        return products;
+    public Products getProductID() {
+        return productID;
     }
 
-    public void setProducts(Products products) {
-        this.products = products;
+    public void setProductID(Products productID) {
+        this.productID = productID;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (orderDetailsPK != null ? orderDetailsPK.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -185,7 +174,7 @@ public class OrderDetails implements Serializable {
             return false;
         }
         OrderDetails other = (OrderDetails) object;
-        if ((this.orderDetailsPK == null && other.orderDetailsPK != null) || (this.orderDetailsPK != null && !this.orderDetailsPK.equals(other.orderDetailsPK))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -193,7 +182,7 @@ public class OrderDetails implements Serializable {
 
     @Override
     public String toString() {
-        return "com.zipmart.ejb.entities.OrderDetails[ orderDetailsPK=" + orderDetailsPK + " ]";
+        return "com.zipmart.ejb.entities.OrderDetails[ id=" + id + " ]";
     }
     
 }

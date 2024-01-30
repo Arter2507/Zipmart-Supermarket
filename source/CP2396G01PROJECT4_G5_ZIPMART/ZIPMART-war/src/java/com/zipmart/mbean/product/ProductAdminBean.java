@@ -16,16 +16,13 @@ import com.zipmart.ejb.session_beans.ProductsFacadeLocal;
 import com.zipmart.ejb.session_beans.SuppliersFacadeLocal;
 import com.zipmart.util.FileUltil;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.servlet.http.Part;
 
-/**
- *
- * @author TUONG
- */
 @Named(value = "productAdminBean")
 @RequestScoped
 public class ProductAdminBean {
@@ -46,8 +43,18 @@ public class ProductAdminBean {
     private BrandFacadeLocal brandFacade;
 
     private Products product;
+    private Brand brand;
+    private Categories category;
+    private Suppliers supplier;
+    private InventoryStatus inventory;
 
     private Long id;
+    private String product_name;
+    private Double unit_price;
+    private String unit;
+    private int quantity;
+    private int quantity_in_stock;
+    private int discount;
 
     private Part file;
     private String image_url;
@@ -85,10 +92,35 @@ public class ProductAdminBean {
 
     public String addNewProduct() {
         image_url = FileUltil.getInstance().uploadFile(file);
+
+        product.setProductName(product_name);
+        product.setUnitPrice(unit_price);
+        product.setDiscount(discount);
+        product.setUnit(unit);
         product.setBrandID(brandFacade.find(selected_brand));
         product.setCategoryID(categoriesFacade.find(selected_category));
         product.setSupplierID(suppliersFacade.find(selected_supplier));
         product.setImageURL(image_url);
+        product.setCreatedate(new Date());
+        product.setAvaliable(Boolean.TRUE);
+
+        if (quantity > quantity_in_stock) {
+            product.setQuantity(quantity_in_stock);
+            product.setQuantityInStock(quantity);
+        } else {
+            product.setQuantity(quantity);
+            product.setQuantityInStock(quantity_in_stock);
+        }
+
+        if (quantity_in_stock < 50) {
+            selected_inventorystatus = 3L;
+        } else if (quantity_in_stock >= 50 && quantity_in_stock < 120) {
+            selected_inventorystatus = 2L;
+        } else {
+            selected_inventorystatus = 1L;
+        }
+
+        product.setInventoryStatus(inventoryStatusFacade.find(selected_inventorystatus));
         productsFacade.create(product);
         return "product";
     }
@@ -101,6 +133,15 @@ public class ProductAdminBean {
     public String updateProduct(Long id) {
         product = productsFacade.find(id);
         id = product.getId();
+
+        brand = brandFacade.find(product.getBrandID().getId());
+        selected_brand = brand.getId();
+
+        supplier = suppliersFacade.find(product.getSupplierID().getId());
+        selected_supplier = supplier.getId();
+
+        category = categoriesFacade.find(product.getCategoryID().getId());
+        selected_category = category.getId();
         System.out.println("----ID Product------>" + id);
         return "updateProduct";
     }
@@ -117,7 +158,8 @@ public class ProductAdminBean {
             pro.setImageURL(p.getImageURL());
             System.out.println("------------->" + pro.getImageURL());
         }
-        pro.setViewCount(p.getViewCount());
+        pro.setCreatedate(p.getCreatedate());
+        pro.setModifiedate(new Date(System.currentTimeMillis()));
         pro.setBrandID(selected_brand == null ? p.getBrandID() : brandFacade.find(selected_brand));
         pro.setCategoryID(selected_category == null ? p.getCategoryID() : categoriesFacade.find(selected_category));
         pro.setSupplierID(selected_supplier == null ? p.getSupplierID() : suppliersFacade.find(selected_supplier));
@@ -129,8 +171,29 @@ public class ProductAdminBean {
         return "product";
     }
 
+    public String toggleStatus(Long ID) {
+        product = productsFacade.find(ID);
+        System.out.println("init id: " + product.getId() + "---------- status: " + product.getAvaliable());
+        if (product.getAvaliable()) {
+            product.setAvaliable(false);
+        } else {
+            product.setAvaliable(true);
+        }
+        productsFacade.edit(product);
+        return "employee";
+    }
+
+    public String removeProduct(Long ID) {
+        productsFacade.remove(productsFacade.find(ID));
+        return "product";
+    }
+
     public ProductAdminBean() {
         product = new Products();
+        brand = new Brand();
+        supplier = new Suppliers();
+        category = new Categories();
+        inventory = new InventoryStatus();
     }
 
     public CategoriesFacadeLocal getCategoriesFacade() {
@@ -235,5 +298,93 @@ public class ProductAdminBean {
 
     public void setIdpro(Long id) {
         this.id = id;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
+    public Categories getCategory() {
+        return category;
+    }
+
+    public void setCategory(Categories category) {
+        this.category = category;
+    }
+
+    public Suppliers getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Suppliers supplier) {
+        this.supplier = supplier;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getProduct_name() {
+        return product_name;
+    }
+
+    public void setProduct_name(String product_name) {
+        this.product_name = product_name;
+    }
+
+    public Double getUnit_price() {
+        return unit_price;
+    }
+
+    public void setUnit_price(Double unit_price) {
+        this.unit_price = unit_price;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public int getQuantity_in_stock() {
+        return quantity_in_stock;
+    }
+
+    public void setQuantity_in_stock(int quantity_in_stock) {
+        this.quantity_in_stock = quantity_in_stock;
+    }
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+
+    public InventoryStatus getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(InventoryStatus inventory) {
+        this.inventory = inventory;
     }
 }

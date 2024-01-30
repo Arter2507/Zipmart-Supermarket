@@ -58,7 +58,7 @@ public class Invoices implements Serializable {
     @Column(name = "Order Date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
-    @Size(max = 255)
+    @Size(max = 100)
     @Column(name = "Customer Name")
     private String customerName;
     @Size(max = 50)
@@ -91,9 +91,8 @@ public class Invoices implements Serializable {
     private String notes;
     @Column(name = "Order Status")
     private Integer orderStatus;
-    @Size(max = 255)
     @Column(name = "Payment Method")
-    private String paymentMethod;
+    private Short paymentMethod;
     @Size(max = 255)
     @Column(name = "Card Name")
     private String cardName;
@@ -218,11 +217,11 @@ public class Invoices implements Serializable {
         this.orderStatus = orderStatus;
     }
 
-    public String getPaymentMethod() {
+    public Short getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
+    public void setPaymentMethod(Short paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 

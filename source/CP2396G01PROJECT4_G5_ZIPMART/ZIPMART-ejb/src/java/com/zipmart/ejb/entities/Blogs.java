@@ -13,8 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -37,6 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Blogs.findByTitle", query = "SELECT b FROM Blogs b WHERE b.title = :title"),
     @NamedQuery(name = "Blogs.findByImageURL", query = "SELECT b FROM Blogs b WHERE b.imageURL = :imageURL"),
     @NamedQuery(name = "Blogs.findByContent", query = "SELECT b FROM Blogs b WHERE b.content = :content"),
+    @NamedQuery(name = "Blogs.findByCategory", query = "SELECT b FROM Blogs b WHERE b.category = :category"),
     @NamedQuery(name = "Blogs.findBySortcontent", query = "SELECT b FROM Blogs b WHERE b.sortcontent = :sortcontent"),
     @NamedQuery(name = "Blogs.findByCreatedate", query = "SELECT b FROM Blogs b WHERE b.createdate = :createdate"),
     @NamedQuery(name = "Blogs.findByModifiedate", query = "SELECT b FROM Blogs b WHERE b.modifiedate = :modifiedate"),
@@ -51,7 +50,7 @@ public class Blogs implements Serializable {
     @Column(name = "ID")
     private Long id;
     @Column(name = "employee_ID")
-    private Long employeeID;
+    private BigInteger employeeID;
     @Size(max = 255)
     @Column(name = "title")
     private String title;
@@ -61,6 +60,9 @@ public class Blogs implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "content")
     private String content;
+    @Size(max = 100)
+    @Column(name = "category")
+    private String category;
     @Size(max = 2147483647)
     @Column(name = "sortcontent")
     private String sortcontent;
@@ -70,15 +72,12 @@ public class Blogs implements Serializable {
     @Column(name = "modifiedate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedate;
-    @Size(max = 80)
+    @Size(max = 255)
     @Column(name = "createby")
     private String createby;
-    @Size(max = 80)
+    @Size(max = 255)
     @Column(name = "modifieby")
     private String modifieby;
-    @JoinColumn(name = "category", referencedColumnName = "ID")
-    @ManyToOne
-    private BlogCategories category;
 
     public Blogs() {
     }
@@ -95,11 +94,11 @@ public class Blogs implements Serializable {
         this.id = id;
     }
 
-    public Long getEmployeeID() {
+    public BigInteger getEmployeeID() {
         return employeeID;
     }
 
-    public void setEmployeeID(Long employeeID) {
+    public void setEmployeeID(BigInteger employeeID) {
         this.employeeID = employeeID;
     }
 
@@ -125,6 +124,14 @@ public class Blogs implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getSortcontent() {
@@ -165,14 +172,6 @@ public class Blogs implements Serializable {
 
     public void setModifieby(String modifieby) {
         this.modifieby = modifieby;
-    }
-
-    public BlogCategories getCategory() {
-        return category;
-    }
-
-    public void setCategory(BlogCategories category) {
-        this.category = category;
     }
 
     @Override

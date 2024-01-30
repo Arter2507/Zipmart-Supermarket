@@ -5,8 +5,9 @@
 package com.zipmart.ejb.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,11 +17,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,12 +33,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o"),
     @NamedQuery(name = "Orders.findById", query = "SELECT o FROM Orders o WHERE o.id = :id"),
+    @NamedQuery(name = "Orders.findByPaymentMethod", query = "SELECT o FROM Orders o WHERE o.paymentMethod = :paymentMethod"),
     @NamedQuery(name = "Orders.findByNote", query = "SELECT o FROM Orders o WHERE o.note = :note"),
-    @NamedQuery(name = "Orders.findByStatus", query = "SELECT o FROM Orders o WHERE o.status = :status"),
-    @NamedQuery(name = "Orders.findByCreatedate", query = "SELECT o FROM Orders o WHERE o.createdate = :createdate"),
-    @NamedQuery(name = "Orders.findByModifiedate", query = "SELECT o FROM Orders o WHERE o.modifiedate = :modifiedate"),
-    @NamedQuery(name = "Orders.findByCreateby", query = "SELECT o FROM Orders o WHERE o.createby = :createby"),
-    @NamedQuery(name = "Orders.findByModifieby", query = "SELECT o FROM Orders o WHERE o.modifieby = :modifieby")})
+    @NamedQuery(name = "Orders.findByStatus", query = "SELECT o FROM Orders o WHERE o.status = :status")})
 public class Orders implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,32 +44,18 @@ public class Orders implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
-    @Size(max = 255)
+    @Column(name = "paymentMethod")
+    private Short paymentMethod;
+    @Size(max = 2147483647)
     @Column(name = "note")
     private String note;
     @Column(name = "status")
     private Integer status;
-    @Column(name = "createdate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdate;
-    @Column(name = "modifiedate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date modifiedate;
-    @Size(max = 80)
-    @Column(name = "createby")
-    private String createby;
-    @Size(max = 80)
-    @Column(name = "modifieby")
-    private String modifieby;
     @JoinColumn(name = "customerID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Customers customerID;
-    @JoinColumn(name = "employeeID", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
-    private Employees employeeID;
-    @JoinColumn(name = "paymentMethodID", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
-    private PaymentMethod paymentMethodID;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderID")
+    private Collection<OrderDetails> orderDetailsCollection;
 
     public Orders() {
     }
@@ -86,6 +70,14 @@ public class Orders implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Short getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(Short paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 
     public String getNote() {
@@ -104,38 +96,6 @@ public class Orders implements Serializable {
         this.status = status;
     }
 
-    public Date getCreatedate() {
-        return createdate;
-    }
-
-    public void setCreatedate(Date createdate) {
-        this.createdate = createdate;
-    }
-
-    public Date getModifiedate() {
-        return modifiedate;
-    }
-
-    public void setModifiedate(Date modifiedate) {
-        this.modifiedate = modifiedate;
-    }
-
-    public String getCreateby() {
-        return createby;
-    }
-
-    public void setCreateby(String createby) {
-        this.createby = createby;
-    }
-
-    public String getModifieby() {
-        return modifieby;
-    }
-
-    public void setModifieby(String modifieby) {
-        this.modifieby = modifieby;
-    }
-
     public Customers getCustomerID() {
         return customerID;
     }
@@ -144,20 +104,13 @@ public class Orders implements Serializable {
         this.customerID = customerID;
     }
 
-    public Employees getEmployeeID() {
-        return employeeID;
+    @XmlTransient
+    public Collection<OrderDetails> getOrderDetailsCollection() {
+        return orderDetailsCollection;
     }
 
-    public void setEmployeeID(Employees employeeID) {
-        this.employeeID = employeeID;
-    }
-
-    public PaymentMethod getPaymentMethodID() {
-        return paymentMethodID;
-    }
-
-    public void setPaymentMethodID(PaymentMethod paymentMethodID) {
-        this.paymentMethodID = paymentMethodID;
+    public void setOrderDetailsCollection(Collection<OrderDetails> orderDetailsCollection) {
+        this.orderDetailsCollection = orderDetailsCollection;
     }
 
     @Override

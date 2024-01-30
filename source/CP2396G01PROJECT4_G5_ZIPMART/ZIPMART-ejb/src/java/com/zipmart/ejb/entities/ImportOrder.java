@@ -32,16 +32,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ImportOrder.findAll", query = "SELECT i FROM ImportOrder i"),
     @NamedQuery(name = "ImportOrder.findById", query = "SELECT i FROM ImportOrder i WHERE i.id = :id"),
-    @NamedQuery(name = "ImportOrder.findByCompanyName", query = "SELECT i FROM ImportOrder i WHERE i.companyName = :companyName"),
     @NamedQuery(name = "ImportOrder.findByDateImport", query = "SELECT i FROM ImportOrder i WHERE i.dateImport = :dateImport"),
     @NamedQuery(name = "ImportOrder.findByHsCode", query = "SELECT i FROM ImportOrder i WHERE i.hsCode = :hsCode"),
-    @NamedQuery(name = "ImportOrder.findByNameProduct", query = "SELECT i FROM ImportOrder i WHERE i.nameProduct = :nameProduct"),
     @NamedQuery(name = "ImportOrder.findByAmountDelivery", query = "SELECT i FROM ImportOrder i WHERE i.amountDelivery = :amountDelivery"),
-    @NamedQuery(name = "ImportOrder.findByAddress", query = "SELECT i FROM ImportOrder i WHERE i.address = :address"),
-    @NamedQuery(name = "ImportOrder.findByCity", query = "SELECT i FROM ImportOrder i WHERE i.city = :city"),
-    @NamedQuery(name = "ImportOrder.findByPhone", query = "SELECT i FROM ImportOrder i WHERE i.phone = :phone"),
-    @NamedQuery(name = "ImportOrder.findByFax", query = "SELECT i FROM ImportOrder i WHERE i.fax = :fax"),
-    @NamedQuery(name = "ImportOrder.findByPostalCode", query = "SELECT i FROM ImportOrder i WHERE i.postalCode = :postalCode"),
     @NamedQuery(name = "ImportOrder.findByDescription", query = "SELECT i FROM ImportOrder i WHERE i.description = :description"),
     @NamedQuery(name = "ImportOrder.findByStatus", query = "SELECT i FROM ImportOrder i WHERE i.status = :status"),
     @NamedQuery(name = "ImportOrder.findByLeadtime", query = "SELECT i FROM ImportOrder i WHERE i.leadtime = :leadtime"),
@@ -57,36 +50,13 @@ public class ImportOrder implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
-    @Size(max = 40)
-    @Column(name = "companyName")
-    private String companyName;
     @Column(name = "dateImport")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateImport;
     @Column(name = "hsCode")
     private Integer hsCode;
-    @Size(max = 255)
-    @Column(name = "nameProduct")
-    private String nameProduct;
     @Column(name = "amountDelivery")
     private Integer amountDelivery;
-    @Size(max = 255)
-    @Column(name = "address")
-    private String address;
-    @Size(max = 15)
-    @Column(name = "city")
-    private String city;
-    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
-    @Size(max = 24)
-    @Column(name = "phone")
-    private String phone;
-    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
-    @Size(max = 24)
-    @Column(name = "fax")
-    private String fax;
-    @Size(max = 10)
-    @Column(name = "postalCode")
-    private String postalCode;
     @Size(max = 255)
     @Column(name = "description")
     private String description;
@@ -110,12 +80,9 @@ public class ImportOrder implements Serializable {
     @JoinColumn(name = "branchID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Branch branchID;
-    @JoinColumn(name = "categoryID", referencedColumnName = "ID")
+    @JoinColumn(name = "productID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
-    private Categories categoryID;
-    @JoinColumn(name = "supplierID", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
-    private Suppliers supplierID;
+    private Products productID;
 
     public ImportOrder() {
     }
@@ -130,14 +97,6 @@ public class ImportOrder implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
     }
 
     public Date getDateImport() {
@@ -156,60 +115,12 @@ public class ImportOrder implements Serializable {
         this.hsCode = hsCode;
     }
 
-    public String getNameProduct() {
-        return nameProduct;
-    }
-
-    public void setNameProduct(String nameProduct) {
-        this.nameProduct = nameProduct;
-    }
-
     public Integer getAmountDelivery() {
         return amountDelivery;
     }
 
     public void setAmountDelivery(Integer amountDelivery) {
         this.amountDelivery = amountDelivery;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getFax() {
-        return fax;
-    }
-
-    public void setFax(String fax) {
-        this.fax = fax;
-    }
-
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
     }
 
     public String getDescription() {
@@ -276,20 +187,12 @@ public class ImportOrder implements Serializable {
         this.branchID = branchID;
     }
 
-    public Categories getCategoryID() {
-        return categoryID;
+    public Products getProductID() {
+        return productID;
     }
 
-    public void setCategoryID(Categories categoryID) {
-        this.categoryID = categoryID;
-    }
-
-    public Suppliers getSupplierID() {
-        return supplierID;
-    }
-
-    public void setSupplierID(Suppliers supplierID) {
-        this.supplierID = supplierID;
+    public void setProductID(Products productID) {
+        this.productID = productID;
     }
 
     @Override

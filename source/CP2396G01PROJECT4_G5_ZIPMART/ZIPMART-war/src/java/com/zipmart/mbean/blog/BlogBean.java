@@ -39,6 +39,11 @@ public class BlogBean {
     public List<BlogCategories> showAllCategory() {
         return blogCategoriesFacade.findAll();
     }
+    
+    public String showDetail(Long id){
+    blog = blogsFacade.find(id);
+    return "blog-details";
+    }
 
     public Blogs getBlog() {
         return blog;

@@ -42,8 +42,11 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:selectOneMenu id="gender" styleClass="select2 form-select" value="#{managerBean.selected_gender}">
-                                                        <f:selectItems value="#{managerBean.showGenders()}" var="gender" itemValue="#{gender.id}" itemLabel="#{gender.genderName}"/>
+                                                    <h:selectOneMenu id="gender" styleClass="select2 form-select" value="#{employeeBean.selected_gender}">
+                                                        <f:selectItem itemValue="1" itemLabel="Male"/>
+                                                        <f:selectItem itemValue="2" itemLabel="Female"/>
+                                                        <f:selectItem itemValue="3" itemLabel="Other"/>
+                                                        <f:selectItem itemValue="4" itemLabel="Not Set"/>
                                                     </h:selectOneMenu>   
                                                     <h:outputLabel for="gender">Gender</h:outputLabel>
                                                 </div>

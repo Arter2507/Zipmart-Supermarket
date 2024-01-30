@@ -22,10 +22,10 @@ $(document).ready(function () {
         const buttonText = $('.btnview');
         if (tabContent.height() === 250) {
             tabContent.height('auto');
-            buttonText.text('View less');
+            buttonText.html('View less <i class="fas fa-caret-up"></i> ');
         } else {
             tabContent.height(250);
-            buttonText.text('View more');
+            buttonText.html('View more <i class="fas fa-caret-down"></i> ');
             $('#nav-about-tab')[0].scrollIntoView({behavior: 'smooth'});
         }
     });

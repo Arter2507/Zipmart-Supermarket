@@ -35,7 +35,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ThresholdAdjustment.findByReasonAdjustment", query = "SELECT t FROM ThresholdAdjustment t WHERE t.reasonAdjustment = :reasonAdjustment"),
     @NamedQuery(name = "ThresholdAdjustment.findByNewrestockThreshold", query = "SELECT t FROM ThresholdAdjustment t WHERE t.newrestockThreshold = :newrestockThreshold"),
     @NamedQuery(name = "ThresholdAdjustment.findByDateAdjusted", query = "SELECT t FROM ThresholdAdjustment t WHERE t.dateAdjusted = :dateAdjusted"),
-    @NamedQuery(name = "ThresholdAdjustment.findByStatusThresholdAdjustments", query = "SELECT t FROM ThresholdAdjustment t WHERE t.statusThresholdAdjustments = :statusThresholdAdjustments")})
+    @NamedQuery(name = "ThresholdAdjustment.findByStatusThresholdAdjustments", query = "SELECT t FROM ThresholdAdjustment t WHERE t.statusThresholdAdjustments = :statusThresholdAdjustments"),
+    @NamedQuery(name = "ThresholdAdjustment.findByCreatedate", query = "SELECT t FROM ThresholdAdjustment t WHERE t.createdate = :createdate"),
+    @NamedQuery(name = "ThresholdAdjustment.findByModifiedate", query = "SELECT t FROM ThresholdAdjustment t WHERE t.modifiedate = :modifiedate"),
+    @NamedQuery(name = "ThresholdAdjustment.findByCreateby", query = "SELECT t FROM ThresholdAdjustment t WHERE t.createby = :createby"),
+    @NamedQuery(name = "ThresholdAdjustment.findByModifieby", query = "SELECT t FROM ThresholdAdjustment t WHERE t.modifieby = :modifieby")})
 public class ThresholdAdjustment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,6 +59,18 @@ public class ThresholdAdjustment implements Serializable {
     @Size(max = 50)
     @Column(name = "statusThresholdAdjustments")
     private String statusThresholdAdjustments;
+    @Column(name = "createdate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdate;
+    @Column(name = "modifiedate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date modifiedate;
+    @Size(max = 255)
+    @Column(name = "createby")
+    private String createby;
+    @Size(max = 255)
+    @Column(name = "modifieby")
+    private String modifieby;
     @JoinColumn(name = "categoryID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Categories categoryID;
@@ -104,6 +120,38 @@ public class ThresholdAdjustment implements Serializable {
 
     public void setStatusThresholdAdjustments(String statusThresholdAdjustments) {
         this.statusThresholdAdjustments = statusThresholdAdjustments;
+    }
+
+    public Date getCreatedate() {
+        return createdate;
+    }
+
+    public void setCreatedate(Date createdate) {
+        this.createdate = createdate;
+    }
+
+    public Date getModifiedate() {
+        return modifiedate;
+    }
+
+    public void setModifiedate(Date modifiedate) {
+        this.modifiedate = modifiedate;
+    }
+
+    public String getCreateby() {
+        return createby;
+    }
+
+    public void setCreateby(String createby) {
+        this.createby = createby;
+    }
+
+    public String getModifieby() {
+        return modifieby;
+    }
+
+    public void setModifieby(String modifieby) {
+        this.modifieby = modifieby;
     }
 
     public Categories getCategoryID() {

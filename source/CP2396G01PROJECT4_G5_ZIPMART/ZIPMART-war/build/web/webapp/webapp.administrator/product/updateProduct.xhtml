@@ -30,7 +30,7 @@
                                                 <div class="button-wrapper">
                                                     <h:outputLabel for="status" tabindex="0">
                                                         <h:selectOneMenu id="status" styleClass="select2 form-select" value="#{productAdminBean.selected_inventorystatus}">
-                                                            <f:selectItems value="#{productAdminBean.showAllSatus()}" class="#{productAdminBean.selected_inventorystatus == 1 ? 'btn btn-success me-2 mb-3' : 'btn btn-warning me-2 mb-3'}" var="status" itemValue="#{status.id}" itemLabel="#{status.statusName}"/>
+                                                            <f:selectItems value="#{productAdminBean.showAllSatus()}" var="status" itemValue="#{status.id}" itemLabel="#{status.statusName}"/>
                                                         </h:selectOneMenu> 
                                                     </h:outputLabel>
                                                 </div>
@@ -144,7 +144,7 @@
                                             <div class="col-md-12">
                                                 <h:outputLabel for="sortdescription">Sort description</h:outputLabel>
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:inputTextarea class="form-control" rows="20" cols="20" id="sortdescription" value="#{productAdminBean.product.sortDescription}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:inputTextarea class="form-control" rows="20" cols="20" id="sortdescription" value="#{productAdminBean.product.sortdescription}" required="true" requiredMessage="This field cannot be empty!"/>
                                                     <h:message for = "sortdescription" style = "color: red;" />
                                                 </div>
                                             </div>
@@ -167,6 +167,9 @@
                         </div>
                     </div>
                 </div>
+                <!-- CKeditor 5 CDN -->
+                <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/super-build/ckeditor.js"></script>
+                <script src="#{request.contextPath}/resources/js/js.admin/ckeditor5.js"/>
             </ui:define>
         </ui:composition>
     </h:body>

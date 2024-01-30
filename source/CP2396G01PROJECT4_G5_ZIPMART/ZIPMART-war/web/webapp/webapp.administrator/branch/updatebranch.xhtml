@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/webapp/webapp.layout/_adminLayout.xhtml">
+            <ui:define name="content">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h4 class="py-3 mb-4"><span class="text-muted fw-light">Branch Management /</span> Update Branch</h4>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card mb-4">
+                                <h4 class="card-header m-0 font-weight-bold text-primary">Branch Information</h4>
+                                <div class="card-body pt-2 mt-1">
+                                    <h:form id="formAccountSettings" enctype="multipart/form-data">
+                                        <div class="row mt-2 gy-4">
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="companyname" value="#{branchMB.branch.companyName}"/>
+                                                    <h:outputLabel for="companyname">Company Name</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="branchname" value="#{branchMB.branch.branchName}"/>
+                                                    <h:outputLabel for="branchname">Branch Name</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="address" value="#{branchMB.branch.address}"/>
+                                                    <h:outputLabel for="address">Address</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="city" value="#{branchMB.branch.city}"/>
+                                                    <h:outputLabel for="city">City</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="phone" value="#{branchMB.branch.phone}"/>
+                                                    <h:outputLabel for="phone">Phone</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="fax" value="#{branchMB.branch.fax}"/>
+                                                    <h:outputLabel for="fax">Fax</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="postalcode" value="#{branchMB.branch.postalCode}"/>
+                                                    <h:outputLabel for="postalcode">Postal Code</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="description" value="#{branchMB.branch.description}"/>
+                                                    <h:outputLabel for="description">Description</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="createby" value="#{branchMB.branch.createby}"/>
+                                                    <h:outputLabel for="createby">Create By</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="createdate" value="#{branchMB.branch.createdate}">
+                                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                    </h:inputText>
+                                                    <h:outputLabel for="createdate">Create Date</h:outputLabel>
+                                                </div>
+                                            </div>
+
+                                            <!--                                            <div class="col-md-6">
+                                                                                            <div class="form-floating form-floating-outline">
+                                                                                                <h:inputText class="form-control" id="username" value="#{customerMB.customers.username}"/>
+                                                                                                <h:outputLabel for="username">User Name</h:outputLabel>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="form-floating form-floating-outline">
+                                                                                                <h:inputText class="form-control" id="password" value="#{customerMB.customers.password}"/>
+                                                                                                <h:outputLabel for="pasword">Password</h:outputLabel>
+                                                                                            </div>
+                                                                                        </div>-->
+                                        </div>
+                                        <div class="mt-4">
+                                            <h:commandButton type="submit" class="btn btn-primary me-2 text-white" value="Update Branch" action="#{branchMB.updateBranch()}"/>
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

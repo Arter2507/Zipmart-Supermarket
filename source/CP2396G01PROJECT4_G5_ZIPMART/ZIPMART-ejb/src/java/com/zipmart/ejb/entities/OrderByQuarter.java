@@ -74,7 +74,7 @@ public class OrderByQuarter implements Serializable {
     private String note;
     @Column(name = "Status")
     private Integer status;
-    @Size(max = 255)
+    @Size(max = 100)
     @Column(name = "FullName")
     private String fullName;
     @Size(max = 50)
@@ -85,7 +85,7 @@ public class OrderByQuarter implements Serializable {
     @Column(name = "Phone")
     private String phone;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 255)
+    @Size(max = 150)
     @Column(name = "Email")
     private String email;
     @Column(name = "Point")

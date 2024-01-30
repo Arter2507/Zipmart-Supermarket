@@ -1,13 +1,8 @@
 package com.zipmart.mbean.employee;
 
-import com.zipmart.ejb.entities.EmployeeGenders;
-import com.zipmart.ejb.entities.EmployeeGendersPK;
 import com.zipmart.ejb.entities.Employees;
-import com.zipmart.ejb.entities.Genders;
 import com.zipmart.ejb.entities.Permissions;
-import com.zipmart.ejb.session_beans.EmployeeGendersFacadeLocal;
 import com.zipmart.ejb.session_beans.EmployeesFacadeLocal;
-import com.zipmart.ejb.session_beans.GendersFacadeLocal;
 import com.zipmart.ejb.session_beans.PermissionsFacadeLocal;
 import com.zipmart.util.CryptUltil;
 import com.zipmart.util.FileUltil;
@@ -25,7 +20,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Part;
-import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -39,19 +33,9 @@ public class EmployeeBean implements Serializable {
     private PermissionsFacadeLocal permissionsFacade;
 
     @EJB
-    private EmployeeGendersFacadeLocal employeeGendersFacade;
-
-    @EJB
-    private GendersFacadeLocal gendersFacade;
-
-    @EJB
     private EmployeesFacadeLocal employeesFacade;
-     
 
-    private Employees employee = new Employees();
-    private Genders gender = new Genders();
-    private EmployeeGenders eg = new EmployeeGenders();
-    private EmployeeGendersPK idEG = new EmployeeGendersPK();
+    private Employees employee;
     private Permissions per = new Permissions();
 
     private Long id;
@@ -66,19 +50,19 @@ public class EmployeeBean implements Serializable {
     private Timestamp birthdate;
     private boolean status = true;
 
-    private String pepper_pass = CryptUltil.getCrypt().getPepper_pass();   
+    private String pepper_pass = CryptUltil.getCrypt().getPepper_pass();
     private String salt = CryptUltil.getCrypt().getSalt_pass();
     private String hashPassword;
 
     private Part file;
     private String imageURL;
 
-    private Long selected_gender;
-    private long genderValue;
+    private short selected_gender;
     private String genderLabel;
     private String user_message;
-    
+
     public EmployeeBean() {
+        employee = new Employees();
     }
 
     public List<Employees> showAll() {
@@ -94,10 +78,6 @@ public class EmployeeBean implements Serializable {
         return listEmp;
     }
 
-    public List<Genders> showGenders() {
-        return gendersFacade.findAll();
-    }
-
     public String showListID(Long id) {
         employee = employeesFacade.find(id);
         id = employee.getId();
@@ -108,8 +88,8 @@ public class EmployeeBean implements Serializable {
     public String showDetails(Long id) {
         employee = employeesFacade.find(id);
         id = employee.getId();
-        genderValue = employee.getEmployeeGender();  // Assuming employeeGender is an integer
-        switch ((int) genderValue) {
+        selected_gender = employee.getEmployeeGender();  // Assuming employeeGender is an integer
+        switch (selected_gender) {
             case 1:
                 genderLabel = "Male";
                 break;
@@ -126,7 +106,7 @@ public class EmployeeBean implements Serializable {
                 genderLabel = "Unknow";
                 break;
         }
-        System.out.println("====== ID Employee ========== " + id + "=========" + genderValue + "========" + genderLabel);
+        System.out.println("====== ID Employee ========== " + id + "========="  + "========" + genderLabel);
         return "detailsEmployee";
     }
 
@@ -150,114 +130,42 @@ public class EmployeeBean implements Serializable {
         } else {
             imageURL = FileUltil.getInstance().uploadFile(file);
             hashPassword = CryptUltil.getCrypt().enCodePass(password);
-            employee.setFullname(fullname);
             employee.setUsername(username);
             employee.setPassword(hashPassword);
-            employee.setSaltPassword(salt);
-            employee.setPepperPassword(pepper_pass);
+            employee.setBirthDate(dayOfBirth);
+            employee.setImageURL(imageURL);
+            employee.setEmployeeGender(selected_gender);
+            employee.setFullname(fullname);
             employee.setAddress(address);
             employee.setPhone(phone);
             employee.setEmail(email);
-            employee.setBirthDate(dayOfBirth);
-            employee.setImageURL(imageURL);
+            employee.setCreatedate(new Date(System.currentTimeMillis()));
             if (employee.getStatus() == null) {
                 employee.setStatus(Boolean.TRUE);
             }
-            
             employeesFacade.create(employee);
-
-            selected_gender = 4L;
-
-            Employees emp = employee;
-            id = emp.getId();
-            emp = employeesFacade.find(id);
-            gender = gendersFacade.find(selected_gender);
-            if (emp != null && gender != null) {
-                idEG.setEmployeeID(emp.getId());
-                idEG.setGenderID(gender.getId());
-
-                emp.setEmployeeGender(gender.getId());
-                System.out.println("Gender: " + emp.getEmployeeGender());
-
-                eg = employeeGendersFacade.find(idEG);
-
-                if (eg == null) {
-                    // Create if not exist
-                    eg = new EmployeeGenders();
-                    eg.setEmployeeGendersPK(idEG);
-                    employeeGendersFacade.create(eg);
-                } else {
-                    // Update if exist
-                    eg.setGenders(gender);
-                    eg.setEmployees(emp);
-                    employeeGendersFacade.edit(eg);
-                }
-                employeesFacade.edit(emp);
-            }
-            System.out.println("Image URL: " + imageURL);
-            System.out.println("Full name: " + fullname);
-            System.out.println("Username: " + username);
-            System.out.println("Password: " + password);
-            System.out.println("Pass Hash: " + hashPassword);
-            System.out.println("Salt: " + salt);
-            System.out.println("Pepper: " + pepper_pass);
-            System.out.println("Address: " + address);
-            System.out.println("Email: " + email);
-            System.out.println("Birthdate: " + birthdate);
         }
         return "employee";
     }
 
     public String updateEmp() {
         Employees empUp = employee;
-        gender = gendersFacade.find(selected_gender);
-        Long idp = 2L;
-        
+        Employees em = employeesFacade.find(empUp.getId());
         hashPassword = CryptUltil.getCrypt().enCodePass(new_password);
 
         if (empUp.getImageURL() == null) {
             imageURL = FileUltil.getInstance().uploadFile(file);
             empUp.setImageURL(imageURL);
         } else {
-            empUp.setImageURL(empUp.getImageURL());
-        }
-
-        if (gender != null) {
-            empUp.setEmployeeGender(gender.getId());
-
-            idEG.setEmployeeID(empUp.getId());
-            idEG.setGenderID(gender.getId());
-            System.out.println("Gender: " + empUp.getEmployeeGender());
-            eg.setEmployeeGendersPK(idEG);
-            EmployeeGenders existingEmployeeGender = employeeGendersFacade.find(idEG);
-
-            if (existingEmployeeGender == null) {
-                // Create if not exist
-                employeeGendersFacade.create(eg);
-            } else {
-                // Update if exist
-                existingEmployeeGender.setGenders(eg.getGenders());
-                existingEmployeeGender.setEmployees(eg.getEmployees());
-                employeeGendersFacade.edit(existingEmployeeGender);
-            }
-        }
-        empUp.setFullname(empUp.getFullname());
-        empUp.setUsername(empUp.getUsername());
+            empUp.setImageURL(em.getImageURL());
+        }              
+        empUp.setEmployeeGroup(em.getEmployeeGroup());
         empUp.setPassword(hashPassword);
-        empUp.setSaltPassword(salt);
-        empUp.setPepperPassword(pepper_pass);
-        empUp.setAddress(empUp.getAddress());
-        empUp.setPhone(empUp.getPhone());
-        empUp.setEmail(empUp.getEmail());
-        empUp.setBirthDate(empUp.getBirthDate());
-        empUp.setNotes(empUp.getNotes());
-        empUp.setImageURL(empUp.getImageURL());
+        empUp.setCreatedate(em.getCreatedate());
+        empUp.setModifiedate(new Date(System.currentTimeMillis()));
         if (empUp.getStatus() == null) {
-                empUp.setStatus(Boolean.TRUE);
-            }
-        if(empUp.getEmployeeGroup() == null){
-        empUp.setEmployeeGroup(permissionsFacade.find(idp));
-        }
+            empUp.setStatus(Boolean.TRUE);
+        }       
         employeesFacade.edit(empUp);
         return "employee";
     }
@@ -278,7 +186,7 @@ public class EmployeeBean implements Serializable {
         employeesFacade.remove(employeesFacade.find(id));
         String messageDeleteEmployee = "Deleted employee successfully!";
         return null;
-    }
+    }   
 
     public void backToIndex() {
 //        // Huỷ session trước đó
@@ -286,7 +194,7 @@ public class EmployeeBean implements Serializable {
         // Chuyển về trang employee.xhtml
         FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "employee");
     }
-    
+
     // Exception handling
     private void handleFileUploadException(IOException ex) {
         Logger.getLogger(EmployeeBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -317,46 +225,6 @@ public class EmployeeBean implements Serializable {
 
     public void setEmployee(Employees employee) {
         this.employee = employee;
-    }
-
-    public EmployeeGendersFacadeLocal getEmployeeGendersFacade() {
-        return employeeGendersFacade;
-    }
-
-    public void setEmployeeGendersFacade(EmployeeGendersFacadeLocal employeeGendersFacade) {
-        this.employeeGendersFacade = employeeGendersFacade;
-    }
-
-    public GendersFacadeLocal getGendersFacade() {
-        return gendersFacade;
-    }
-
-    public void setGendersFacade(GendersFacadeLocal gendersFacade) {
-        this.gendersFacade = gendersFacade;
-    }
-
-    public Genders getGender() {
-        return gender;
-    }
-
-    public void setGender(Genders gender) {
-        this.gender = gender;
-    }
-
-    public EmployeeGenders getEg() {
-        return eg;
-    }
-
-    public void setEg(EmployeeGenders eg) {
-        this.eg = eg;
-    }
-
-    public EmployeeGendersPK getIdEG() {
-        return idEG;
-    }
-
-    public void setIdEG(EmployeeGendersPK idEG) {
-        this.idEG = idEG;
     }
 
     public Long getId() {
@@ -471,11 +339,11 @@ public class EmployeeBean implements Serializable {
         this.imageURL = imageURL;
     }
 
-    public Long getSelected_gender() {
+    public short getSelected_gender() {
         return selected_gender;
     }
 
-    public void setSelected_gender(Long selected_gender) {
+    public void setSelected_gender(short selected_gender) {
         this.selected_gender = selected_gender;
     }
 
@@ -493,14 +361,6 @@ public class EmployeeBean implements Serializable {
 
     public void setNew_password(String new_password) {
         this.new_password = new_password;
-    }
-
-    public long getGenderValue() {
-        return genderValue;
-    }
-
-    public void setGenderValue(long genderValue) {
-        this.genderValue = genderValue;
     }
 
     public String getGenderLabel() {

@@ -6,7 +6,6 @@ package com.zipmart.mbean.customer;
 
 import com.zipmart.ejb.entities.Customers;
 import com.zipmart.ejb.session_beans.CustomerCardFacadeLocal;
-import com.zipmart.ejb.session_beans.CustomerGendersFacadeLocal;
 import com.zipmart.ejb.session_beans.CustomersFacadeLocal;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +21,6 @@ import javax.enterprise.context.RequestScoped;
 @RequestScoped
 public class CustomerAdminBean {
 
-    @EJB
-    private CustomerGendersFacadeLocal customerGendersFacade;
 
     @EJB
     private CustomersFacadeLocal customersFacade;
@@ -83,14 +80,6 @@ public class CustomerAdminBean {
         }
         customersFacade.edit(customer);
         return "customer";
-    }
-    
-    public CustomerGendersFacadeLocal getCustomerGendersFacade() {
-        return customerGendersFacade;
-    }
-
-    public void setCustomerGendersFacade(CustomerGendersFacadeLocal customerGendersFacade) {
-        this.customerGendersFacade = customerGendersFacade;
     }
 
     public CustomersFacadeLocal getCustomersFacade() {

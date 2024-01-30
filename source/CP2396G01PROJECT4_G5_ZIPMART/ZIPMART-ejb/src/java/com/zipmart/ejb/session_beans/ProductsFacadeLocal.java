@@ -6,6 +6,7 @@ package com.zipmart.ejb.session_beans;
 
 import com.zipmart.ejb.entities.Products;
 import java.util.List;
+import java.util.Objects;
 import javax.ejb.Local;
 
 /**
@@ -33,6 +34,13 @@ public interface ProductsFacadeLocal {
     
     List<Products> getProSameCate(long id);
     
-    List<Products> getFeaturedProductDetails ();
+    List<Products> getFeaturedProductDetails();
     
+    List<Products> getProductBest();
+    
+    List<Products> topPro6 ();
+    
+    List<Products> getProductsByCategories(List<Long> categoryID);
+    
+    List<Products> findByName(String name);
 }

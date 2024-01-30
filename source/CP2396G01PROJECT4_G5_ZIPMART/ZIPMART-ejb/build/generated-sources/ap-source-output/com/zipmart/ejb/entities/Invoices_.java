@@ -6,7 +6,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2024-01-29T03:40:49")
+@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2024-01-30T17:34:12")
 @StaticMetamodel(Invoices.class)
 public class Invoices_ { 
 
@@ -25,7 +25,7 @@ public class Invoices_ {
     public static volatile SingularAttribute<Invoices, String> customerPhone;
     public static volatile SingularAttribute<Invoices, Long> invoiceNumber;
     public static volatile SingularAttribute<Invoices, String> shippingAddress;
-    public static volatile SingularAttribute<Invoices, String> paymentMethod;
+    public static volatile SingularAttribute<Invoices, Short> paymentMethod;
     public static volatile SingularAttribute<Invoices, String> cardNumberlast4digits;
     public static volatile SingularAttribute<Invoices, Date> orderDate;
 

@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">   
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://java.sun.com/jsf/passthrough">   
     <h:body>
         <ui:composition template="/webapp/webapp.layout/_mainLayout.xhtml">
             <ui:define name="content">
@@ -27,8 +28,9 @@
                                 <div class="row g-4">
                                     <div class="col-xl-3">
                                         <div class="input-group w-100 mx-auto d-flex">
-                                            <input type="search" class="form-control p-3" placeholder="search..." aria-describedby="search-icon-1"/>
-                                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                                            <h:form id="search">
+                                                <h:commandLink action="#{productBean.searchPro()}" id="search-icon-1" class="input-group-text p-3"><h:inputText class="form-control p-3" a:placeholder="search..."  value="#{productBean.productName}"/><i class="fa fa-search"></i></h:commandLink>
+                                            </h:form>
                                         </div>
                                     </div>
                                     <div class="col-6"></div>
@@ -51,14 +53,15 @@
                                                 <div class="mb-3">
                                                     <h4>Categories</h4> <!-- Category -->
                                                     <ul class="list-unstyled fruite-categorie">
-                                                        <ui:repeat var="ca" value="#{categoryBean.showAllCate()}">
-                                                            <h:form>
-                                                                <li>
-                                                                    <div class="d-flex justify-content-between fruite-name">
-                                                                        <h:link><i class="fas fa-apple-alt me-2"></i>#{ca.categoryName}</h:link>
-                                                                    </div>
-                                                                </li>
-                                                            </h:form>
+                                                        <ui:repeat value="#{categoryBean.showAllCate()}" var="itemCate">
+                                                            <div class="d-flex justify-content-between fruite-name">
+                                                                <h:selectBooleanCheckbox id="cate" styleClass="custom-control-input">
+                                                                    <f:ajax render="productList" listener="#{productBean.updateSelected}" />
+                                                                    <!-- Truyền giá trị của itemCate.categoryName cho phương thức updateSelected -->
+                                                                    <f:param name="selectedCategory" value="#{itemCate.id}" />
+                                                                </h:selectBooleanCheckbox>
+                                                                <h:link class="custom-control-label"><h:outputText value="#{itemCate.categoryName}"/><i class="fa-solid fa-bag-shopping"></i></h:link>
+                                                            </div>                                         
                                                         </ui:repeat>
                                                     </ul>
                                                 </div>
@@ -72,7 +75,7 @@
                                             </div>
                                             <div class="col-lg-12">
                                                 <h4 class="mb-3">Featured products</h4>
-                                                <ui:repeat var="fea" value="#{productBean.showFeature()}">
+                                                <c:forEach var="fea" items="#{productBean.showFeature()}">
                                                     <div class="d-flex align-items-center justify-content-start">
                                                         <div class="rounded me-4" style="width: 100px; height: 100px;">
                                                             <h:graphicImage value="#{resource[fea.imageURL]}" class="img-fluid rounded" alt=""/>
@@ -98,7 +101,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </ui:repeat>
+                                                </c:forEach>
                                                 <div class="d-flex justify-content-center my-4">
                                                     <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">View More</a>
                                                 </div>
@@ -114,9 +117,9 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-9">
-                                        <h:form>
+                                        <h:form id="shoppro">
                                             <div class="row g-4 justify-content-center">
-                                                <ui:repeat var="pro" value="#{productBean.showAllPro()}">
+                                                <ui:repeat var="pro" value="#{productBean.showAllProa()}">
                                                     <div class="col-md-6 col-lg-6 col-xl-4 cart-content">
                                                         <div class="rounded position-relative fruite-item">
                                                             <div class="fruite-img">

@@ -6,8 +6,10 @@ package com.zipmart.ejb.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,12 +19,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -41,20 +45,22 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Products.findByQuantityInStock", query = "SELECT p FROM Products p WHERE p.quantityInStock = :quantityInStock"),
     @NamedQuery(name = "Products.findByUnit", query = "SELECT p FROM Products p WHERE p.unit = :unit"),
     @NamedQuery(name = "Products.findByDescription", query = "SELECT p FROM Products p WHERE p.description = :description"),
-    @NamedQuery(name = "Products.findBySortDescription", query = "SELECT p FROM Products p WHERE p.sortDescription = :sortDescription"),
-    @NamedQuery(name = "Products.findBySku", query = "SELECT p FROM Products p WHERE p.sku = :sku"),
-    @NamedQuery(name = "Products.findByWeight", query = "SELECT p FROM Products p WHERE p.weight = :weight"),
-    @NamedQuery(name = "Products.findByManufacturedPlace", query = "SELECT p FROM Products p WHERE p.manufacturedPlace = :manufacturedPlace"),
-    @NamedQuery(name = "Products.findByStorageInstruction", query = "SELECT p FROM Products p WHERE p.storageInstruction = :storageInstruction"),
-    @NamedQuery(name = "Products.findByUsageNotes", query = "SELECT p FROM Products p WHERE p.usageNotes = :usageNotes"),
-    @NamedQuery(name = "Products.findByViewCount", query = "SELECT p FROM Products p WHERE p.viewCount = :viewCount"),
+    @NamedQuery(name = "Products.findBySortdescription", query = "SELECT p FROM Products p WHERE p.sortdescription = :sortdescription"),
     @NamedQuery(name = "Products.findByDiscount", query = "SELECT p FROM Products p WHERE p.discount = :discount"),
     @NamedQuery(name = "Products.findByAvaliable", query = "SELECT p FROM Products p WHERE p.avaliable = :avaliable"),
     @NamedQuery(name = "Products.findByCreatedate", query = "SELECT p FROM Products p WHERE p.createdate = :createdate"),
     @NamedQuery(name = "Products.findByModifiedate", query = "SELECT p FROM Products p WHERE p.modifiedate = :modifiedate"),
     @NamedQuery(name = "Products.findByCreateby", query = "SELECT p FROM Products p WHERE p.createby = :createby"),
-    @NamedQuery(name = "Products.findByModifieby", query = "SELECT p FROM Products p WHERE p.modifieby = :modifieby")})
+    @NamedQuery(name = "Products.findByModifieby", query = "SELECT p FROM Products p WHERE p.modifieby = :modifieby"),
+    @NamedQuery(name = "Products.findByManufacturedPlace", query = "SELECT p FROM Products p WHERE p.manufacturedPlace = :manufacturedPlace"),
+    @NamedQuery(name = "Products.findBySku", query = "SELECT p FROM Products p WHERE p.sku = :sku"),
+    @NamedQuery(name = "Products.findByStorageInstruction", query = "SELECT p FROM Products p WHERE p.storageInstruction = :storageInstruction"),
+    @NamedQuery(name = "Products.findByUsageNotes", query = "SELECT p FROM Products p WHERE p.usageNotes = :usageNotes")})
 public class Products implements Serializable {
+
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productID")
+    private Collection<OrderDetails> orderDetailsCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -82,25 +88,8 @@ public class Products implements Serializable {
     @Column(name = "description")
     private String description;
     @Size(max = 2147483647)
-    @Column(name = "sort_description")
-    private String sortDescription;
-    @Size(max = 25)
-    @Column(name = "sku")
-    private String sku;
-    @Size(max = 50)
-    @Column(name = "weight")
-    private String weight;
-    @Size(max = 50)
-    @Column(name = "manufactured_place")
-    private String manufacturedPlace;
-    @Size(max = 200)
-    @Column(name = "storage_instruction")
-    private String storageInstruction;
-    @Size(max = 200)
-    @Column(name = "usage_notes")
-    private String usageNotes;
-    @Column(name = "viewCount")
-    private Integer viewCount;
+    @Column(name = "sortdescription")
+    private String sortdescription;
     @Column(name = "discount")
     private Integer discount;
     @Column(name = "avaliable")
@@ -111,12 +100,27 @@ public class Products implements Serializable {
     @Column(name = "modifiedate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedate;
-    @Size(max = 80)
+    @Size(max = 255)
     @Column(name = "createby")
     private String createby;
-    @Size(max = 80)
+    @Size(max = 255)
     @Column(name = "modifieby")
     private String modifieby;
+    @Size(max = 255)
+    @Column(name = "manufactured_place")
+    private String manufacturedPlace;
+    @Size(max = 25)
+    @Column(name = "sku")
+    private String sku;
+    @Size(max = 50)
+    @Column(name = "weight")
+    private String weight;
+    @Size(max = 255)
+    @Column(name = "storage_instruction")
+    private String storageInstruction;
+    @Size(max = 100)
+    @Column(name = "usage_notes")
+    private String usageNotes;
     @JoinColumn(name = "brandID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Brand brandID;
@@ -207,60 +211,12 @@ public class Products implements Serializable {
         this.description = description;
     }
 
-    public String getSortDescription() {
-        return sortDescription;
+    public String getSortdescription() {
+        return sortdescription;
     }
 
-    public void setSortDescription(String sortDescription) {
-        this.sortDescription = sortDescription;
-    }
-
-    public String getSku() {
-        return sku;
-    }
-
-    public void setSku(String sku) {
-        this.sku = sku;
-    }
-
-    public String getWeight() {
-        return weight;
-    }
-
-    public void setWeight(String weight) {
-        this.weight = weight;
-    }
-
-    public String getManufacturedPlace() {
-        return manufacturedPlace;
-    }
-
-    public void setManufacturedPlace(String manufacturedPlace) {
-        this.manufacturedPlace = manufacturedPlace;
-    }
-
-    public String getStorageInstruction() {
-        return storageInstruction;
-    }
-
-    public void setStorageInstruction(String storageInstruction) {
-        this.storageInstruction = storageInstruction;
-    }
-
-    public String getUsageNotes() {
-        return usageNotes;
-    }
-
-    public void setUsageNotes(String usageNotes) {
-        this.usageNotes = usageNotes;
-    }
-
-    public Integer getViewCount() {
-        return viewCount;
-    }
-
-    public void setViewCount(Integer viewCount) {
-        this.viewCount = viewCount;
+    public void setSortdescription(String sortdescription) {
+        this.sortdescription = sortdescription;
     }
 
     public Integer getDiscount() {
@@ -309,6 +265,38 @@ public class Products implements Serializable {
 
     public void setModifieby(String modifieby) {
         this.modifieby = modifieby;
+    }
+
+    public String getManufacturedPlace() {
+        return manufacturedPlace;
+    }
+
+    public void setManufacturedPlace(String manufacturedPlace) {
+        this.manufacturedPlace = manufacturedPlace;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+
+    public String getStorageInstruction() {
+        return storageInstruction;
+    }
+
+    public void setStorageInstruction(String storageInstruction) {
+        this.storageInstruction = storageInstruction;
+    }
+
+    public String getUsageNotes() {
+        return usageNotes;
+    }
+
+    public void setUsageNotes(String usageNotes) {
+        this.usageNotes = usageNotes;
     }
 
     public Brand getBrandID() {
@@ -382,6 +370,23 @@ public class Products implements Serializable {
 
     public void setActive(String active) {
         this.active = active;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }   
+
+    @XmlTransient
+    public Collection<OrderDetails> getOrderDetailsCollection() {
+        return orderDetailsCollection;
+    }
+
+    public void setOrderDetailsCollection(Collection<OrderDetails> orderDetailsCollection) {
+        this.orderDetailsCollection = orderDetailsCollection;
     }
 
 }

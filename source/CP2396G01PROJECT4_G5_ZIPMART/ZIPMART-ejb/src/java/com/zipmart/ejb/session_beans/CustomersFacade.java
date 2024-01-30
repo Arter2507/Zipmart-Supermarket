@@ -32,7 +32,7 @@ public class CustomersFacade extends AbstractFacade<Customers> implements Custom
     public CustomersFacade() {
         super(Customers.class);
     }
-
+    
     @Override
     public long findByUsername(String username) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -42,7 +42,7 @@ public class CustomersFacade extends AbstractFacade<Customers> implements Custom
         cq.where(cb.and(cb.equal(root.get(Customers_.username), username)));
         Query query = em.createQuery(cq);
         return (long) query.getSingleResult();
-    }
+}
 
     @Override
     public Customers getFindByUsername(String username) {

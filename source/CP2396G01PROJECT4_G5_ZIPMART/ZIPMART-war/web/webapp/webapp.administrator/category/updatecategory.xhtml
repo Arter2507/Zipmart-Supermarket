@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/webapp/webapp.layout/_adminLayout.xhtml">
+            <ui:define name="content">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h4 class="py-3 mb-4"><span class="text-muted fw-light">Categories Management /</span> Update Category</h4>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card mb-4">
+                                <h4 class="card-header m-0 font-weight-bold text-primary">Category Information</h4>
+                                <div class="card-body pt-2 mt-1">
+                                    <h:form id="formAccountSettings" enctype="multipart/form-data">
+                                        <div class="row mt-2 gy-4">
+
+<!--                                            <div class="card-body">
+                                                <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                                    <h:graphicImage url="#{resource['/images/logo/photo-camera-gray.svg']}" alt="user-avatar" styleClass="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar" height="200px" width="200px"/>
+                                                    <div class="button-wrapper">
+                                                        <h:outputLabel for="upload" class="btn btn-primary me-2 mb-3" tabindex="0">
+                                                            <span class="d-none d-sm-block">Upload photo customer</span>
+                                                            <i class="mdi mdi-tray-arrow-up d-block d-sm-none"></i>
+                                                            <h:inputFile id="upload" style="display: none;" class="account-file-input" onchange="setImagePreview(this)" value="#{customerMB.customers.imageURL}"/>
+                                                        </h:outputLabel>
+                                                    </div>
+                                                </div>
+                                            </div>-->
+
+<!--                                            <div class="">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:graphicImage class="form-control" id="imageurl" library="../resources/images/customer" name="customericon.png" value="#{customerMB.fileImage}"/>  
+                                                    <h:outputLabel for="imageurl">Image URL</h:outputLabel>
+                                                </div>
+                                            </div>-->
+
+                                            <div class="">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="categoryname" value="#{catMB.categories.categoryName}" requiredMessage="Category name not empty" required="true"/>
+                                                    <h:message for="categoryname" style="color: red"/>
+                                                    <h:outputLabel for="categoryname">Category Name</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputTextarea class="form-control" id="description" style="height: 100px" value="#{catMB.categories.description}" requiredMessage="Description not empty" required="true"/>
+                                                    <h:message for="description" style="color: red"/>
+                                                    <h:outputLabel for="description">Description</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="createby" value="#{catMB.categories.createby}" requiredMessage="Create by not empty" required="true"/>
+                                                    <h:message for="createby" style="color: red"/>
+                                                    <h:outputLabel for="createby">Create By</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText class="form-control" id="createdate" value="#{catMB.categories.createdate}">
+                                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                    </h:outputText>
+                                                    <h:message for="createdate" style="color: red"/>
+                                                    <h:outputLabel for="createdate">Create Day</h:outputLabel>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4">
+                                            <h:commandButton type="submit" class="btn btn-primary me-2 text-white" value="Update Category" action="#{catMB.updateCat()}"/>
+                                            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

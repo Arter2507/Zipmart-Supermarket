@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <h:outputStylesheet name="css/css.client/blog.css"/>
@@ -31,25 +30,31 @@
 
                 <!-- Post -->
                 <section class="post containerb">
+
                     <ui:repeat var="blog" value="#{blogBean.showAllBlog()}">
-                    <!-- Post 1 -->
-                    <div class="post-box #{blog.category.name}">
-                        <h:graphicImage value="#{resource[blog.imageURL]}" alt="" class="post-img" />
-                        <h2 class="category">#{blog.category.name}</h2>
-                        <h:link class="post-title"><h:outputText value="#{blog.title}"/></h:link>
-                        <span class="post-date">
-                            <h:outputText value="#{blog.createdate}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
-                        </span>
-                        <p class="post-decription"><h:outputText value="#{blog.sortcontent}"/></p>
-                        <!-- Profile -->
-                        <div class="profile">
-                            <img src="#" alt="" class="profile-img" />
-                            <span class="profile-name">Lorem Ipsum</span>
-                        </div>
-                    </div>
+                        <h:form>
+                            <!-- Post 1 -->
+                            <div class="post-box #{blog.category}">
+                                <h:graphicImage value="#{resource[blog.imageURL]}" alt="" class="post-img" />
+                                <h:outputText class="category" value="#{blog.category}"/>
+                                <h:commandLink class="post-title" action="#{blogBean.showDetail(blog.id)}">
+                                    <h:outputText value="#{blog.title}"/>
+                                </h:commandLink>
+                                <span class="post-date">
+                                    <h:outputText value="#{blog.createdate}">
+                                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                                    </h:outputText>
+                                </span>
+                                <p class="post-decription"><h:outputText value="#{blog.sortcontent}"/></p>
+                                <!-- Profile -->
+                                <div class="profile">
+                                    <img src="#" alt="" class="profile-img" />
+                                    <span class="profile-name">Lorem Ipsum</span>
+                                </div>
+                            </div>
+                        </h:form>
                     </ui:repeat>
+
                 </section>
                 <!-- Blog Content End -->
             </ui:define>

@@ -103,8 +103,6 @@ public class Suppliers implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplierID")
     private Collection<Products> productsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplierID")
-    private Collection<ImportOrder> importOrderCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplierID")
     private Collection<Brand> brandCollection;
 
     public Suppliers() {
@@ -241,15 +239,6 @@ public class Suppliers implements Serializable {
 
     public void setProductsCollection(Collection<Products> productsCollection) {
         this.productsCollection = productsCollection;
-    }
-
-    @XmlTransient
-    public Collection<ImportOrder> getImportOrderCollection() {
-        return importOrderCollection;
-    }
-
-    public void setImportOrderCollection(Collection<ImportOrder> importOrderCollection) {
-        this.importOrderCollection = importOrderCollection;
     }
 
     @XmlTransient

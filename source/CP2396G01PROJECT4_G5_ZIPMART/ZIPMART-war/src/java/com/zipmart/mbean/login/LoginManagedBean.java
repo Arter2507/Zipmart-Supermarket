@@ -4,10 +4,7 @@
  */
 package com.zipmart.mbean.login;
 
-import com.zipmart.ejb.entities.CustomerGenders;
-import com.zipmart.ejb.entities.CustomerGendersPK;
 import com.zipmart.ejb.entities.Customers;
-import com.zipmart.ejb.entities.Genders;
 import com.zipmart.ejb.entities.Permissions;
 import com.zipmart.ejb.session_beans.CustomersFacadeLocal;
 import com.zipmart.ejb.session_beans.PermissionsFacadeLocal;

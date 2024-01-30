@@ -29,11 +29,13 @@ public interface ManagersFacadeLocal {
 
     int count();
     
-    Long findByUsername(String username);
+    boolean checkLoginEmployee(String username, String password);
+    
+    List<Managers> findByUsername1(String username);
+            
+    Long findByUsername(String username); 
+    
+    long getCountByUsernamePassword(String username, String password);
     
     Managers loadByUsername(String username, String password);
-
-    long getCountByUsernamePassword(String username, String password);
-
-    Managers getfindByUsername(String username);
 }

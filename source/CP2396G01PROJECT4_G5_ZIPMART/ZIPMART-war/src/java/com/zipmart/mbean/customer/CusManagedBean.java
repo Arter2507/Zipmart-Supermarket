@@ -77,6 +77,21 @@ public class CusManagedBean implements Serializable {
         return "displaycustomer";
     }
 
+    public String showUpdateUsers(String username) {
+        customers = customersFacade.getFindByUsername(username);
+        Long id = customers.getId();
+        customers = customersFacade.find(id);
+        System.out.println("============================"+customers.toString());
+        Long userID = customers.getId();
+        return "profile";
+    }
+    
+    public String saveUpdateUsers() {
+        System.out.println("---------------------++++++++++++++++++++"+customers.toString());
+        customersFacade.edit(customers);
+        return "profile";
+    }
+    
     public Customers getCustomers() {
         return customers;
     }

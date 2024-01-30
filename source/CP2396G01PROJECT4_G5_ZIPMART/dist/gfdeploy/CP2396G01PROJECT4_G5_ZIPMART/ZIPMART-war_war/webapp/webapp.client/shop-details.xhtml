@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:a = "http://java.sun.com/jsf/passthrough">
+      xmlns:a = "http://java.sun.com/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:body>
         <ui:composition template="/webapp/webapp.layout/_mainLayout.xhtml">
             <ui:define name="content">
@@ -45,8 +46,7 @@
                                             <i class="fa fa-star text-secondary"></i>
                                             <i class="fa fa-star"></i>
                                         </div>
-                                        <p class="mb-4">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc.</p>
-                                        <p class="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish</p>
+                                        <p class="mb-3 sort-description sortdefont-14"><h:outputFormat escape="false" value="#{productBean.product.sortdescription}"/></p>
                                         <h:form>
                                             <div class="input-group quantity mb-5" style="width: 100px;">
                                                 <div class="input-group-btn">
@@ -73,63 +73,60 @@
                                                         id="nav-about-tab" data-bs-toggle="tab" data-bs-target="#nav-about"
                                                         aria-controls="nav-about" aria-selected="true">Description</button>
                                                 <button class="nav-link border-white border-bottom-0" type="button" role="tab"
+                                                        id="nav-specifications-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#nav-specifications" aria-controls="nav-specifications"
+                                                        aria-selected="false">Specifications</button>
+                                                <button class="nav-link border-white border-bottom-0" type="button" role="tab"
                                                         id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-mission"
                                                         aria-controls="nav-mission" aria-selected="false">Reviews</button>
                                             </div>
                                         </nav>
                                         <div class="tab-content mb-5">
-                                            <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-                                                <p>The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc. 
-                                                    Susp endisse ultricies nisi vel quam suscipit </p>
-                                                <p>Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish filefish Antarctic 
-                                                    icefish goldeye aholehole trumpetfish pilot fish airbreathing catfish, electric ray sweeper.</p>
+                                            <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab" style="overflow: hidden; height: 250px;">
+                                                <h:outputFormat escape="false" value="#{productBean.product.description}"/>
+                                            </div>
+
+                                            <div class="text-center mt-4" style="text-align: center;">
+                                                <button class="btn btn-link btnview" type="button">View more <i class="fas fa-caret-up"></i> </button>
+                                            </div>
+                                            <div class="tab-pane" id="nav-specifications" role="tabpanel"
+                                                 aria-labelledby="nav-specifications-tab">
                                                 <div class="px-2">
-                                                    <div class="row g-4">
-                                                        <div class="col-6">
-                                                            <div class="row bg-light align-items-center text-center justify-content-center py-2">
-                                                                <div class="col-6">
-                                                                    <p class="mb-0">Weight</p>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <p class="mb-0">1 kg</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row text-center align-items-center justify-content-center py-2">
-                                                                <div class="col-6">
-                                                                    <p class="mb-0">Country of Origin</p>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <p class="mb-0">Agro Farm</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row bg-light text-center align-items-center justify-content-center py-2">
-                                                                <div class="col-6">
-                                                                    <p class="mb-0">Quality</p>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <p class="mb-0">Organic</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row text-center align-items-center justify-content-center py-2">
-                                                                <div class="col-6">
-                                                                    <p class="mb-0">Сheck</p>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <p class="mb-0">Healthy</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row bg-light text-center align-items-center justify-content-center py-2">
-                                                                <div class="col-6">
-                                                                    <p class="mb-0">Min Weight</p>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <p class="mb-0">250 Kg</p>
-                                                                </div>
-                                                            </div>
+                                                    <div class="row g-4 d-flex justify-content-center">
+                                                        <div class="col-lg-8">
+                                                            <table class="table table-striped">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th>Manufactured Place</th>
+                                                                        <td>#{productBean.product.manufacturedPlace == null ? 'In Process Of Update' : productBean.product.manufacturedPlace}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Origin</th>
+                                                                        <td>Vietnam</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>SKU</th>
+                                                                        <td>#{productBean.product.sku == null ? 'In Process Of Update' : productBean.product.sku}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Weight (g)</th>
+                                                                        <td>#{productBean.product.weight == null ? 'In Process Of Update' : productBean.product.weight}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Storage Instruction</th>
+                                                                        <td>#{productBean.product.storageInstruction == null ? 'In Process Of Update' : productBean.product.storageInstruction}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Usage Notes</th>
+                                                                        <td>#{productBean.product.usageNotes == null ? 'In Process Of Update' : productBean.product.usageNotes}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
                                                 <div class="d-flex">
                                                     <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt=""/>
@@ -181,7 +178,7 @@
                                         <div class="row g-4">
                                             <div class="col-lg-6">
                                                 <div class="border-bottom rounded">
-                                                    <input type="text" class="form-control border-0 me-4" placeholder="Yur Name *"/>
+                                                    <input type="text" class="form-control border-0 me-4" placeholder="Your Name *"/>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -222,7 +219,7 @@
                                         </div>
                                         <div class="mb-4">
                                             <h4>Categories</h4>
-                                            <ui:repeat var="cate" value="#{categoryBean.showAllCate()}">
+                                            <c:forEach var="cate" items="#{categoryBean.showAllCate()}">
                                                 <ul class="list-unstyled fruite-categorie">
                                                     <li>
                                                         <div class="d-flex justify-content-between fruite-name">
@@ -230,7 +227,7 @@
                                                         </div>
                                                     </li>
                                                 </ul>
-                                            </ui:repeat>
+                                            </c:forEach>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -261,7 +258,7 @@
                                             </div>
                                         </ui:repeat>
                                         <div class="d-flex justify-content-center my-4">
-                                            <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">Vew More</a>
+                                            <h:link outcome="/webapp/webapp.client/shop.xhtml" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">Vew More</h:link>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -278,28 +275,30 @@
                     </div>
                     <h1 class="fw-bold mb-0">Featured products</h1>
                     <div class="vesitable">
-                        <div class="owl-carousel vegetable-carousel justify-content-center">
-                            <ui:repeat var="repro" value="#{productBean.showFeaDetail()}">
-                                <div class="border border-primary rounded position-relative vesitable-item">
-                                    <div class="vesitable-img">
-                                        <h:graphicImage value="#{resource[repro.imageURL]}" class="img-fluid w-100 rounded-top" alt=""/>
-                                    </div>
-                                    <h:outputText value="#{repro.discount > 0 ? 'SAFE OFF ' .concat(repro.discount.toString()).concat('%') : ''}" class="text-white bg-danger px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;" rendered="#{repro.discount > 0}"/>
-                                    <div class="p-4 pb-0 rounded-bottom">
-                                        <h4>#{repro.productName}</h4>
-                                        <h:outputText value="#{repro.price_discout > 0 ? repro.unitPrice : ''}" class="text-danger text-decoration-line-through">
-                                            <f:convertNumber type="currency" currencySymbol="$" locale="en_US"/>
-                                        </h:outputText>
-                                        <div class="d-flex justify-content-between flex-lg-wrap">
-                                            <h:outputText value="$#{repro.price_discout > 0 ? repro.price_discout : repro.unitPrice}/#{repro.unit}" class="text-dark fs-5 fw-bold">
+                        <h:form>
+                            <div class="owl-carousel vegetable-carousel justify-content-center">
+                                <ui:repeat var="repro" value="#{productBean.showFeaDetail()}">
+                                    <div class="border border-primary rounded position-relative vesitable-item">
+                                        <div class="vesitable-img">
+                                            <h:graphicImage value="#{resource[repro.imageURL]}" class="img-fluid w-100 rounded-top" alt=""/>
+                                        </div>
+                                        <h:outputText value="#{repro.discount > 0 ? 'SAFE OFF ' .concat(repro.discount.toString()).concat('%') : ''}" class="text-white bg-danger px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;" rendered="#{repro.discount > 0}"/>
+                                        <div class="p-4 pb-0 rounded-bottom">
+                                            <h4>#{repro.productName}</h4>
+                                            <h:outputText value="#{repro.price_discout > 0 ? repro.unitPrice : ''}" class="text-danger text-decoration-line-through">
                                                 <f:convertNumber type="currency" currencySymbol="$" locale="en_US"/>
                                             </h:outputText>
-                                            <a href="#" class="btn border border-secondary rounded-pill px-2 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-1 text-primary"></i> Add to cart</a>
+                                            <div class="d-flex justify-content-between flex-lg-wrap">
+                                                <h:outputText value="$#{repro.price_discout > 0 ? repro.price_discout : repro.unitPrice}/#{repro.unit}" class="text-dark fs-5 fw-bold">
+                                                    <f:convertNumber type="currency" currencySymbol="$" locale="en_US"/>
+                                                </h:outputText>
+                                                <h:commandLink action="#{productBean.showDetailsPro(repro.id)}" class="btn border border-secondary rounded-pill px-2 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-1 text-primary"></i> Add to cart</h:commandLink>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </ui:repeat>
-                        </div>
+                                </ui:repeat>
+                            </div>
+                        </h:form>
                     </div>
                 </div>
                 <!-- Single Product End -->

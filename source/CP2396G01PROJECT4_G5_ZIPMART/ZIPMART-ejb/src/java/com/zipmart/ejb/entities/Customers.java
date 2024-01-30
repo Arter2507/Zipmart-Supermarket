@@ -42,8 +42,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Customers.findByCustomerCard", query = "SELECT c FROM Customers c WHERE c.customerCard = :customerCard"),
     @NamedQuery(name = "Customers.findByUsername", query = "SELECT c FROM Customers c WHERE c.username = :username"),
     @NamedQuery(name = "Customers.findByPassword", query = "SELECT c FROM Customers c WHERE c.password = :password"),
-    @NamedQuery(name = "Customers.findBySaltPassword", query = "SELECT c FROM Customers c WHERE c.saltPassword = :saltPassword"),
-    @NamedQuery(name = "Customers.findByPepperPassword", query = "SELECT c FROM Customers c WHERE c.pepperPassword = :pepperPassword"),
     @NamedQuery(name = "Customers.findByFullname", query = "SELECT c FROM Customers c WHERE c.fullname = :fullname"),
     @NamedQuery(name = "Customers.findByAddress", query = "SELECT c FROM Customers c WHERE c.address = :address"),
     @NamedQuery(name = "Customers.findByPhone", query = "SELECT c FROM Customers c WHERE c.phone = :phone"),
@@ -57,15 +55,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Customers.findByStatus", query = "SELECT c FROM Customers c WHERE c.status = :status")})
 public class Customers implements Serializable {
 
-    @Column(name = "customer_gender")
-    private Long customerGender;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
+    @Column(name = "customer_gender")
+    private Short customerGender;
     @Column(name = "customer_card")
     private BigInteger customerCard;
     @Size(max = 50)
@@ -74,13 +71,7 @@ public class Customers implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "password")
     private String password;
-    @Size(max = 2147483647)
-    @Column(name = "salt_password")
-    private String saltPassword;
-    @Size(max = 16)
-    @Column(name = "pepper_password")
-    private String pepperPassword;
-    @Size(max = 255)
+    @Size(max = 100)
     @Column(name = "fullname")
     private String fullname;
     @Size(max = 50)
@@ -91,13 +82,13 @@ public class Customers implements Serializable {
     @Column(name = "phone")
     private String phone;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 255)
+    @Size(max = 150)
     @Column(name = "email")
     private String email;
     @Column(name = "birthDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date birthDate;
-    @Size(max = 255)
+    @Size(max = 2147483647)
     @Column(name = "imageURL")
     private String imageURL;
     @Column(name = "createdate")
@@ -116,15 +107,13 @@ public class Customers implements Serializable {
     private Boolean status;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerID")
     private Collection<Orders> ordersCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerID")
+    private Collection<FeedbacksPro> feedbacksProCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customers")
     private Collection<CustomerCard> customerCardCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customers")
-    private Collection<CustomerFeedback> customerFeedbackCollection;
     @JoinColumn(name = "customer_group", referencedColumnName = "ID")
     @ManyToOne
     private Permissions customerGroup;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customers")
-    private Collection<CustomerGenders> customerGendersCollection;
 
     @Transient
     private String active;
@@ -150,11 +139,11 @@ public class Customers implements Serializable {
         this.id = id;
     }
 
-    public Long getCustomerGender() {
+    public Short getCustomerGender() {
         return customerGender;
     }
 
-    public void setCustomerGender(Long customerGender) {
+    public void setCustomerGender(Short customerGender) {
         this.customerGender = customerGender;
     }
 
@@ -180,22 +169,6 @@ public class Customers implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getSaltPassword() {
-        return saltPassword;
-    }
-
-    public void setSaltPassword(String saltPassword) {
-        this.saltPassword = saltPassword;
-    }
-
-    public String getPepperPassword() {
-        return pepperPassword;
-    }
-
-    public void setPepperPassword(String pepperPassword) {
-        this.pepperPassword = pepperPassword;
     }
 
     public String getFullname() {
@@ -296,6 +269,15 @@ public class Customers implements Serializable {
     }
 
     @XmlTransient
+    public Collection<FeedbacksPro> getFeedbacksProCollection() {
+        return feedbacksProCollection;
+    }
+
+    public void setFeedbacksProCollection(Collection<FeedbacksPro> feedbacksProCollection) {
+        this.feedbacksProCollection = feedbacksProCollection;
+    }
+
+    @XmlTransient
     public Collection<CustomerCard> getCustomerCardCollection() {
         return customerCardCollection;
     }
@@ -304,30 +286,12 @@ public class Customers implements Serializable {
         this.customerCardCollection = customerCardCollection;
     }
 
-    @XmlTransient
-    public Collection<CustomerFeedback> getCustomerFeedbackCollection() {
-        return customerFeedbackCollection;
-    }
-
-    public void setCustomerFeedbackCollection(Collection<CustomerFeedback> customerFeedbackCollection) {
-        this.customerFeedbackCollection = customerFeedbackCollection;
-    }
-
     public Permissions getCustomerGroup() {
         return customerGroup;
     }
 
     public void setCustomerGroup(Permissions customerGroup) {
         this.customerGroup = customerGroup;
-    }
-
-    @XmlTransient
-    public Collection<CustomerGenders> getCustomerGendersCollection() {
-        return customerGendersCollection;
-    }
-
-    public void setCustomerGendersCollection(Collection<CustomerGenders> customerGendersCollection) {
-        this.customerGendersCollection = customerGendersCollection;
     }
 
     @Override
@@ -354,10 +318,10 @@ public class Customers implements Serializable {
     public String toString() {
         return "com.zipmart.ejb.entities.Customers[ id=" + id + " ]";
     }
-
+    
     public String getActive() {
         return status == null ? "null" : status ? "Enabled" : "Disabled";
-    }
+}
 
     public void setActive(String active) {
         this.active = active;

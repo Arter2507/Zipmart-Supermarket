@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://java.sun.com/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/webapp/webapp.layout/_adminLayout.xhtml">
+            <ui:define name="content">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h1 class="h3 mb-2 text-gray-800">Supplier Management</h1>
+                    <p class="mb-4">The <a href="javascript:void(0);">"Software Supplier Management"</a> is a robust software solution meticulously crafted to streamline and automate the intricacies of supplier-related processes within an organization.</p>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card mb-4">
+                                <!-- Add Form -->
+                                <h:form id="formUpdate" enctype="multipart/form-data">
+                                    <h:inputHidden value="#{supplierAdminBean.supplier.id}"/>
+
+                                    <div class="card-body pt-2 mt-1">
+                                        <div class="row mt-2 gy-4">
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="companyname" value="#{supplierAdminBean.supplier.companyName}" required="true" requiredMessage="This field cannot be empty!"/>  
+                                                    <h:outputLabel for="companyname">Company name</h:outputLabel>
+                                                    <h:message for = "companyname" style = "color: red;" /> 
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="contactname" value="#{supplierAdminBean.supplier.contactName}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:outputLabel for="contactname">Contact name</h:outputLabel>
+                                                    <h:message for = "contactname" style = "color: red;" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="contactitle" value="#{supplierAdminBean.supplier.contactTitle}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:outputLabel for="contactitle">Contact title</h:outputLabel>
+                                                    <h:message for = "contactitle" style = "color: red;" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="city" value="#{supplierAdminBean.supplier.city}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:outputLabel for="city">City</h:outputLabel>
+                                                    <h:message for = "city" style = "color: red;" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="address" value="#{supplierAdminBean.supplier.address}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:outputLabel for="address">Address</h:outputLabel>
+                                                    <h:message for = "address" style = "color: red;" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText a:type="number" class="form-control" id="phone" value="#{supplierAdminBean.supplier.phone}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:outputLabel for="phone">Phone</h:outputLabel>
+                                                    <h:message for = "phone" style = "color: red;" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="fax" value="#{supplierAdminBean.supplier.fax}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:outputLabel for="fax">Fax</h:outputLabel>
+                                                    <h:message for = "fax" style = "color: red;" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="pcode" value="#{supplierAdminBean.supplier.postalCode}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:outputLabel for="pcode">Postal code</h:outputLabel>
+                                                    <h:message for = "pcode" style = "color: red;" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="hpage" value="#{supplierAdminBean.supplier.homePage}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:outputLabel for="hpage">Home page</h:outputLabel>
+                                                    <h:message for = "hpage" style = "color: red;" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="des" value="#{supplierAdminBean.supplier.description}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:outputLabel for="des">Description</h:outputLabel>
+                                                    <h:message for = "des" style = "color: red;" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4">
+                                            <h:commandButton styleClass="btn btn-primary me-2 text-white" value="save" action="#{supplierAdminBean.updateProcess()}"/>
+                                            <h:link value="Back" outcome="/webapp/webapp.administrator/supplier/supplier.xhtml" class="btn btn-outline-secondary"/>
+                                        </div>
+                                    </div>
+                                </h:form>
+                                <!-- /Form Add -->
+                            </div>                          
+                        </div>
+                    </div>
+                </div>
+                <!-- CKeditor 5 CDN -->
+                <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/super-build/ckeditor.js"></script>
+                <script src="#{request.contextPath}/resources/js/js.admin/ckeditor5.js"/>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

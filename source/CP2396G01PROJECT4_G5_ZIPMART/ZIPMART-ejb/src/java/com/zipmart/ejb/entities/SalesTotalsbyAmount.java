@@ -45,7 +45,7 @@ public class SalesTotalsbyAmount implements Serializable {
     @Column(name = "ID")
     @Id
     private long id;
-    @Size(max = 255)
+    @Size(max = 100)
     @Column(name = "fullname")
     private String fullname;
     @Column(name = "ShipDate")

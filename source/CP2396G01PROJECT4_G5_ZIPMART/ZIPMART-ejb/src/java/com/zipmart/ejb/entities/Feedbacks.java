@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author phnha
+ * @author TUONG
  */
 @Entity
 @Table(name = "Feedbacks")
@@ -31,7 +31,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Feedbacks.findAll", query = "SELECT f FROM Feedbacks f"),
     @NamedQuery(name = "Feedbacks.findById", query = "SELECT f FROM Feedbacks f WHERE f.id = :id"),
-    @NamedQuery(name = "Feedbacks.findByProductID", query = "SELECT f FROM Feedbacks f WHERE f.productID = :productID"),
     @NamedQuery(name = "Feedbacks.findByTitle", query = "SELECT f FROM Feedbacks f WHERE f.title = :title"),
     @NamedQuery(name = "Feedbacks.findByContent", query = "SELECT f FROM Feedbacks f WHERE f.content = :content"),
     @NamedQuery(name = "Feedbacks.findByDate", query = "SELECT f FROM Feedbacks f WHERE f.date = :date"),
@@ -48,10 +47,6 @@ public class Feedbacks implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "product_ID")
-    private long productID;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
@@ -85,9 +80,8 @@ public class Feedbacks implements Serializable {
         this.id = id;
     }
 
-    public Feedbacks(Long id, long productID, String title) {
+    public Feedbacks(Long id, String title) {
         this.id = id;
-        this.productID = productID;
         this.title = title;
     }
 
@@ -97,14 +91,6 @@ public class Feedbacks implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public long getProductID() {
-        return productID;
-    }
-
-    public void setProductID(long productID) {
-        this.productID = productID;
     }
 
     public String getTitle() {

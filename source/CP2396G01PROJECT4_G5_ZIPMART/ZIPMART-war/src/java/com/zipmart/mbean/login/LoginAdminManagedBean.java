@@ -15,9 +15,11 @@ import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -38,9 +40,9 @@ public class LoginAdminManagedBean implements Serializable {
     @Inject
     private LoginAdminManagedBean loginAdminManagedBean;
 
-    private Employees employee = new Employees();
-    private Managers manager = new Managers();
-    private Permissions permission = new Permissions();
+    private Employees employee;
+    private Managers manager;
+    private Permissions permission;
 
     private String username;
     private String login_password;
@@ -52,10 +54,14 @@ public class LoginAdminManagedBean implements Serializable {
 
     private int statusLogin;
     private int check;
+    private boolean flag = false;
 
     private String error_password;
 
     public LoginAdminManagedBean() {
+        employee = new Employees();
+        manager = new Managers();
+        permission = new Permissions();
     }
 
     @PostConstruct
@@ -63,100 +69,54 @@ public class LoginAdminManagedBean implements Serializable {
         statusLogin = 6;
     }
 
-    public void processLogin() throws IOException {
-        if (checkPassword() == 1 || checkPassword() == 2) {
-            long checkManager = managersFacade.getCountByUsernamePassword(username, login_password);
-            long checkEmployee = employeesFacade.getCountByUsernamePassword(username, login_password);
-            if (checkManager > 0) {
-                System.out.println(checkManager);
-                Managers mng = managersFacade.loadByUsername(username, login_password);
-                if (mng.getStatus() != false && mng.getManagerGroup().getId() == 1) {
-                    statusLogin = 1;
-                    FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/manager/manager.xhtml");
-                } else {
-                    statusLogin = 3;
-                }
-            } else if (checkEmployee > 0) {
-                statusLogin = 2;
-                System.out.println(checkEmployee);
-                Employees emp = employeesFacade.loadByUsername(username, login_password);
-                if (emp.getStatus() != false && emp.getEmployeeGroup().getId() == 2) {
-                    statusLogin = 1;
-                    FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/employee/employee.xhtml");
-                } else {
-                    statusLogin = 3;
-                }
+    public String checkLoginAdmin() throws IOException {
+        String login = CryptUltil.getCrypt().enCodePass(login_password);
+        if (employeesFacade.checkLoginEmployee(username, login)) {
+            List<Employees> employees = employeesFacade.findByUsername1(username);
+            System.out.println("2" + employees);
+            flag = true;
+            statusLogin = 2;
+            return "index";
+        } else if (managersFacade.checkLoginEmployee(username, login)) {
+            List<Managers> managers = managersFacade.findByUsername1(username);
+            System.out.println("1" + managers);
+            flag = true;
+            statusLogin = 1;
+            return "index";
+        } else {
+            statusLogin = 3;
+            System.out.println("error" + statusLogin);
+            return "login";
+        }
+    }
+
+    public String processLogin() throws IOException {
+        String login = CryptUltil.getCrypt().enCodePass(login_password);
+        long checkManager = managersFacade.getCountByUsernamePassword(username, login);
+        long checkEmployee = employeesFacade.getCountByUsernamePassword(username, login);
+        if (checkManager > 0) {
+            System.out.println(checkManager);
+            Managers mng = managersFacade.loadByUsername(username, login);
+            if (mng.getStatus() != false && mng.getManagerGroup().getId() == 1) {
+                statusLogin = 1;
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/employee/employee.xhtml");
             } else {
                 statusLogin = 3;
-                FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/login.xhtml");
             }
-        }
-    }
-
-    public int checkPassword() throws IOException {
-        check = 6;
-        employee = employeesFacade.getfindByUsername(username);
-        manager = managersFacade.getfindByUsername(username);
-        Employees emp = employee;
-        Managers manage = manager;
-        hash_employee = emp.getPassword();
-        hash_manager = manage.getPassword();
-        String login = CryptUltil.getCrypt().enCodePass(login_password);
-        System.out.println("===========" + hash_employee + "===========" + emp + login);
-        System.out.println("===========" + hash_manager + "===========" + manage + login);
-        if (login.equals(hash_manager)) {
-            System.out.println(CryptUltil.getCrypt().checkPass(login, hash_manager));
-            System.out.println("Match");
-            check = 1;
-        } else if (login.equals(hash_employee)) {
-            System.out.println(CryptUltil.getCrypt().checkPass(login, hash_manager));
-            System.out.println("Match");
-            check = 2;
-        } else if (hash_employee == null || hash_manager == null) {
-            System.out.println("Password Null");
-            check = 4;
-            error_password = "Incorrect Password";
-            FacesContext.getCurrentInstance().addMessage("password", new FacesMessage(FacesMessage.SEVERITY_ERROR, error_password, null));
+        } else if (checkEmployee > 0) {
+            System.out.println(checkEmployee);
+            Employees emp = employeesFacade.loadByUsername(username, login);
+            if (emp.getStatus() != false && emp.getEmployeeGroup().getId() == 2) {
+                statusLogin = 2;
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/partials/index.xhtml");
+            } else {
+                statusLogin = 3;
+            }
         } else {
-            System.out.println("Incorrect Password");
-            error_password = "Incorrect Password";
-            check = 5;
-            FacesContext.getCurrentInstance().addMessage("password", new FacesMessage(FacesMessage.SEVERITY_ERROR, error_password, null));
+            statusLogin = 3;
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/partials/login.xhtml");
         }
-//        if (BCrypt.checkpw(password, hash_employee)) {
-//            check = 2;
-//            System.out.println("Password Employee Match: " + password + "=======" + hash_employee);
-//        } else if (BCrypt.checkpw(password, combined_manager)) {
-//            check = 1;
-//            System.out.println("Password Manager Match: " + password + "=======" + hash_manager);
-//        } else {
-//            check = 4;
-//            System.out.println("Password incorrect");
-//        }
-        return check;
-    }
-
-    public void checkEmp() throws IOException {
-        employee = employeesFacade.getfindByUsername(username);
-        Employees emp = employee;
-        hash_employee = emp.getPassword();
-        String login = CryptUltil.getCrypt().enCodePass(login_password);
-
-        System.out.println("===========" + hash_employee + "===========" + emp + login);
-//        if (hash_employee == null) {
-//            System.out.println("Password Null");
-//            FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/login.xhtml");
-//        } else 
-        if (login.equals(hash_employee)) {
-            System.out.println(CryptUltil.getCrypt().checkPass(login, hash_employee));
-            System.out.println("Match");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/employee/employee.xhtml");
-
-        } else {
-            System.out.println(CryptUltil.getCrypt().checkPass(login, hash_employee));
-            System.out.println("Doesn't Match");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/login.xhtml");
-        }
+        return null;
     }
 
     public void checkLogin() throws IOException {
@@ -186,7 +146,7 @@ public class LoginAdminManagedBean implements Serializable {
         username = "";
         login_password = "";
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/login.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/partials/login.xhtml");
     }
 
     public PermissionsFacadeLocal getPermissionsFacade() {
@@ -327,5 +287,13 @@ public class LoginAdminManagedBean implements Serializable {
 
     public void setError_password(String error_password) {
         this.error_password = error_password;
+    }
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
     }
 }

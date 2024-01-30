@@ -3,8 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/TUONG/Documents/GitHub/Zipmart-Supermarket/source/CP2396G01PROJECT4_G5_ZIPMART/ZIPMART-war/src/java/com/zipmart/mbean/product/ProductAdminBean.java</file>
-            <file>file:/C:/Users/TUONG/Documents/GitHub/Zipmart-Supermarket/source/CP2396G01PROJECT4_G5_ZIPMART/ZIPMART-war/web/webapp/webapp.administrator/product/updateProduct.xhtml</file>
+            <file>file:/C:/Users/TUONG/Documents/GitHub/Zipmart-Supermarket/source/CP2396G01PROJECT4_G5_ZIPMART/ZIPMART-war/web/webapp/webapp.administrator/order/orderdetail.xhtml</file>
+            <file>file:/C:/Users/TUONG/Documents/GitHub/Zipmart-Supermarket/source/CP2396G01PROJECT4_G5_ZIPMART/ZIPMART-war/src/java/com/zipmart/mbean/checkout/CheckoutBean.java</file>
+            <file>file:/C:/Users/TUONG/Documents/GitHub/Zipmart-Supermarket/source/CP2396G01PROJECT4_G5_ZIPMART/ZIPMART-war/web/webapp/webapp.administrator/order/order.xhtml</file>
         </group>
     </open-files>
 </project-private>

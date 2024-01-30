@@ -79,14 +79,14 @@
                                                                 <div class="input-group-btn">
                                                                     <h:commandLink class="btn btn-sm btn-minus rounded-circle bg-light border" action="#{cartBean.updateCart(item_cart.id, false)}" >
                                                                         <i class="fa fa-minus"></i>
-                                                                        <f:ajax execute="@form" render="@form"/>
+                                                                        <f:ajax execute="@form" render="@all"/>
                                                                     </h:commandLink>
                                                                 </div>
                                                                 <h:inputText a:type="number" styleClass="form-control form-control-sm text-center border-0" value="#{item_cart.quantity}"/>
                                                                 <div class="input-group-btn">
                                                                     <h:commandLink class="btn btn-sm btn-plus rounded-circle bg-light border" action="#{cartBean.updateCart(item_cart.id, true)}">
                                                                         <i class="fa fa-plus"></i>
-                                                                        <f:ajax execute="@form" render="@form"/>
+                                                                        <f:ajax execute="@form" render="@all"/>
                                                                     </h:commandLink>
                                                                 </div>
                                                             </div>

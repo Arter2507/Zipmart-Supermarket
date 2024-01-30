@@ -42,8 +42,11 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:selectOneMenu id="gender" styleClass="select2 form-select" value="#{employeeBean.selected_gender}">
-                                                        <f:selectItems value="#{employeeBean.showGenders()}" var="gender" itemValue="#{gender.id}" itemLabel="#{gender.genderName}"/>
+                                                    <h:selectOneMenu id="gender" styleClass="select2 form-select" value="#{employeeBean.employee.employeeGender}">
+                                                        <f:selectItem itemValue="1" itemLabel="Male"/>
+                                                        <f:selectItem itemValue="2" itemLabel="Female"/>
+                                                        <f:selectItem itemValue="3" itemLabel="Other"/>
+                                                        <f:selectItem itemValue="4" itemLabel="Not Set"/>
                                                     </h:selectOneMenu>   
                                                     <h:outputLabel for="gender">Gender</h:outputLabel>
                                                 </div>
@@ -86,18 +89,11 @@
                                                     <h:message for = "email" style = "color: red;" />
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
                                                     <h:inputText class="form-control" id="address" value="#{employeeBean.employee.address}" required="true" requiredMessage="This field cannot be empty!"/>
                                                     <h:outputLabel for="address">Address</h:outputLabel>
                                                     <h:message for = "fullname" style = "color: red;" />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-floating form-floating-outline">
-                                                    <h:inputText class="form-control" id="note" value="#{employeeBean.employee.notes}" required="true" requiredMessage="This field cannot be empty!"/>
-                                                    <h:outputLabel for="note">Note</h:outputLabel>
-                                                    <h:message for = "note" style = "color: red;" />
                                                 </div>
                                             </div>
                                         </div>
@@ -112,7 +108,6 @@
                         </div>
                     </div>
                 </div>
-                <h:outputScript name="js/configfile.js"/>
                 <script>
                     window.onload = function () {
                         var birthday = document.getElementById("formUpdate:birthday");

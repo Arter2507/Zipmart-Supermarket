@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      >
+    <h:body>
+        <ui:composition template="/webapp/webapp.layout/_adminLayout.xhtml">
+            <ui:define name="content">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h4 class="py-3 mb-4"><span class="text-muted fw-light">Blogs Management /</span> Create Blog</h4>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h:form enctype="multipart/form-data"  id="formAccountSettings">
+                                <div class="card mb-4">
+                                    <h4 class="card-header m-0 font-weight-bold text-primary">Blog Information</h4>
+
+                                    <div class="card-body pt-2 mt-1" var="blog">
+
+                                        <div class="row mt-2 gy-4">
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="title" value="#{blogMB.blogs.title}" requiredMessage="Title not empty" required="true"/>
+                                                    <h:message for="title" style="color: red"/>
+                                                    <h:outputLabel for="title">Title</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="category" value="#{blogMB.blogs.category}" requiredMessage="Category not empty"/>
+                                                    <h:message for="category" style="color: red"/>
+                                                    <h:outputLabel for="category">Category</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="createby" value="#{blogMB.blogs.createby}" requiredMessage="Create by not empty" required="true"/>
+                                                    <h:message for="createby" style="color: red"/>
+                                                    <h:outputLabel for="createby">Create By</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText class="form-control" id="createday" value="#{blogMB.blogs.createdate}">
+                                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                    </h:outputText>
+                                                    <h:message for="createday" style="color: red"/>
+                                                    <h:outputLabel for="createday">Create Day</h:outputLabel>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <h5 class="card-header m-0 font-weight-bold text-primary">Image, Short Content, Content Blog</h5>
+                                    <div class="card-body">
+                                        <div class="col-md-6">
+                                            <div class="form-floating form-floating-outline">
+                                                <h:inputFile id="imageURL" value="#{blogMB.fileImage}" requiredMessage="Image not empty" required="true"/>
+                                                <h:message for="imageURL" style="color: red"/>
+                                            </div>
+                                        </div><br/>
+                                        <div class="col-md-6">
+                                            <div class="form-floating form-floating-outline">
+                                                <h:inputTextarea value="#{blogMB.blogs.sortcontent}" class="form-control" style="width: 1100px; height: 200px" id="shortcontent" requiredMessage="Short content not empty" required="true"/>
+                                                <h:message for="shortcontent" style="color: red"/>
+                                                <h:outputLabel for="shortcontent">Short Content</h:outputLabel>
+                                            </div>
+                                        </div><br></br>
+                                        <div class="col-md-6">
+                                            <div class="form-floating form-floating-outline">
+                                                <h:inputTextarea value="#{blogMB.blogs.content}" class="form-control" style="width: 1100px; height: 500px" id="contentbth" requiredMessage="Content not empty" required="true"/>
+                                                <h:message for="contentbth" style="color: red"/>
+                                                <h:outputLabel for="contentbth">Content</h:outputLabel>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4">
+                                            <h:commandButton class="btn btn-primary me-2 text-white" value="Create Blog" action="#{blogMB.createBlog()}"/>
+                                            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

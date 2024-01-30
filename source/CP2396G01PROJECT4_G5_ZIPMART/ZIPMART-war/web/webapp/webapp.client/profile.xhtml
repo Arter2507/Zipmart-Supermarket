@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://java.sun.com/jsf/passthrough">
     <h:body>
         <ui:composition template="/webapp/webapp.layout/_mainLayout.xhtml">
             <ui:define name="content">               
@@ -35,7 +36,7 @@
                                                     <a class="nav-link active" href="javascript:void(0);"><i class="mdi mdi-account-outline mdi-20px me-1"></i>Account</a>
                                                 </li>                   
                                                 <li class="nav-item">
-                                                    <a class="nav-link" href="pages-account-settings-connections.html"><i class="mdi mdi-link mdi-20px me-1"></i>Connections</a>
+                                                    <a class="nav-link" href="javascript:void(0);"><i class="mdi mdi-link mdi-20px me-1"></i>Connections</a>
                                                 </li>
                                             </ul>
                                             <div class="card mb-4">
@@ -43,159 +44,68 @@
                                                 <!-- Account -->
                                                 <div class="card-body">
                                                     <div class="d-flex align-items-start align-items-sm-center gap-4">
-                                                        <img src="https://res.cloudinary.com/dwjl02bji/image/upload/f_auto,q_auto/v1/user/avatars/jqrn3v2u8qf3lpstudgn" alt="user-avatar" class="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar" />
+                                                        <img src="#{resource[loginManagedBean.customer.imageURL]}" alt="user-avatar" class="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar" />
                                                         <div class="button-wrapper">
                                                             <h:outputLabel for="upload" class="btn btn-primary me-2 mb-3" tabindex="0">
                                                                 <span class="d-none d-sm-block">Upload new photo</span>
                                                                 <i class="mdi mdi-tray-arrow-up d-block d-sm-none"></i>
-                                                                <input type="file" id="upload" class="account-file-input" hidden="" accept="image/png, image/jpeg" />
+                                                                <h:inputFile id="upload" class="account-file-input" a:hidden="" value="#{customerMB.fileImage}" />
                                                             </h:outputLabel>
-                                                            <button type="button" class="btn btn-outline-danger account-image-reset mb-3">
-                                                                <i class="mdi mdi-reload d-block d-sm-none"></i>
-                                                                <span class="d-none d-sm-block">Reset</span>
-                                                            </button>
                                                             <div class="text-muted small">Allowed JPG, GIF or PNG. Max size of 800K</div>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="card-body pt-2 mt-1">
-                                                    <h:form id="formAccountSettings">
+                                                    <h:form id="formAccountSettings" enctype="multipart/form-data">
                                                         <div class="row mt-2 gy-4">
                                                             <div class="col-md-6">
                                                                 <div class="form-floating form-floating-outline">
-                                                                    <h:inputText class="form-control" id="firstName"/>  
-                                                                    <h:outputLabel for="firstName">First Name</h:outputLabel>
+                                                                    <h:inputText class="form-control" id="firstName" value="#{customerMB.customers.fullname}"/>  
+                                                                    <h:outputLabel for="firstName">Full name</h:outputLabel>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-floating form-floating-outline">
-                                                                    <h:inputText class="form-control" id="lastName"/>
-                                                                    <h:outputLabel for="lastName">Last Name</h:outputLabel>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-floating form-floating-outline">
-                                                                    <h:inputText class="form-control" id="email"/>
+                                                                    <h:inputText class="form-control" id="email" value="#{customerMB.customers.email}"/>
                                                                     <h:outputLabel for="email">E-mail</h:outputLabel>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-floating form-floating-outline">
-                                                                    <h:inputText class="form-control" id="organization"/>
-                                                                    <h:outputLabel for="organization">Organization</h:outputLabel>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-floating form-floating-outline">
-                                                                    <h:inputText class="form-control" id="phoneNumber"/>
+                                                                    <h:inputText class="form-control" id="phoneNumber" value="#{customerMB.customers.phone}"/>
                                                                     <h:outputLabel for="phoneNumber">Phone Number</h:outputLabel>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-floating form-floating-outline">
-                                                                    <h:inputText class="form-control" id="address"/>
+                                                                    <h:inputText class="form-control" id="address" value="#{customerMB.customers.address}"/>
                                                                     <h:outputLabel for="address">Address</h:outputLabel>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-floating form-floating-outline">
-                                                                    <h:inputText class="form-control" id="state"/>
-                                                                    <h:outputLabel for="state">State</h:outputLabel>
+                                                                    <h:selectOneMenu id="gender" styleClass="select2 form-select" value="#{customerMB.customers.customerGender}">
+                                                                        <f:selectItem itemValue="1" itemLabel="Male"/>
+                                                                        <f:selectItem itemValue="2" itemLabel="Female"/>
+                                                                        <f:selectItem itemValue="3" itemLabel="Other"/>
+                                                                        <f:selectItem itemValue="4" itemLabel="Not Set"/>
+                                                                    </h:selectOneMenu>   
+                                                                    <h:outputLabel for="gender">Gender</h:outputLabel>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-floating form-floating-outline">
-                                                                    <h:inputText class="form-control" id="zipCode"/>
-                                                                    <h:outputLabel for="zipCode">Zip Code</h:outputLabel>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-floating form-floating-outline">
-                                                                    <h:selectOneMenu styleClass="select2 form-select"> 
-                                                                        <f:selectItem itemValue = "1" itemLabel = "Select" /> 
-                                                                        <f:selectItem itemValue = "2" itemLabel = "Australia" />
-                                                                        <f:selectItem itemValue = "3" itemLabel = "Bangladesh" />
-                                                                        <f:selectItem itemValue = "4" itemLabel = "Belarus" />
-                                                                        <f:selectItem itemValue = "5" itemLabel = "Brazil" />
-                                                                        <f:selectItem itemValue = "6" itemLabel = "Canada" />
-                                                                        <f:selectItem itemValue = "7" itemLabel = "China" />
-                                                                        <f:selectItem itemValue = "8" itemLabel = "France" />
-                                                                        <f:selectItem itemValue = "9" itemLabel = "Germany" />
-                                                                        <f:selectItem itemValue = "10" itemLabel = "India" />
-                                                                        <f:selectItem itemValue = "11" itemLabel = "Indonesia" />
-                                                                        <f:selectItem itemValue = "12" itemLabel = "Israel" />
-                                                                        <f:selectItem itemValue = "13" itemLabel = "Italy" />
-                                                                        <f:selectItem itemValue = "14" itemLabel = "Japan" />
-                                                                        <f:selectItem itemValue = "15" itemLabel = "Korea, Republic of" />
-                                                                        <f:selectItem itemValue = "16" itemLabel = "Mexico" />
-                                                                        <f:selectItem itemValue = "17" itemLabel = "Philippines" />
-                                                                        <f:selectItem itemValue = "18" itemLabel = "Russian Federation" />
-                                                                        <f:selectItem itemValue = "19" itemLabel = "South Africa" />
-                                                                        <f:selectItem itemValue = "20" itemLabel = "Thailand" />
-                                                                        <f:selectItem itemValue = "21" itemLabel = "Turkey" />
-                                                                        <f:selectItem itemValue = "22" itemLabel = "Ukraine" />
-                                                                        <f:selectItem itemValue = "23" itemLabel = "United Arab Emirates" />
-                                                                        <f:selectItem itemValue = "24" itemLabel = "United Kingdom" />
-                                                                        <f:selectItem itemValue = "25" itemLabel = "United States" />
-                                                                        <f:selectItem itemValue = "26" itemLabel = "Viet Nam" />
-                                                                    </h:selectOneMenu> 
-                                                                    <h:outputLabel for="country">Country</h:outputLabel>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-floating form-floating-outline">
-                                                                    <h:selectOneMenu styleClass="select2 form-select"> 
-                                                                        <f:selectItem itemValue = "1" itemLabel = "Select Language" /> 
-                                                                        <f:selectItem itemValue = "2" itemLabel = "English" />
-                                                                        <f:selectItem itemValue = "3" itemLabel = "French" />
-                                                                        <f:selectItem itemValue = "4" itemLabel = "German" />
-                                                                        <f:selectItem itemValue = "5" itemLabel = "Portuguese" />
-                                                                    </h:selectOneMenu> 
-                                                                    <h:outputLabel for="language">Language</h:outputLabel>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-floating form-floating-outline">
-                                                                    <h:selectOneMenu styleClass="select2 form-select"> 
-                                                                        <f:selectItem itemValue = "1" itemLabel = "Select Timezone" /> 
-                                                                        <f:selectItem itemValue = "2" itemLabel = "(GMT-12:00) International Date Line West" />
-                                                                        <f:selectItem itemValue = "3" itemLabel = "(GMT-11:00) Midway Island, Samoa" />
-                                                                        <f:selectItem itemValue = "4" itemLabel = "(GMT-10:00) Hawaii" />
-                                                                        <f:selectItem itemValue = "5" itemLabel = "(GMT-09:00) Alaska" />
-                                                                        <f:selectItem itemValue = "6" itemLabel = "(GMT-08:00) Pacific Time (US &amp; Canada)" />
-                                                                        <f:selectItem itemValue = "7" itemLabel = "(GMT-08:00) Tijuana, Baja California" />
-                                                                        <f:selectItem itemValue = "8" itemLabel = "(GMT-07:00) Arizona" />
-                                                                        <f:selectItem itemValue = "9" itemLabel = "(GMT-07:00) Chihuahua, La Paz, Mazatlan" />
-                                                                        <f:selectItem itemValue = "10" itemLabel = "(GMT-07:00) Mountain Time (US &amp; Canada)" />
-                                                                        <f:selectItem itemValue = "11" itemLabel = "(GMT-06:00) Central America" />
-                                                                        <f:selectItem itemValue = "12" itemLabel = "(GMT-06:00) Central Time (US &amp; Canada)" />
-                                                                        <f:selectItem itemValue = "13" itemLabel = "(GMT-06:00) Guadalajara, Mexico City, Monterrey" />
-                                                                        <f:selectItem itemValue = "14" itemLabel = "(GMT-06:00) Saskatchewan" />
-                                                                        <f:selectItem itemValue = "15" itemLabel = "(GMT-05:00) Bogota, Lima, Quito, Rio Branco" />
-                                                                        <f:selectItem itemValue = "16" itemLabel = "(GMT-05:00) Eastern Time (US &amp; Canada)" />
-                                                                        <f:selectItem itemValue = "17" itemLabel = "(GMT-05:00) Indiana (East)" />
-                                                                        <f:selectItem itemValue = "18" itemLabel = "(GMT-04:00) Atlantic Time (Canada)" />
-                                                                        <f:selectItem itemValue = "19" itemLabel = "(GMT-04:00) Caracas, La Paz" />
-                                                                    </h:selectOneMenu> 
-                                                                    <h:outputLabel for="timeZones">Timezone</h:outputLabel>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-floating form-floating-outline">
-                                                                    <h:selectOneMenu styleClass="select2 form-select">
-                                                                        <f:selectItem itemValue = "1" itemLabel = "Select Currency" />
-                                                                        <f:selectItem itemValue = "2" itemLabel = "USD" />
-                                                                        <f:selectItem itemValue = "3" itemLabel = "Euro" />
-                                                                        <f:selectItem itemValue = "4" itemLabel = "Pound" />
-                                                                        <f:selectItem itemValue = "5" itemLabel = "Bitcoin" />
-                                                                    </h:selectOneMenu> 
-                                                                    <h:outputLabel for="currency">Currency</h:outputLabel>
+                                                                    <h:inputText a:type="date" class="form-control" id="birthday" value="#{customerMB.customers.birthDate}" required="true" requiredMessage="This field cannot be empty!">
+                                                                        <f:convertDateTime pattern="MM-dd-yyyy" />
+                                                                    </h:inputText>
+                                                                    <h:outputLabel for="birthday">Birthday</h:outputLabel>
+                                                                    <h:message for = "birthday" style = "color: red;" />
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="mt-4">
-                                                            <button type="submit" class="btn btn-primary me-2 text-white">Save changes</button>
+                                                            <h:commandButton type="submit" class="btn btn-primary me-2 text-white" value="Save" action="#{customerMB.saveUpdateUsers()}"/>
                                                             <button type="reset" class="btn btn-outline-secondary">Reset</button>
                                                         </div>
                                                     </h:form>

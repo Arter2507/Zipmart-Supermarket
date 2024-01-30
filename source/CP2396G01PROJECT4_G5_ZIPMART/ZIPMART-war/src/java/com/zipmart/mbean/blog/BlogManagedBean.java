@@ -4,9 +4,11 @@
  */
 package com.zipmart.mbean.blog;
 
+import com.zipmart.ejb.entities.BlogCategories;
 import com.zipmart.ejb.entities.Blogs;
 import com.zipmart.ejb.session_beans.BlogCategoriesFacadeLocal;
 import com.zipmart.ejb.session_beans.BlogsFacadeLocal;
+import com.zipmart.util.FileUltil;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -39,7 +41,7 @@ public class BlogManagedBean implements Serializable {
 
     @EJB
     private BlogsFacadeLocal blogsFacade;
-    
+
     private Blogs blogs;
 
     private long id;
@@ -48,17 +50,17 @@ public class BlogManagedBean implements Serializable {
 
     private Part fileImage;
     private String keyfind = "";
+    private String imageurl;
 
-    final String UPLOAD_DIRECTORY = "../resources\\images\\blog";
+    private final String UPLOAD_DIRECTORY = "../resources\\images\\blog";
     private List<Blogs> listBlog = new ArrayList<>();
-    
-    
+
     public BlogManagedBean() {
-         blogs = new Blogs();
+        blogs = new Blogs();
         listBlog = new ArrayList<>();
         blogs.setCreatedate(new Date(System.currentTimeMillis()));
     }
-    
+
     //Showall
     public List<Blogs> showAllBlogs() {
         return blogsFacade.findAll();
@@ -117,16 +119,17 @@ public class BlogManagedBean implements Serializable {
 
     //Create
     public String createBlog() {
-        blogs.setImageURL(fileImage.getSubmittedFileName());
-        uploadFile();
+        imageurl = FileUltil.getInstance().uploadFile(fileImage);
+        blogs.setImageURL(imageurl);
+//        uploadFile();
         blogsFacade.create(blogs);
         return "displayblog?faces-redirect=true";
     }
 
     //Update
     public String updateBlog() {
-        blogs.setImageURL(fileImage.getSubmittedFileName());
-        uploadFile();
+        imageurl = FileUltil.getInstance().uploadFile(fileImage);
+        blogs.setImageURL(imageurl);
         blogsFacade.edit(blogs);
         return "displayblog";
     }
@@ -147,8 +150,12 @@ public class BlogManagedBean implements Serializable {
     public String showblogbyID(long id) {
         blogs = blogsFacade.find(id);
         return "blog-details";
-}
+    }
 
+    public List<BlogCategories> showCateBlog(){
+    return blogCategoriesFacade.findAll();
+    }
+    
     public BlogCategoriesFacadeLocal getBlogCategoriesFacade() {
         return blogCategoriesFacade;
     }
@@ -211,5 +218,17 @@ public class BlogManagedBean implements Serializable {
 
     public void setListBlog(List<Blogs> listBlog) {
         this.listBlog = listBlog;
+    }
+
+    public String getUPLOAD_DIRECTORY() {
+        return UPLOAD_DIRECTORY;
+    }
+
+    public String getImageurl() {
+        return imageurl;
+    }
+
+    public void setImageurl(String imageurl) {
+        this.imageurl = imageurl;
     }
 }

@@ -33,11 +33,22 @@
 
                                     <div class="card-body pt-2 mt-1">
                                         <div class="row mt-2 gy-4">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
                                                     <h:inputText class="form-control" id="fullname" value="#{managerBean.fullname}" required="true" requiredMessage="This field cannot be empty!"/>  
                                                     <h:outputLabel for="fullname">Full Name</h:outputLabel>
                                                     <h:message for = "fullname" style = "color: red;" /> 
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:selectOneMenu id="gender" styleClass="select2 form-select" value="#{managerBean.selected_gender}">
+                                                        <f:selectItem itemValue="1" itemLabel="Male"/>
+                                                        <f:selectItem itemValue="2" itemLabel="Female"/>
+                                                        <f:selectItem itemValue="3" itemLabel="Other"/>
+                                                        <f:selectItem itemValue="4" itemLabel="Not Set"/>
+                                                    </h:selectOneMenu>   
+                                                    <h:outputLabel for="gender">Gender</h:outputLabel>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -94,7 +105,6 @@
                         </div>
                     </div>
                 </div>
-                <h:outputScript name="js/configfile.js"/>
             </ui:define>
         </ui:composition>
     </h:body>

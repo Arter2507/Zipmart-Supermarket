@@ -21,15 +21,16 @@
                 <!-- Blog Details Start-->
                 <section>
                     <div class="header-content post-container">
-                        <h:outputText class="header-title" style="font-size: 24px; font-weight: bold; text-transform: uppercase" value="#{blogMB.blogs.title}"/>
-                        <h:graphicImage url="../../resources/images/blog/#{blogMB.blogs.imageURL}" alt="" class="header-img" />
+                        <h:inputHidden value="#{blogBean.blog.id}"/>
+                        <h:outputText class="header-title" style="font-size: 24px; font-weight: bold; text-transform: uppercase" value="#{blogBean.blog.title}"/>
+                        <h:graphicImage url="#{resource[blogBean.blog.imageURL]}" alt="" class="header-img" />
                     </div>
                 </section>
                 <section class="post-content post-container">
-                    <h:outputText value="#{blogMB.blogs.content}"/>
+                    <h:outputText value="#{blogBean.blog.content}"/>
                 </section>
                 <section class="post-content post-container">
-                    <h:outputText value="Create by: #{blogMB.blogs.createby}"/>
+                    <h:outputText value="Create by: #{blogBean.blog.createby}"/>
                 </section>
 
                 <div class="share post-container">

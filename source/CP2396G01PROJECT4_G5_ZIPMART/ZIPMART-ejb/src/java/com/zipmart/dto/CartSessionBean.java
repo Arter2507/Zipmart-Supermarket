@@ -104,7 +104,7 @@ public class CartSessionBean implements CartSessionBeanLocal {
         int newQuantity = mycart.getOrDefault(id, 0) + increment;
         newQuantity = Math.max(newQuantity, 0);
         mycart.put(id, newQuantity);
-        cart.setQuantity(newQuantity);  // Cập nhật đối tượng cart được truyền vào
+        cart.setQuantity(newQuantity); 
     }
 
 }

@@ -5,11 +5,8 @@
 package com.zipmart.ejb.entities;
 
 import java.io.Serializable;
-import java.math.BigInteger;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,14 +16,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -41,8 +36,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Managers.findByManagerGender", query = "SELECT m FROM Managers m WHERE m.managerGender = :managerGender"),
     @NamedQuery(name = "Managers.findByUsername", query = "SELECT m FROM Managers m WHERE m.username = :username"),
     @NamedQuery(name = "Managers.findByPassword", query = "SELECT m FROM Managers m WHERE m.password = :password"),
-    @NamedQuery(name = "Managers.findBySaltPassword", query = "SELECT m FROM Managers m WHERE m.saltPassword = :saltPassword"),
-    @NamedQuery(name = "Managers.findByPepperPassword", query = "SELECT m FROM Managers m WHERE m.pepperPassword = :pepperPassword"),
     @NamedQuery(name = "Managers.findByFullname", query = "SELECT m FROM Managers m WHERE m.fullname = :fullname"),
     @NamedQuery(name = "Managers.findByAddress", query = "SELECT m FROM Managers m WHERE m.address = :address"),
     @NamedQuery(name = "Managers.findByPhone", query = "SELECT m FROM Managers m WHERE m.phone = :phone"),
@@ -62,19 +55,13 @@ public class Managers implements Serializable {
     @Column(name = "ID")
     private Long id;
     @Column(name = "manager_gender")
-    private Long managerGender;
+    private Short managerGender;
     @Size(max = 50)
     @Column(name = "username")
     private String username;
     @Size(max = 2147483647)
     @Column(name = "password")
     private String password;
-    @Size(max = 2147483647)
-    @Column(name = "salt_password")
-    private String saltPassword;
-    @Size(max = 16)
-    @Column(name = "pepper_password")
-    private String pepperPassword;
     @Size(max = 50)
     @Column(name = "fullname")
     private String fullname;
@@ -106,8 +93,6 @@ public class Managers implements Serializable {
     private String modifieby;
     @Column(name = "status")
     private Boolean status;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "managers")
-    private Collection<ManagerGenders> managerGendersCollection;
     @JoinColumn(name = "manager_group", referencedColumnName = "ID")
     @ManyToOne
     private Permissions managerGroup;
@@ -136,11 +121,11 @@ public class Managers implements Serializable {
         this.id = id;
     }
 
-    public Long getManagerGender() {
+    public Short getManagerGender() {
         return managerGender;
     }
 
-    public void setManagerGender(Long managerGender) {
+    public void setManagerGender(Short managerGender) {
         this.managerGender = managerGender;
     }
 
@@ -158,22 +143,6 @@ public class Managers implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getSaltPassword() {
-        return saltPassword;
-    }
-
-    public void setSaltPassword(String saltPassword) {
-        this.saltPassword = saltPassword;
-    }
-
-    public String getPepperPassword() {
-        return pepperPassword;
-    }
-
-    public void setPepperPassword(String pepperPassword) {
-        this.pepperPassword = pepperPassword;
     }
 
     public String getFullname() {
@@ -256,15 +225,6 @@ public class Managers implements Serializable {
         this.status = status;
     }
 
-    @XmlTransient
-    public Collection<ManagerGenders> getManagerGendersCollection() {
-        return managerGendersCollection;
-    }
-
-    public void setManagerGendersCollection(Collection<ManagerGenders> managerGendersCollection) {
-        this.managerGendersCollection = managerGendersCollection;
-    }
-
     public Permissions getManagerGroup() {
         return managerGroup;
     }
@@ -297,10 +257,10 @@ public class Managers implements Serializable {
     public String toString() {
         return "com.zipmart.ejb.entities.Managers[ id=" + id + " ]";
     }
-
+    
     public String getActive() {
         return status == null ? "null" : status ? "Enabled" : "Disabled";
-    }
+}
 
     public void setActive(String active) {
         this.active = active;

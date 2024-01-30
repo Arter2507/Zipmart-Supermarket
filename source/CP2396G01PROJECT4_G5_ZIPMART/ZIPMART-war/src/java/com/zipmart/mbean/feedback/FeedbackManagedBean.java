@@ -44,14 +44,6 @@ public class FeedbackManagedBean implements Serializable {
         feedbacks.setCreatedate(new Date(System.currentTimeMillis()));
     }
     
-    //default ngay thang
-    public String getCurrentDayFormatted(){
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        currentDateFormatted = sdf.format(new Date());
-        return currentDateFormatted;
-
-    }
-    
     //Add
     public String createFeedback() {
         feedbacksFacade.create(feedbacks);

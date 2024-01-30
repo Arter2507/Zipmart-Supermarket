@@ -1,5 +1,5 @@
 window.onload = function () {
-    const editorElementIds = ["formUpdate:sortdescription", "formUpdate:description", "formAccountSettings:content"];
+    const editorElementIds = ["formUpdate:sortdescription", "formUpdate:description"];
     editorElementIds.forEach(elementId => {
         // This sample still does not showcase all CKEditor&nbsp;5 features (!)
 // Visit https://ckeditor.com/docs/ckeditor5/latest/features/index.html to browse all the features.

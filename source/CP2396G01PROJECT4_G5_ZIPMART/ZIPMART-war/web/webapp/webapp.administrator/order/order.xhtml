@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:body>
+        <ui:composition template="/webapp/webapp.layout/_adminLayout.xhtml">
+            <ui:define name="content">              
+                <!-- Page Heading -->
+                <h1 class="h3 mb-2 text-gray-800">Order Management</h1>
+                <p class="mb-4">The <a href="javascript:void(0);">"Order Employee Management"</a> is a robust software solution meticulously crafted to streamline and automate the intricacies of order-related processes within an organization.</p>
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <h:form id="employeeForm">
+                                <table class="table table-bordered table-hover" 
+                                       id="dataTable"
+                                       data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Customer</th>
+                                            <th class="text-center">Product</th>
+                                            <th class="text-center">Total Price</th>
+                                            <th class="text-center">Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ui:repeat var="item" value="#{checkoutBean.showAllOrders()}">
+                                                <tr>
+                                                    <td><h:outputText value="#{item.orderID.customerID.fullname}"/></td>
+                                                    <td><h:outputText value="#{item.productID.productName}"/></td>
+                                                    <td><h:outputText value="$#{item.totalPrice}"/></td>
+                                                    <td>
+                                                        <h:commandLink title="Details" class="btn btn-outline-info btn-sm" action="#{checkoutBean.showDetails(item.id)}">
+                                                            <i class="fas fa-eye"></i>
+                                                        </h:commandLink>
+                                                    </td>
+                                                </tr>
+                                        </ui:repeat>
+                                    </tbody>
+                                </table>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>               
+            </ui:define>
+        </ui:composition>       
+    </h:body>
+</html>

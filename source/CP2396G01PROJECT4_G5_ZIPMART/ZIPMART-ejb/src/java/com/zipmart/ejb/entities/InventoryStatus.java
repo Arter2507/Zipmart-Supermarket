@@ -6,7 +6,6 @@ package com.zipmart.ejb.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,8 +17,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -36,19 +33,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "InventoryStatus.findById", query = "SELECT i FROM InventoryStatus i WHERE i.id = :id"),
     @NamedQuery(name = "InventoryStatus.findByStatusName", query = "SELECT i FROM InventoryStatus i WHERE i.statusName = :statusName")})
 public class InventoryStatus implements Serializable {
-
-    @Column(name = "createdate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdate;
-    @Column(name = "modifiedate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date modifiedate;
-    @Size(max = 80)
-    @Column(name = "createby")
-    private String createby;
-    @Size(max = 80)
-    @Column(name = "modifieby")
-    private String modifieby;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -117,38 +101,6 @@ public class InventoryStatus implements Serializable {
     @Override
     public String toString() {
         return "com.zipmart.ejb.entities.InventoryStatus[ id=" + id + " ]";
-    }
-
-    public Date getCreatedate() {
-        return createdate;
-    }
-
-    public void setCreatedate(Date createdate) {
-        this.createdate = createdate;
-    }
-
-    public Date getModifiedate() {
-        return modifiedate;
-    }
-
-    public void setModifiedate(Date modifiedate) {
-        this.modifiedate = modifiedate;
-    }
-
-    public String getCreateby() {
-        return createby;
-    }
-
-    public void setCreateby(String createby) {
-        this.createby = createby;
-    }
-
-    public String getModifieby() {
-        return modifieby;
-    }
-
-    public void setModifieby(String modifieby) {
-        this.modifieby = modifieby;
     }
     
 }

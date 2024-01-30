@@ -1,11 +1,14 @@
 package com.zipmart.util;
 
+import com.zipmart.ejb.entities.Encrypt;
 import org.apache.commons.codec.digest.DigestUtils;
 
 public class CryptUltil {
 
     private static CryptUltil crypt = null;
 
+    private Encrypt encr = new Encrypt();
+    
     public static CryptUltil getCrypt() {
         if (crypt == null) {
             crypt = new CryptUltil();
@@ -17,8 +20,8 @@ public class CryptUltil {
         crypt = aCrypt;
     }
 
-    private final String salt_pass = "dhapsowidnshywipldkhtsb@&ndjaspsad|";
-    private final String pepper_pass = "secretrandom";
+    private final String salt_pass = encr.getSalt();
+    private final String pepper_pass = encr.getPepper();
 
     public String enCodePass(String pass) {
         String str = pass + salt_pass + pepper_pass;
@@ -48,5 +51,13 @@ public class CryptUltil {
 
     public String getPepper_pass() {
         return pepper_pass;
+    }
+
+    public Encrypt getEncr() {
+        return encr;
+    }
+
+    public void setEncr(Encrypt encr) {
+        this.encr = encr;
     }
 }

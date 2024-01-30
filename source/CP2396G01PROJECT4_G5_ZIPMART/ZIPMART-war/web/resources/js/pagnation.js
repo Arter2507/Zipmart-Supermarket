@@ -11,7 +11,7 @@ function loadItem() {
         } else {
             item.style.display = 'none';
         }
-    })
+    });
     listPage();
 }
 loadItem();

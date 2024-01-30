@@ -58,7 +58,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
                                                     <h:outputText class="form-control" id="unitprice" value="#{productAdminBean.product.unitPrice}">
                                                         <f:convertNumber type="currency" currencySymbol="$" locale="en_US"/>
@@ -66,7 +66,7 @@
                                                     <h:outputLabel for="unitprice">Unit Price</h:outputLabel>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
                                                     <h:outputText class="form-control" id="discount" value="#{productAdminBean.product.discount}%"/>
                                                     <h:outputLabel for="discount">Discount</h:outputLabel>
@@ -90,14 +90,7 @@
                                                     <h:outputLabel for="quantitystock">Quantity In Stock</h:outputLabel>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="form-floating form-floating-outline">
-                                                    <h:outputText value="#{productAdminBean.product.viewCount == null ? '0' : productAdminBean.product.viewCount} Views" class="form-control" id="viewcount"/>
-                                                    <h:outputLabel for="viewcount">View</h:outputLabel>
-                                                </div>
-                                            </div>
                                         </div>
-
                                     </div>
                                     <!-- /Form Add -->
                                 </div>
@@ -116,7 +109,7 @@
                                     <div class="card-body">
                                         <div class="tab-content" id="pills-tabContent">
                                             <div class="tab-pane fade show active" id="pills-sort" role="tabpanel" aria-labelledby="pills-sort-tab">
-                                                <h:outputFormat escape="false" value="#{productAdminBean.product.sortDescription == null ? 'In Process Of Update' : productAdminBean.product.sortDescription}"/>
+                                                <h:outputFormat escape="false" value="#{productAdminBean.product.sortdescription == null ? 'In Process Of Update' : productAdminBean.product.sortdescription}"/>
                                             </div>
 
                                             <div class="tab-pane fade show" id="pills-description" role="tabpanel" aria-labelledby="pills-description-tab" style="overflow: hidden; height: 250px;">

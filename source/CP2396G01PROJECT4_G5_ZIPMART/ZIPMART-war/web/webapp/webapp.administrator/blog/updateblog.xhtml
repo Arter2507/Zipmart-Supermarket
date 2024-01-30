@@ -28,18 +28,14 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:selectOneMenu id="status" styleClass="select2 form-select" value="#{blogAdminBean.selected_category}">
-                                                        <f:selectItems value="#{blogAdminBean.showAllCategory()}" var="cate" itemValue="#{cate.id}" itemLabel="#{cate.name}"/>
-                                                    </h:selectOneMenu> 
+                                                    <h:inputText class="form-control" id="category" value="#{blogMB.blogs.category}" requiredMessage="Category not empty" required="true"/>
                                                     <h:message for="category" style="color: red"/>
                                                     <h:outputLabel for="category">Category</h:outputLabel>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:selectOneMenu id="status" styleClass="select2 form-select" value="#{blogAdminBean.selected_employee}">
-                                                        <f:selectItems value="#{blogAdminBean.showEmployee()}" var="emp" itemValue="#{emp.id}" itemLabel="#{emp.fullname}"/>
-                                                    </h:selectOneMenu> 
+                                                    <h:inputText class="form-control" id="createby" value="#{blogMB.blogs.createby}" requiredMessage="Create by not empty" required="true"/>
                                                     <h:message for="createby" style="color: red"/>
                                                     <h:outputLabel for="createby">Create By</h:outputLabel>
                                                 </div>

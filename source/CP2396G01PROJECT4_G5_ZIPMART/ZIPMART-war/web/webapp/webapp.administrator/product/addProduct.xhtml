@@ -1,9 +1,117 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">    
     <h:body>
-       
-                        <h:outputScript name="js/configfile.js"/>
+        <ui:composition template="/webapp/webapp.layout/_adminLayout.xhtml">
+            <ui:define name="content">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h1 class="h3 mb-2 text-gray-800">Product Management</h1>
+                    <p class="mb-4">The <a href="javascript:void(0);">"Software Product Management"</a> is a robust software solution meticulously crafted to streamline and automate the intricacies of product-related processes within an organization.</p>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card mb-4">
+                                <!-- Add Form -->
+                                <h:form id="formAccountSettings" enctype="multipart/form-data">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                            <h:graphicImage url="#{resource['/images/logo/photo-camera-gray.svg']}" alt="user-avatar" styleClass="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar" height="200px" width="200px"  />
+                                            <div class="button-wrapper">
+                                                <h:outputLabel for="upload" class="btn btn-primary me-2 mb-3" tabindex="0">
+                                                    <span class="d-none d-sm-block">Upload new photo</span>
+                                                    <i class="mdi mdi-tray-arrow-up d-block d-sm-none"></i>
+                                                    <h:inputFile a:hidden="" id="upload" class="account-file-input" value="#{productAdminBean.file}"/>
+                                                    <h:message for="upload" style="color: red;"/>
+                                                </h:outputLabel>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body pt-2 mt-1">
+                                        <div class="row mt-2 gy-4">
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="productname" value="#{productAdminBean.product_name}" required="true" requiredMessage="This field cannot be empty!"/>  
+                                                    <h:outputLabel for="productname">Product name</h:outputLabel>
+                                                    <h:message for = "productname" style = "color: red;" /> 
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:selectOneMenu id="category" styleClass="select2 form-select" value="#{productAdminBean.selected_category}">
+                                                        <f:selectItems value="#{productAdminBean.showAllCategory()}" var="category" itemValue="#{category.id}" itemLabel="#{category.categoryName}"/>
+                                                    </h:selectOneMenu>   
+                                                    <h:outputLabel for="category">Category</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:selectOneMenu id="brand" styleClass="select2 form-select" value="#{productAdminBean.selected_brand}">
+                                                        <f:selectItems value="#{productAdminBean.showAllBrand()}" var="brand" itemValue="#{brand.id}" itemLabel="#{brand.brandName}"/>
+                                                    </h:selectOneMenu>   
+                                                    <h:outputLabel for="brand">Brand</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:selectOneMenu id="supplier" styleClass="select2 form-select" value="#{productAdminBean.selected_supplier}">
+                                                        <f:selectItems value="#{productAdminBean.showAllSupplier()}" var="supplier" itemValue="#{supplier.id}" itemLabel="#{supplier.companyName}"/>
+                                                    </h:selectOneMenu>   
+                                                    <h:outputLabel for="supplier">Supplier</h:outputLabel>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="unitprice" value="#{productAdminBean.unit_price}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:outputLabel for="unitprice">Unit Price</h:outputLabel>
+                                                    <h:message for = "unitprice" style = "color: red;" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="discount" value="#{productAdminBean.discount}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:outputLabel for="discount">Discount</h:outputLabel>
+                                                    <h:message for = "discount" style = "color: red;" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText a:type="number" class="form-control" id="quantity" value="#{productAdminBean.quantity}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:outputLabel for="quantity">Quantity</h:outputLabel>
+                                                    <h:message for = "quantity" style = "color: red;" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText a:type="number" class="form-control" id="quantityinstock" value="#{productAdminBean.quantity_in_stock}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:outputLabel for="quantityinstock">Quantity In Stock</h:outputLabel>
+                                                    <h:message for = "quantityinstock" style = "color: red;" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:inputText class="form-control" id="unit" value="#{productAdminBean.unit}" required="true" requiredMessage="This field cannot be empty!"/>
+                                                    <h:outputLabel for="unit">Unit</h:outputLabel>
+                                                    <h:message for = "unit" style = "color: red;" />
+                                                </div>
+                                            </div>
+                                            <div class="mt-4">
+                                                <h:commandButton styleClass="btn btn-primary me-2 text-white" value="save" action="#{productAdminBean.addNewProduct()}"/>
+                                                <h:link value="Back" outcome="/webapp/webapp.administrator/product/product.xhtml" class="btn btn-outline-secondary"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </h:form>
+                                <!-- /Form Add -->
+                            </div>                          
+                        </div>
+                    </div>
+                </div>  
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>

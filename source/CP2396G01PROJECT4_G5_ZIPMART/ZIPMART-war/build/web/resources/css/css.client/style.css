@@ -30,10 +30,20 @@
 
 /*** Button Start ***/
 .btn {
-    font-weight: 600;
     transition: .5s;
 }
+.fil-item {
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+}
 
+.active-fil {
+    background-color: var(--bs-primary);
+    color: var(--bs-white);
+    padding: 4px 10px;
+    border-radius: 4px;
+}
 .btn-square {
     width: 32px;
     height: 32px;
@@ -415,42 +425,6 @@
 }
 /*** Facts End ***/
 
-
-/*** testimonial Start ***/
-.testimonial .owl-nav .owl-prev {
-    position: absolute;
-    top: -58px;
-    right: 0;
-    color: var(--bs-primary);
-    padding: 5px 25px;
-    border: 1px solid var(--bs-secondary);
-    border-radius: 20px;
-    transition: 0.5s;
-}
-
-.testimonial .owl-nav .owl-prev:hover {
-    background: var(--bs-secondary);
-    color: var(--bs-white);
-}
-
-.testimonial .owl-nav .owl-next {
-    position: absolute;
-    top: -58px;
-    right: 88px;
-    color: var(--bs-primary);
-    padding: 5px 25px;
-    border: 1px solid var(--bs-secondary);
-    border-radius: 20px;
-    transition: 0.5s;
-}
-
-.testimonial .owl-nav .owl-next:hover {
-    background: var(--bs-secondary);
-    color: var(--bs-white);
-}
-/*** testimonial End ***/
-
-
 /*** Single Page Start ***/
 .pagination {
     display: inline-block;
@@ -476,6 +450,28 @@
 .nav.nav-tabs .nav-link.active {
     border-bottom: 2px solid var(--bs-secondary) !important;
 }
+
+.sort-description {
+    padding-left: 0.75rem;
+}
+
+.txt-grayer {
+    color: #50515c;
+}
+
+.sortdefont-14 {
+    font-size: .975rem !important;
+}
+
+.btnview {
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem 0.75rem 1rem;
+    transition: color .15s ease-in-out,
+        background-color .15s ease-in-out,
+        border-color .15s ease-in-out,
+        box-shadow .15s ease-in-out !important;
+}
+
 /*** Single Page End ***/
 
 /*** Footer Start ***/
