@@ -63,7 +63,16 @@
                                                     </h:commandLink>
                                                 </div>
                                             </div>
-                                            <h:commandLink action="#{cartBean.addCart(productBean.product.id, cartBean.cart.quantity)}" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</h:commandLink>
+                                            <c:if test="#{loginManagedBean.status_login == 1}">
+                                                <h:commandLink action="#{cartBean.addCart(productBean.product.id, cartBean.cart.quantity)}" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary">
+                                                    <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                                </h:commandLink>
+                                            </c:if>
+                                            <c:if test="#{loginManagedBean.status_login == 4}">
+                                                <h:commandLink action="login" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary">
+                                                    <i class="fa fa-sign-in-alt me-1 text-primary"></i> Login to Buy
+                                                </h:commandLink>
+                                            </c:if>
                                         </h:form>
                                     </div>
                                     <div class="col-lg-12">

@@ -3,12 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      lang="en"
-      class="light-style layout-menu-fixed layout-compact"
-      dir="ltr"
-      data-theme="theme-default"
-      data-assets-path="#{resource['/images/admin/']}"
-      data-template="vertical-menu-template-free"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
@@ -36,10 +30,10 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"/>
 
         <!-- Boostrap Css 5 -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"/>
 
         <!-- Bootstrap Table Css -->
-        <link href="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.css" rel="stylesheet"/>            
+        <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.22.2/dist/bootstrap-table.min.css"></link>            
 
         <!-- Custom styles for this template-->
         <h:outputStylesheet name="css/css.admin/old/sb-admin-2.min.css"/>
@@ -79,6 +73,9 @@
     </h:head>
     <h:body id="page-top">
 
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{loginAdminManagedBean.checkLoginAdminOwner()}"></f:event>
+        </f:metadata>
         <!-- Page Wrapper -->
         <div id="wrapper">
 
@@ -135,14 +132,6 @@
                         </h:link>
                     </li>
 
-                    <li class="nav-item">
-                        <h:link class="nav-link collapsed" outcome="/webapp/webapp.administrator/branch/displaybranch.xhtml">
-                            <i class="fas fa-fw fa-house"></i>
-                            <span>Inventory Status</span>
-                        </h:link>
-                    </li>
-
-
                     <!-- Divider -->
                     <hr class="sidebar-divider"></hr>
 
@@ -152,15 +141,14 @@
                     </div>
 
                     <li class="nav-item">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseIm"
-                           aria-expanded="true" aria-controls="collapsePages">
+                        <a class="nav-link collapsed" data-bs-toggle="collapse" href="#collapseImport" role="button" aria-expanded="false" aria-controls="collapseImport">
                             <i class="fas fa-fw fa-gear"></i>
                             <span>Import</span>
                         </a>
-                        <div id="collapseIm" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div id="collapseImport" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="login.html">Import Order</a>
-                                <a class="collapse-item" href="register.html">Threshold Adjustment</a>
+                                <a class="collapse-item" href="javascript:void(0);">Import Order</a>
+                                <a class="collapse-item" href="javascript:void(0);">Threshold Adjustment</a>
                             </div>
                         </div>
                     </li>
@@ -176,8 +164,7 @@
                     <!-- Nav Item - Page Menu -->
 
                     <li class="nav-item">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseS"
-                           aria-expanded="true" aria-controls="collapsePages">
+                        <a class="nav-link collapsed">
                             <i class="fas fa-fw fa-chart-line"></i>
                             <span>Statistics</span>
                         </a>
@@ -201,38 +188,20 @@
                     </div>
 
                     <li class="nav-item">
-                        <h:link class="nav-link collapsed" outcome="/webapp/webapp.administrator/branch/displaybranch.xhtml">
+                        <a class="nav-link collapsed" data-bs-toggle="collapse" href="#collapseNetwo" role="button" aria-expanded="false" aria-controls="collapseNetwo">
                             <i class="fas fa-fw fa-house"></i>
-                            <span>Branch</span>
-                        </h:link>
-                    </li>
-
-                    <li class="nav-item">
-                        <h:link class="nav-link collapsed" outcome="/webapp/webapp.administrator/supplier/supplier.xhtml">
-                            <i class="fas fa-fw fa-house"></i>
-                            <span>Supplier</span>
-                        </h:link>
-                    </li>
-
-                    <li class="nav-item">
-                        <h:link class="nav-link collapsed" outcome="/webapp/webapp.administrator/brand/brand.xhtml">
-                            <i class="fas fa-fw fa-house"></i>
-                            <span>Brand</span>
-                        </h:link>
-                    </li>
-
-                    <li class="nav-item">
-                        <h:link class="nav-link collapsed" outcome="/webapp/webapp.administrator/blog/displayblog.xhtml">
-                            <i class="fas fa-fw fa-house"></i>
-                            <span>Blogs</span>
-                        </h:link>
-                    </li>
-
-                    <li class="nav-item">
-                        <h:link class="nav-link collapsed" outcome="/webapp/webapp.administrator/feedback/displayfeedback.xhtml">
-                            <i class="fas fa-fw fa-house"></i>
-                            <span>Feedback</span>
-                        </h:link>
+                            <span>Services</span>
+                        </a>
+                        <div id="collapseNetwo" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <h:link class="collapse-item" outcome="/webapp/webapp.administrator/blog/displayblog.xhtml">
+                                    <span>Blogs</span>
+                                </h:link>
+                                <h:link class="collapse-item" outcome="/webapp/webapp.administrator/feedback/displayfeedback.xhtml">
+                                    <span>Feedback</span>
+                                </h:link>
+                            </div>
+                        </div>
                     </li>
 
                     <!-- Divider -->
@@ -244,17 +213,29 @@
                     </div>
 
                     <li class="nav-item">
-                        <h:link class="nav-link collapsed" outcome="/webapp/webapp.administrator/category/displaycategory.xhtml">
+                        <a class="nav-link collapsed" data-bs-toggle="collapse" href="#collapseProduct" role="button" aria-expanded="false" aria-controls="collapseProduct">
                             <i class="fas fa-fw fa-leaf"></i>
-                            <span>Categories</span>
-                        </h:link>
-                    </li>
-
-                    <li class="nav-item">
-                        <h:link class="nav-link collapsed" outcome="/webapp/webapp.administrator/product/product.xhtml">
-                            <i class="fas fa-fw fa-leaf"></i>
-                            <span>Products</span>
-                        </h:link>
+                            <span>Network</span>
+                        </a>
+                        <div id="collapseProduct" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <h:link class="collapse-item" outcome="/webapp/webapp.administrator/branch/displaybranch.xhtml">
+                                    <span>Branch</span>
+                                </h:link>
+                                <h:link class="collapse-item" outcome="/webapp/webapp.administrator/supplier/supplier.xhtml">
+                                    <span>Supplier</span>
+                                </h:link>
+                                <h:link class="collapse-item" outcome="/webapp/webapp.administrator/brand/brand.xhtml">
+                                    <span>Brand</span>
+                                </h:link>
+                                <h:link class="collapse-item" outcome="/webapp/webapp.administrator/category/displaycategory.xhtml">
+                                    <span>Categories</span>
+                                </h:link>
+                                <h:link class="collapse-item" outcome="/webapp/webapp.administrator/product/product.xhtml">
+                                    <span>Products</span>
+                                </h:link>
+                            </div>
+                        </div>
                     </li>
 
                     <!-- Divider -->
@@ -266,15 +247,14 @@
                     </div>
 
                     <li class="nav-item">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseIm"
-                           aria-expanded="true" aria-controls="collapsePages">
+                        <a class="nav-link collapsed" data-bs-toggle="collapse" href="#collapseImport" role="button" aria-expanded="false" aria-controls="collapseImport">
                             <i class="fas fa-fw fa-gear"></i>
                             <span>Import</span>
                         </a>
-                        <div id="collapseIm" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div id="collapseImport" class="collapse">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="login.html">Import Order</a>
-                                <a class="collapse-item" href="register.html">Threshold Adjustment</a>
+                                <a class="collapse-item" href="javascript:void(0);">Import Order</a>
+                                <a class="collapse-item" href="javascript:void(0);">Threshold Adjustment</a>
                             </div>
                         </div>
                     </li>
@@ -291,11 +271,11 @@
 
                     <li class="nav-item">
                         <h:link class="nav-link collapsed" outcome="/webapp/webapp.administrator/order/order.xhtml">
-                            <i class="fas fa-fw fa-leaf"></i>
+                            <i class="fas fa-fw fa-receipt"></i>
                             <span>Order</span>
                         </h:link>
                     </li>
-                    
+
                 </c:if>
 
                 <!-- Divider -->
@@ -330,65 +310,61 @@
                         </button>
                         <!-- Topbar Navbar -->
                         <ul class="navbar-nav ml-auto">                           
-                            <div class="topbar-divider d-none d-sm-block"></div>
-
                             <!-- Nav Item - User Information -->
                             <c:if test="#{loginAdminManagedBean.statusLogin == 1}">
                                 <h:form>
-                                    <h:commandLink class="btn btn-primary" action="#{loginAdminManagedBean.logoutAdmin()}">Logout</h:commandLink>
-                                </h:form>
-                                <li class="nav-item dropdown no-arrow">
-                                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">#{loginAdminManagedBean.manager.fullname}</span>
-                                        <img class="img-profile rounded-circle"
-                                             src="#{resource[loginAdminManagedBean.manager.imageURL]}"/>
-                                    </a>
-                                    <!-- Dropdown - User Information -->
-                                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                         aria-labelledby="userDropdown">
-                                        <h:form>
-                                            <h:commandLink class="dropdown-item">
-                                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                                Profile
-                                            </h:commandLink>
-                                        </h:form>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Logout
+                                    <li class="nav-item dropdown no-arrow">
+                                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0);" role="button" aria-expanded="false">
+                                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">#{loginAdminManagedBean.manager.fullname}</span>
+                                            <h:graphicImage class="img-profile rounded-circle"
+                                                            value="#{resource[loginAdminManagedBean.manager.imageURL]}"/>
                                         </a>
-                                    </div>
-                                </li>
+                                        <ul class="dropdown-menu dropdown-menu-lg-left shadow animated--grow-in">
+
+                                            <li>
+                                                <h:commandLink class="dropdown-item" action="#{managerBean.showDetails(loginAdminManagedBean.manager.id)}">
+                                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                    Profile
+                                                </h:commandLink>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                    Logout
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                </h:form>
                             </c:if>
 
                             <c:if test="#{loginAdminManagedBean.statusLogin == 2}">
                                 <h:form>
-                                    <h:commandLink class="btn btn-primary" action="#{loginAdminManagedBean.logoutAdmin()}">Logout</h:commandLink>
-                                </h:form>
-                                <li class="nav-item dropdown no-arrow">
-                                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">#{loginAdminManagedBean.employee.fullname}</span>
-                                        <img class="img-profile rounded-circle"
-                                             src="#{resource[loginAdminManagedBean.employee.imageURL]}"/>
-                                    </a>
-                                    <!-- Dropdown - User Information -->
-                                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                         aria-labelledby="userDropdown">
-                                        <h:form>
-                                            <h:commandLink class="dropdown-item">
-                                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                                Profile
-                                            </h:commandLink>
-                                        </h:form>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Logout
+                                    <li class="nav-item dropdown no-arrow">
+                                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0);" role="button" aria-expanded="false">
+                                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">#{loginAdminManagedBean.employee.fullname}</span>
+                                            <h:graphicImage class="img-profile rounded-circle"
+                                                            value="#{resource[loginAdminManagedBean.employee.imageURL]}"/>
                                         </a>
-                                    </div>
-                                </li>
+                                        <ul class="dropdown-menu dropdown-menu-lg-left shadow animated--grow-in">
+
+                                            <li>
+                                                <h:commandLink class="dropdown-item" action="#{employeeBean.showDetailspro(loginAdminManagedBean.employee.id)}">
+                                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                    Profile
+                                                </h:commandLink>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                    Logout
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                </h:form>
                             </c:if>
 
                         </ul>
@@ -437,19 +413,16 @@
             </a>
 
             <!-- Logout Modal-->
-            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
+            <div class="modal fade" id="logoutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                         <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             <h:form>
                                 <h:commandLink class="btn btn-primary" action="#{loginAdminManagedBean.logoutAdmin()}">Logout</h:commandLink>
                             </h:form>
@@ -461,21 +434,22 @@
 
         <!-- JS Webapp -->
         <!-- Jquery Js-->
-        <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js" load-on-demand="true"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <!-- Bootstrap core JavaScript-->        
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" load-on-demand="true"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous" load-on-demand="true"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <!-- Core plugin JavaScript-->
-        <script src="#{request.contextPath}/resources/otherpackages/op.admin/vendor/old/jquery-easing/jquery.easing.min.js" load-on-demand="true"/>
+        <h:outputScript name="otherpackages/op.admin/vendor/old/jquery-easing/jquery.easing.min.js"/>
 
         <!-- Custom scripts for all pages-->
-        <script src="#{request.contextPath}/resources/js/js.admin/old/sb-admin-2.min.js"/> 
-        <script src="#{request.contextPath}/resources/js/js.admin/viewmore.js"/>
-
-
+        <h:outputScript name="js/js.admin/old/sb-admin-2.min.js"/> 
+        <h:outputScript name="js/js.admin/viewmore.js"/>
+        <script src="#{request.contextPath}/resources/js/configfile.js" defer="true"/>
         <!-- Bootstrap Table Js-->
-        <script src="https://unpkg.com/bootstrap-table@1.22.2/dist/bootstrap-table.min.js" load-on-demand="true"></script>
-        <script src="https://unpkg.com/bootstrap-table@1.22.1/dist/extensions/export/bootstrap-table-export.min.js" load-on-demand="true"></script>
-        <script src="#{request.contextPath}/resources/js/configfile.js"/>
+        <script src="https://unpkg.com/bootstrap-table@1.22.2/dist/bootstrap-table.min.js"></script>
+        <script src="https://unpkg.com/bootstrap-table@1.22.2/dist/extensions/export/bootstrap-table-export.min.js"></script>
+
+        <!-- CKeditor 5 CDN -->
+        <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/super-build/ckeditor.js"></script>
+        <script src="#{request.contextPath}/resources/js/js.admin/ckeditor5.js"/>
     </h:body>
 </html>

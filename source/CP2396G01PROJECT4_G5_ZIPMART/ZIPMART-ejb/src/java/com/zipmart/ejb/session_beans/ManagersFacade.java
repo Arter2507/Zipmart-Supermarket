@@ -36,51 +36,31 @@ public class ManagersFacade extends AbstractFacade<Managers> implements Managers
     }
 
     @Override
-    public boolean checkLoginEmployee(String username, String password) {
-        boolean flag = false;
-        try {
-            Query query = em.createQuery("select u from Managers u where u.username =:uname and u.password = :pword");
-            query.setParameter("uname", username);
-            query.setParameter("pword", password);
-            query.getSingleResult();
-            flag = true;
-        } catch (NoResultException ex) {
-            flag = false;
-        }
-        return flag;
-    }
-
-    @Override
-    public List<Managers> findByUsername1(String username) {
+    public Managers getFindByUsername(String username) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery();
         Root r = cq.from(Managers.class);
         cq.select(r);
         cq.where(cb.equal(r.get("username"), username));
         Query query = em.createQuery(cq);
-        return (List<Managers>) query.getResultList();
-    }
-
-    @Override
-    public long getCountByUsernamePassword(String username, String password) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery cq = cb.createQuery();
-        Root root = cq.from(Managers.class);
-        cq.select(cb.count(root.get("username")));
-        cq.where(cb.and(cb.equal(root.get("username"), username), cb.equal(root.get("password"), password)));
-        Query query = em.createQuery(cq);
-        return (long) query.getSingleResult();
-    }
-
-    @Override
-    public Managers loadByUsername(String username, String password) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery cq = cb.createQuery();
-        Root root = cq.from(Managers.class);
-        cq.select(root);
-        cq.where(cb.and(cb.equal(root.get("username"), username), cb.equal(root.get("password"), password)));
-        Query query = em.createQuery(cq);
         return (Managers) query.getSingleResult();
+    }
+
+    @Override
+    public boolean validate(String username, String password) {
+        boolean flag = false;
+        try {
+            Query query = em.createQuery("SELECT m FROM Managers m WHERE m.username =:uname and m.password = :pword");
+            query.setParameter("uname", username);
+            query.setParameter("pword", password);
+            query.getSingleResult();
+            flag = true;
+        } catch (Exception e) {
+            System.out.println("error->>>>>> " + e.getMessage());
+            System.out.println(username);
+            flag = false;
+        }
+        return flag;
     }
 
     @Override
@@ -89,8 +69,9 @@ public class ManagersFacade extends AbstractFacade<Managers> implements Managers
         CriteriaQuery cq = cb.createQuery();
         Root root = cq.from(Managers.class);
         cq.select(cb.count(root.get("username")));
-        cq.where(cb.and(cb.equal(root.get(Managers_.username), username)));
+        cq.where(cb.and(cb.equal(root.get("username"), username)));
         Query query = em.createQuery(cq);
         return (long) query.getSingleResult();
+
     }
 }

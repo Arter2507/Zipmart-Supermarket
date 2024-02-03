@@ -45,8 +45,8 @@ public abstract class AbstractFacade<T> {
                 System.out.println(cv.getRootBeanClass().getSimpleName() + "." + cv.getPropertyPath() + " " + cv.getMessage());
             }
         } else {
-            getEntityManager().persist(entity);
-        }
+        getEntityManager().persist(entity);
+    }
     }
 
     public void edit(T entity) {
@@ -83,5 +83,5 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-
+    
 }

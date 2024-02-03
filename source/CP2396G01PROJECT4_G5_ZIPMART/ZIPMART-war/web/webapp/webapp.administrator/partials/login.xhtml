@@ -73,6 +73,8 @@
                             <c:if test="#{loginAdminManagedBean.check == 4 || loginAdminManagedBean.check == 5}">
                                 <h:message for="password" style="color: red;"/>
                             </c:if>
+                            <h:outputText id="message" style="color: red;"/>
+                            <h:message for="message" style="color: red;"></h:message>
                             <h:form id="formAuthentication" class="mb-3">
                                 <div class="form-floating form-floating-outline mb-3">
                                     <h:inputText styleClass="form-control" id="email" value="#{loginAdminManagedBean.username}" a:placeholder="Enter your email or username"/>                                                                     
@@ -99,7 +101,7 @@
                                     </h:link>
                                 </div>
                                 <div class="mb-3">
-                                    <h:commandButton class="btn btn-outline-primary d-grid" action="#{loginAdminManagedBean.processLogin()}" value="Sign in"></h:commandButton>
+                                    <h:commandButton class="btn btn-outline-primary d-grid" action="#{loginAdminManagedBean.login()}" value="Sign in"></h:commandButton>
                                 </div>
                             </h:form>
 

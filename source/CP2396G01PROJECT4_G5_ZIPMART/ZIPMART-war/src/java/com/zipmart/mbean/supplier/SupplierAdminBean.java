@@ -33,6 +33,7 @@ public class SupplierAdminBean {
     private String fax;
     private String home_page;
     private String description;
+    private String mess;
 
     public SupplierAdminBean() {
         supplier = new Suppliers();
@@ -75,13 +76,15 @@ public class SupplierAdminBean {
         suppliersFacade.edit(supplier);
         return "supplier";
     }
-    
+
     public String removeProcess(Long id) {
         supplier = suppliersFacade.find(id);
         if (!supplier.getProductsCollection().isEmpty()) {
+            mess = "Supplier cannot delete because have product.";
             FacesMessage message = new FacesMessage("Supplier cannot delete because have product.");
             FacesContext.getCurrentInstance().addMessage(null, message);
         } else if (supplier.getBrandCollection() != null) {
+            mess= "Supplier cannot delete because have brand.";
             FacesMessage message = new FacesMessage("Supplier cannot delete because have brand.");
             FacesContext.getCurrentInstance().addMessage(null, message);
         } else {
@@ -184,5 +187,13 @@ public class SupplierAdminBean {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getMess() {
+        return mess;
+    }
+
+    public void setMess(String mess) {
+        this.mess = mess;
     }
 }

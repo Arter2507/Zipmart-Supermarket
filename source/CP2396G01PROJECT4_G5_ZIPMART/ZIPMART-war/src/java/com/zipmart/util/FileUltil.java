@@ -36,8 +36,9 @@ public class FileUltil {
                 ExternalContext ec = context.getExternalContext();
                 HttpServletRequest request = (HttpServletRequest) ec.getRequest();
                 String applicationPath = request.getServletContext().getRealPath("");
-                src = applicationPath.substring(0, applicationPath.indexOf("dist") - 1) + File.separator + "ZIPMART-war" + File.separator + "web";
-                String uploadFilePath = src + File.separator + UPLOAD_DIRECTORY;
+                System.out.println("----12345>>>" + applicationPath + File.separator + UPLOAD_DIRECTORY);
+//                src = applicationPath.substring(0, applicationPath.lastIndexOf("ZIPMART-war_war"));
+                String uploadFilePath = applicationPath + File.separator + UPLOAD_DIRECTORY;
 
                 // Create the upload directory if it doesn't exist
                 File fileSaveDir = new File(uploadFilePath);

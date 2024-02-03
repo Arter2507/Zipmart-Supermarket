@@ -62,6 +62,12 @@
                                                     <h:outputLabel for="tprice">Total Price</h:outputLabel>
                                                 </div>
                                             </div>
+                                            <div class="col-md-12">
+                                                <div class="form-floating form-floating-outline">
+                                                    <h:outputText class="form-control" id="shipad" value="#{checkoutBean.od.shipAddress}"/>
+                                                    <h:outputLabel for="shipad">Ship Address</h:outputLabel>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="mt-4">
                                             <h:link value="Back" outcome="/webapp/webapp.administrator/order/order.xhtml" class="btn btn-outline-secondary"/>

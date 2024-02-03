@@ -33,6 +33,7 @@ public class BrandAdminBean {
     private String address;
 
     private Long selected_supp;
+    private String message;
 
     public BrandAdminBean() {
         brand = new Brand();
@@ -42,12 +43,13 @@ public class BrandAdminBean {
     public List<Brand> showAllBrand() {
         return brandFacade.findAll();
     }
-    
+
     public List<Suppliers> showAllSup() {
         return suppliersFacade.findAll();
     }
 
     public String addBrand() {
+        brand.setSupplierID(suppliersFacade.find(selected_supp));
         brand.setBrandName(name);
         brand.setAddress(address);
         brand.setCreatedate(new Date());
@@ -70,22 +72,25 @@ public class BrandAdminBean {
 
     public String updateProcess() {
         Brand br = brand;
-        brand.setCreatedate(br.getCreatedate());
+        Brand b = brandFacade.find(br.getId());
+        brand.setCreatedate(b.getCreatedate());
         brand.setModifiedate(new Date());
-        brand.setSupplierID(selected_supp == null ? br.getSupplierID() : suppliersFacade.find(selected_supp));
+        brand.setSupplierID(selected_supp == null ? b.getSupplierID() : suppliersFacade.find(selected_supp));
         brandFacade.edit(brand);
         return "brand";
     }
 
     public String removeProcess(Long id) {
         brand = brandFacade.find(id);
-        if (!brand.getProductsCollection().isEmpty()) {
-            FacesMessage message = new FacesMessage("Brand cannot delete because have product.");
-            FacesContext.getCurrentInstance().addMessage(null, message);
+        if (!brand.getSupplierID().getBrandCollection().isEmpty()) {
+            message = "Brand cannot delete because have supplier.";
+            FacesMessage message = new FacesMessage("Brand cannot delete because have supplier.");
+            FacesContext.getCurrentInstance().addMessage("message", message);
+            return "brand";
         } else {
             brandFacade.remove(brand);
+            return "brand";
         }
-        return "brand";
     }
 
     public SuppliersFacadeLocal getSuppliersFacade() {
@@ -142,5 +147,13 @@ public class BrandAdminBean {
 
     public void setSelected_supp(Long selected_supp) {
         this.selected_supp = selected_supp;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

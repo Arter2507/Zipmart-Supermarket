@@ -42,7 +42,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:selectOneMenu id="gender" styleClass="select2 form-select" value="#{employeeBean.selected_gender}">
+                                                    <h:selectOneMenu id="gender" styleClass="select2 form-select" value="#{managerBean.manager.managerGender}">
                                                         <f:selectItem itemValue="1" itemLabel="Male"/>
                                                         <f:selectItem itemValue="2" itemLabel="Female"/>
                                                         <f:selectItem itemValue="3" itemLabel="Other"/>
@@ -90,7 +90,7 @@
                                         </div>
                                         <div class="mt-4">
                                             <h:commandButton styleClass="btn btn-primary me-2 text-white" value="save" action="#{managerBean.updateManager()}"/>
-                                            <h:link value="Back" outcome="/webapp/webapp.administrator/employee/employee.xhtml" class="btn btn-outline-secondary"/>
+                                            <h:link value="Back" outcome="/webapp/webapp.administrator/manager/profile.xhtml" class="btn btn-outline-secondary"/>
                                         </div>
                                     </div>
                                 </h:form>

@@ -32,4 +32,6 @@ public interface CustomersFacadeLocal {
     long findByUsername(String username);
     
     Customers getFindByUsername(String username);
+    
+    boolean validate(String username, String password);
 }

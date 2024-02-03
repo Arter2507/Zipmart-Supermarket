@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -60,7 +61,10 @@ public class EmployeeBean implements Serializable {
     private short selected_gender;
     private String genderLabel;
     private String user_message;
+    private String mess;
 
+    private Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+    private String user = (String) sessionMap.get("username");
     public EmployeeBean() {
         employee = new Employees();
     }
@@ -77,14 +81,40 @@ public class EmployeeBean implements Serializable {
         }
         return listEmp;
     }
-
+    
     public String showListID(Long id) {
         employee = employeesFacade.find(id);
         id = employee.getId();
         System.out.println("====== ID Employee ========== " + id);
         return "updateEmployee";
     }
-
+    
+    
+    public String showDetailspro(Long id) throws IOException {
+        employee = employeesFacade.find(id);
+        id = employee.getId();
+        selected_gender = employee.getEmployeeGender();  // Assuming employeeGender is an integer
+        switch (selected_gender) {
+            case 1:
+                genderLabel = "Male";
+                break;
+            case 2:
+                genderLabel = "Female";
+                break;
+            case 3:
+                genderLabel = "Other";
+                break;
+            case 4:
+                genderLabel = "Not Set";
+                break;
+            default:
+                genderLabel = "Unknow";
+                break;
+        }
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/employee/detailsEmployee.xhtml");
+        return null;
+    }
+    
     public String showDetails(Long id) {
         employee = employeesFacade.find(id);
         id = employee.getId();
@@ -107,7 +137,7 @@ public class EmployeeBean implements Serializable {
                 break;
         }
         System.out.println("====== ID Employee ========== " + id + "========="  + "========" + genderLabel);
-        return "detailsEmployee";
+        return "details";
     }
 
     public String createEmp() {
@@ -139,7 +169,8 @@ public class EmployeeBean implements Serializable {
             employee.setAddress(address);
             employee.setPhone(phone);
             employee.setEmail(email);
-            employee.setCreatedate(new Date(System.currentTimeMillis()));
+            employee.setCreatedate(new Date());
+            employee.setCreateby(user);
             if (employee.getStatus() == null) {
                 employee.setStatus(Boolean.TRUE);
             }
@@ -166,8 +197,13 @@ public class EmployeeBean implements Serializable {
         if (empUp.getStatus() == null) {
             empUp.setStatus(Boolean.TRUE);
         }       
+        empUp.setCreateby(em.getCreateby());
+        empUp.setCreatedate(em.getCreatedate());
+        empUp.setModifiedate(new Date());
+        empUp.setModifieby(user);
         employeesFacade.edit(empUp);
-        return "employee";
+        mess = "Update profile successfully";
+        return "detailsEmployee";
     }
 
     public String toggleEmployeeStatus(Long ID) {
@@ -393,6 +429,22 @@ public class EmployeeBean implements Serializable {
 
     public void setPer(Permissions per) {
         this.per = per;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getMess() {
+        return mess;
+    }
+
+    public void setMess(String mess) {
+        this.mess = mess;
     }
 
 }

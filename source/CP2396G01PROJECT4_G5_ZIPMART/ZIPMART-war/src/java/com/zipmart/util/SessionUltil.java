@@ -4,7 +4,9 @@
  */
 package com.zipmart.util;
 
+import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class SessionUltil {
 
@@ -17,15 +19,28 @@ public class SessionUltil {
         return sessionUltil;
     }
 
-    public void putValue(HttpServletRequest request, String key, Object value) {
-        request.getSession().setAttribute(key, value);
+    public static HttpSession getSession() {
+        return (HttpSession) FacesContext.getCurrentInstance()
+                .getExternalContext().getSession(false);
     }
 
-    public Object getValue(HttpServletRequest request, String key) {
-        return request.getSession().getAttribute(key);
+    public static HttpServletRequest getRequest() {
+        return (HttpServletRequest) FacesContext.getCurrentInstance()
+                .getExternalContext().getRequest();
     }
 
-    public void removeValue(HttpServletRequest request, String key) {
-        request.getSession().removeAttribute(key);
+    public static String getUserName() {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+                .getExternalContext().getSession(false);
+        return session.getAttribute("username").toString();
+    }
+
+    public static Long getUserId() {
+        HttpSession session = getSession();
+        if (session != null) {
+            return (Long) session.getAttribute("id");
+        } else {
+            return null;
+        }
     }
 }

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -59,6 +60,9 @@ public class ManagerBean {
     private String genderLabel;
     private String user_message;
     private String message_delete;
+    private String mess;
+    private Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+    private String user = (String) sessionMap.get("username");
 
     public ManagerBean() {
     }
@@ -78,15 +82,7 @@ public class ManagerBean {
     }
 
     // Show Edit
-    public String showListID(Long id) {
-        manager = managersFacade.find(id);
-        id = manager.getId();
-        System.out.println("====== ID Manager ========== " + id);
-        return "profileEdit";
-    }
-
-    // Show Detail
-    public String showDetails(Long id) {
+    public String showListID(Long id) throws IOException {
         manager = managersFacade.find(id);
         id = manager.getId();
         selected_gender = manager.getManagerGender();
@@ -107,8 +103,16 @@ public class ManagerBean {
                 genderLabel = "Unknow";
                 break;
         }
-        System.out.println("====== ID Manager ========== " + id + "=========" + "========" + genderLabel);
-        return "profile";
+        System.out.println("====== ID Manager ========== " + id);
+        return "profileEdit";
+    }
+
+    // Show Detail
+    public String showDetails(Long id) throws IOException {
+        manager = managersFacade.find(id);
+        id = manager.getId();
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/manager/profile.xhtml");
+        return null;
     }
 
     // Add Manager
@@ -140,7 +144,8 @@ public class ManagerBean {
             manager.setEmail(email);
             manager.setImageURL(imageURL);
             manager.setManagerGender(selected_gender);
-            manager.setCreatedate(new Date(System.currentTimeMillis()));
+            manager.setCreatedate(new Date());
+            manager.setCreateby(user);
             if (manager.getStatus() == null) {
                 manager.setStatus(Boolean.TRUE);
             }
@@ -162,14 +167,17 @@ public class ManagerBean {
         } else {
             managerUp.setImageURL(ma.getImageURL());
         }
+        managerUp.setManagerGroup(ma.getManagerGroup());
         managerUp.setPassword(hashPassword);
         managerUp.setCreatedate(ma.getCreatedate());
-        managerUp.setModifiedate(new Date(System.currentTimeMillis()));
+        managerUp.setModifiedate(new Date());
+        managerUp.setModifieby(user);
         if (managerUp.getStatus() == null) {
             managerUp.setStatus(Boolean.TRUE);
         }
         managersFacade.edit(managerUp);
-        return "manager";
+        mess = "Update profile successfully";
+        return "profile";
     }
 
     // Change Status
@@ -377,5 +385,29 @@ public class ManagerBean {
 
     public void setMessage_delete(String message_delete) {
         this.message_delete = message_delete;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public PermissionsFacadeLocal getPermissionsFacade() {
+        return permissionsFacade;
+    }
+
+    public void setPermissionsFacade(PermissionsFacadeLocal permissionsFacade) {
+        this.permissionsFacade = permissionsFacade;
+    }
+
+    public String getMess() {
+        return mess;
+    }
+
+    public void setMess(String mess) {
+        this.mess = mess;
     }
 }

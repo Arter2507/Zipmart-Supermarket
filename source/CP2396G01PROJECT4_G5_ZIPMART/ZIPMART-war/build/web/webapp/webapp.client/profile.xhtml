@@ -39,117 +39,97 @@
                                                     <a class="nav-link" href="javascript:void(0);"><i class="mdi mdi-link mdi-20px me-1"></i>Connections</a>
                                                 </li>
                                             </ul>
-                                            <div class="card mb-4">
-                                                <h4 class="card-header">Profile Details</h4>
-                                                <!-- Account -->
-                                                <div class="card-body">
-                                                    <div class="d-flex align-items-start align-items-sm-center gap-4">
-                                                        <img src="#{resource[loginManagedBean.customer.imageURL]}" alt="user-avatar" class="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar" />
-                                                        <div class="button-wrapper">
-                                                            <h:outputLabel for="upload" class="btn btn-primary me-2 mb-3" tabindex="0">
-                                                                <span class="d-none d-sm-block">Upload new photo</span>
-                                                                <i class="mdi mdi-tray-arrow-up d-block d-sm-none"></i>
-                                                                <h:inputFile id="upload" class="account-file-input" a:hidden="" value="#{customerMB.fileImage}" />
-                                                            </h:outputLabel>
-                                                            <div class="text-muted small">Allowed JPG, GIF or PNG. Max size of 800K</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            <h:form id="formAccountSettings" enctype="multipart/form-data">
+                                                <div class="card mb-4">
+                                                    <h4 class="card-header">Profile Details</h4>
 
-                                                <div class="card-body pt-2 mt-1">
-                                                    <h:form id="formAccountSettings" enctype="multipart/form-data">
-                                                        <div class="row mt-2 gy-4">
-                                                            <div class="col-md-6">
-                                                                <div class="form-floating form-floating-outline">
-                                                                    <h:inputText class="form-control" id="firstName" value="#{customerMB.customers.fullname}"/>  
-                                                                    <h:outputLabel for="firstName">Full name</h:outputLabel>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-floating form-floating-outline">
-                                                                    <h:inputText class="form-control" id="email" value="#{customerMB.customers.email}"/>
-                                                                    <h:outputLabel for="email">E-mail</h:outputLabel>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-floating form-floating-outline">
-                                                                    <h:inputText class="form-control" id="phoneNumber" value="#{customerMB.customers.phone}"/>
-                                                                    <h:outputLabel for="phoneNumber">Phone Number</h:outputLabel>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-floating form-floating-outline">
-                                                                    <h:inputText class="form-control" id="address" value="#{customerMB.customers.address}"/>
-                                                                    <h:outputLabel for="address">Address</h:outputLabel>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-floating form-floating-outline">
-                                                                    <h:selectOneMenu id="gender" styleClass="select2 form-select" value="#{customerMB.customers.customerGender}">
-                                                                        <f:selectItem itemValue="1" itemLabel="Male"/>
-                                                                        <f:selectItem itemValue="2" itemLabel="Female"/>
-                                                                        <f:selectItem itemValue="3" itemLabel="Other"/>
-                                                                        <f:selectItem itemValue="4" itemLabel="Not Set"/>
-                                                                    </h:selectOneMenu>   
-                                                                    <h:outputLabel for="gender">Gender</h:outputLabel>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-floating form-floating-outline">
-                                                                    <h:inputText a:type="date" class="form-control" id="birthday" value="#{customerMB.customers.birthDate}" required="true" requiredMessage="This field cannot be empty!">
-                                                                        <f:convertDateTime pattern="MM-dd-yyyy" />
-                                                                    </h:inputText>
-                                                                    <h:outputLabel for="birthday">Birthday</h:outputLabel>
-                                                                    <h:message for = "birthday" style = "color: red;" />
-                                                                </div>
+                                                    <!-- Account -->
+                                                    <div class="card-body">
+                                                        <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                                            <h:graphicImage value="#{resource[loginManagedBean.customer.imageURL]}" alt="user-avatar" class="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar" height="200px" width="200px"/>
+                                                            <div class="button-wrapper">
+                                                                <h:outputLabel for="upload" class="btn btn-primary me-2 mb-3" tabindex="0">
+                                                                    <span class="d-none d-sm-block">Upload new photo</span>
+                                                                    <i class="mdi mdi-tray-arrow-up d-block d-sm-none"></i>
+                                                                    <h:inputFile id="upload" class="account-file-input" a:hidden="" value="#{customerMB.fileImage}" />
+                                                                </h:outputLabel>
                                                             </div>
                                                         </div>
-                                                        <div class="mt-4">
-                                                            <h:commandButton type="submit" class="btn btn-primary me-2 text-white" value="Save" action="#{customerMB.saveUpdateUsers()}"/>
-                                                            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+
+                                                        <div class="card-body pt-2 mt-1">
+                                                            <div class="row mt-2 gy-4">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-floating form-floating-outline">
+                                                                        <h:inputText class="form-control" id="firstName" value="#{customerMB.customers.fullname}"/>  
+                                                                        <h:outputLabel for="firstName">Full name</h:outputLabel>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-floating form-floating-outline">
+                                                                        <h:inputText class="form-control" id="email" value="#{customerMB.customers.email}"/>
+                                                                        <h:outputLabel for="email">E-mail</h:outputLabel>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-floating form-floating-outline">
+                                                                        <h:inputText class="form-control" id="phoneNumber" value="#{customerMB.customers.phone}"/>
+                                                                        <h:outputLabel for="phoneNumber">Phone Number</h:outputLabel>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-floating form-floating-outline">
+                                                                        <h:inputText class="form-control" id="address" value="#{customerMB.customers.address}"/>
+                                                                        <h:outputLabel for="address">Address</h:outputLabel>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-floating form-floating-outline">
+                                                                        <h:selectOneMenu id="gender" styleClass="select2 form-select" value="#{customerMB.customers.customerGender}">
+                                                                            <f:selectItem itemValue="1" itemLabel="Male"/>
+                                                                            <f:selectItem itemValue="2" itemLabel="Female"/>
+                                                                            <f:selectItem itemValue="3" itemLabel="Other"/>
+                                                                            <f:selectItem itemValue="4" itemLabel="Not Set"/>
+                                                                        </h:selectOneMenu>   
+                                                                        <h:outputLabel for="gender">Gender</h:outputLabel>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-floating form-floating-outline">
+                                                                        <h:inputText a:type="date" class="form-control" id="birthday" value="#{customerMB.customers.birthDate}" required="true" requiredMessage="This field cannot be empty!">
+                                                                            <f:convertDateTime pattern="yyyy-MM-dd" />
+                                                                        </h:inputText>
+                                                                        <h:outputLabel for="birthday">Birthday</h:outputLabel>
+                                                                        <h:message for = "birthday" style = "color: red;" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mt-4">
+                                                                <h:commandButton type="submit" class="btn btn-primary me-2 text-white" value="Save" action="#{customerMB.saveUpdateUsers()}"/>
+                                                                <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                                                                <h5 style="color: #090;">#{customerMB.message}</h5>
+                                                            </div>
                                                         </div>
-                                                    </h:form>
-                                                </div>
-                                                <!-- /Account -->
-                                            </div>
-                                            <div class="card">
-                                                <h5 class="card-header fw-normal">Delete Account</h5>
-                                                <div class="card-body">
-                                                    <div class="mb-3 col-12 mb-0">
-                                                        <div class="alert alert-warning">
-                                                            <h6 class="alert-heading mb-1">Are you sure you want to delete your account?</h6>
-                                                            <p class="mb-0">Once you delete your account, there is no going back. Please be certain.</p>
-                                                        </div>
+                                                        <!-- /Account -->
                                                     </div>
-                                                    <h:form id="formAccountDeactivation" onsubmit="return false">
-                                                        <div class="form-check mb-3 ms-3">
-                                                            <input
-                                                                class="form-check-input"
-                                                                type="checkbox"
-                                                                name="accountActivation"
-                                                                id="accountActivation" />
-                                                            <h:outputLabel class="form-check-label" for="accountActivation">I confirm my account deactivation</h:outputLabel>
-                                                        </div>
-                                                        <button type="submit" class="btn btn-danger">Deactivate Account</button>
-                                                    </h:form>
+
                                                 </div>
-                                            </div>
+                                            </h:form>
                                         </div>
                                     </div>
+                                    <!-- / Content -->           
+
+                                    <div class="content-backdrop fade"></div>
                                 </div>
-                                <!-- / Content -->           
-
-                                <div class="content-backdrop fade"></div>
+                                <!-- Content wrapper -->
                             </div>
-                            <!-- Content wrapper -->
+                            <!-- / Layout page -->
                         </div>
-                        <!-- / Layout page -->
-                    </div>
 
-                    <!-- Overlay -->
-                    <div class="layout-overlay layout-menu-toggle"></div>
+                        <!-- Overlay -->
+                        <div class="layout-overlay layout-menu-toggle"></div>
+                    </div>
+                    <!-- / Layout wrapper -->
                 </div>
-                <!-- / Layout wrapper -->
             </ui:define>
         </ui:composition>
     </h:body>

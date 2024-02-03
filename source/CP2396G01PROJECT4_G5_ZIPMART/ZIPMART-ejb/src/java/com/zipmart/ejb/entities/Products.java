@@ -55,12 +55,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Products.findByManufacturedPlace", query = "SELECT p FROM Products p WHERE p.manufacturedPlace = :manufacturedPlace"),
     @NamedQuery(name = "Products.findBySku", query = "SELECT p FROM Products p WHERE p.sku = :sku"),
     @NamedQuery(name = "Products.findByStorageInstruction", query = "SELECT p FROM Products p WHERE p.storageInstruction = :storageInstruction"),
-    @NamedQuery(name = "Products.findByUsageNotes", query = "SELECT p FROM Products p WHERE p.usageNotes = :usageNotes")})
+    @NamedQuery(name = "Products.findByUsageNotes", query = "SELECT p FROM Products p WHERE p.usageNotes = :usageNotes"),
+    @NamedQuery(name = "Products.findByWeight", query = "SELECT p FROM Products p WHERE p.weight = :weight")})
 public class Products implements Serializable {
-
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productID")
-    private Collection<OrderDetails> orderDetailsCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -112,15 +109,15 @@ public class Products implements Serializable {
     @Size(max = 25)
     @Column(name = "sku")
     private String sku;
-    @Size(max = 50)
-    @Column(name = "weight")
-    private String weight;
     @Size(max = 255)
     @Column(name = "storage_instruction")
     private String storageInstruction;
     @Size(max = 100)
     @Column(name = "usage_notes")
     private String usageNotes;
+    @Size(max = 50)
+    @Column(name = "weight")
+    private String weight;
     @JoinColumn(name = "brandID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Brand brandID;
@@ -133,6 +130,12 @@ public class Products implements Serializable {
     @JoinColumn(name = "supplierID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Suppliers supplierID;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productID")
+    private Collection<FeedbacksPro> feedbacksProCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productID")
+    private Collection<OrderDetails> orderDetailsCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productID")
+    private Collection<ImportOrder> importOrderCollection;
 
     @Transient
     private Double price_discout;
@@ -299,6 +302,14 @@ public class Products implements Serializable {
         this.usageNotes = usageNotes;
     }
 
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
     public Brand getBrandID() {
         return brandID;
     }
@@ -329,6 +340,33 @@ public class Products implements Serializable {
 
     public void setSupplierID(Suppliers supplierID) {
         this.supplierID = supplierID;
+    }
+
+    @XmlTransient
+    public Collection<FeedbacksPro> getFeedbacksProCollection() {
+        return feedbacksProCollection;
+    }
+
+    public void setFeedbacksProCollection(Collection<FeedbacksPro> feedbacksProCollection) {
+        this.feedbacksProCollection = feedbacksProCollection;
+    }
+
+    @XmlTransient
+    public Collection<OrderDetails> getOrderDetailsCollection() {
+        return orderDetailsCollection;
+    }
+
+    public void setOrderDetailsCollection(Collection<OrderDetails> orderDetailsCollection) {
+        this.orderDetailsCollection = orderDetailsCollection;
+    }
+
+    @XmlTransient
+    public Collection<ImportOrder> getImportOrderCollection() {
+        return importOrderCollection;
+    }
+
+    public void setImportOrderCollection(Collection<ImportOrder> importOrderCollection) {
+        this.importOrderCollection = importOrderCollection;
     }
 
     @Override
@@ -370,23 +408,6 @@ public class Products implements Serializable {
 
     public void setActive(String active) {
         this.active = active;
-    }
-
-    public String getWeight() {
-        return weight;
-    }
-
-    public void setWeight(String weight) {
-        this.weight = weight;
-    }   
-
-    @XmlTransient
-    public Collection<OrderDetails> getOrderDetailsCollection() {
-        return orderDetailsCollection;
-    }
-
-    public void setOrderDetailsCollection(Collection<OrderDetails> orderDetailsCollection) {
-        this.orderDetailsCollection = orderDetailsCollection;
     }
 
 }

@@ -11,18 +11,17 @@ import com.zipmart.ejb.session_beans.EmployeesFacadeLocal;
 import com.zipmart.ejb.session_beans.ManagersFacadeLocal;
 import com.zipmart.ejb.session_beans.PermissionsFacadeLocal;
 import com.zipmart.util.CryptUltil;
+import com.zipmart.util.SessionUltil;
 import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import org.apache.commons.codec.digest.DigestUtils;
+import javax.servlet.http.HttpSession;
 
 @Named(value = "loginAdminManagedBean")
 @SessionScoped
@@ -69,71 +68,56 @@ public class LoginAdminManagedBean implements Serializable {
         statusLogin = 6;
     }
 
-    public String checkLoginAdmin() throws IOException {
+    public String login() throws IOException {
         String login = CryptUltil.getCrypt().enCodePass(login_password);
-        if (employeesFacade.checkLoginEmployee(username, login)) {
-            List<Employees> employees = employeesFacade.findByUsername1(username);
-            System.out.println("2" + employees);
-            flag = true;
-            statusLogin = 2;
-            return "index";
-        } else if (managersFacade.checkLoginEmployee(username, login)) {
-            List<Managers> managers = managersFacade.findByUsername1(username);
-            System.out.println("1" + managers);
-            flag = true;
-            statusLogin = 1;
-            return "index";
-        } else {
-            statusLogin = 3;
-            System.out.println("error" + statusLogin);
-            return "login";
-        }
-    }
-
-    public String processLogin() throws IOException {
-        String login = CryptUltil.getCrypt().enCodePass(login_password);
-        long checkManager = managersFacade.getCountByUsernamePassword(username, login);
-        long checkEmployee = employeesFacade.getCountByUsernamePassword(username, login);
-        if (checkManager > 0) {
-            System.out.println(checkManager);
-            Managers mng = managersFacade.loadByUsername(username, login);
-            if (mng.getStatus() != false && mng.getManagerGroup().getId() == 1) {
+        flag = managersFacade.validate(username, login);
+        if (flag) {
+            manager = managersFacade.getFindByUsername(username);
+            if (manager.getStatus()) {
+                HttpSession session = SessionUltil.getSession();
+                session.setAttribute("username", username);
+                session.setAttribute("id", manager.getId());
                 statusLogin = 1;
                 FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/employee/employee.xhtml");
-            } else {
-                statusLogin = 3;
+                return null;
             }
-        } else if (checkEmployee > 0) {
-            System.out.println(checkEmployee);
-            Employees emp = employeesFacade.loadByUsername(username, login);
-            if (emp.getStatus() != false && emp.getEmployeeGroup().getId() == 2) {
+        } else if (flag = employeesFacade.validate(username, login)) {
+            employee = employeesFacade.getFindByUsername(username);
+            if (employee.getStatus()) {
+                HttpSession session = SessionUltil.getSession();
+                session.setAttribute("username", username);
+                session.setAttribute("id", manager.getId());
                 statusLogin = 2;
                 FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/partials/index.xhtml");
-            } else {
-                statusLogin = 3;
+                return null;
             }
         } else {
-            statusLogin = 3;
+            FacesContext.getCurrentInstance().addMessage(
+                    "message",
+                    new FacesMessage(FacesMessage.SEVERITY_WARN,
+                            "Incorrect Username and Passowrd",
+                            "Please enter correct username and Password"));
             FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/partials/login.xhtml");
+            return null;
         }
         return null;
     }
 
     public void checkLogin() throws IOException {
         if (statusLogin != 2) {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/login.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/partials/login.xhtml");
         }
     }
 
     public void checkLogin1() throws IOException {
         if (statusLogin != 1) {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/login.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/partials/login.xhtml");
         }
     }
 
     public void checkLoginAdminOwner() throws IOException {
         if (statusLogin != 1 && statusLogin != 2) {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/login.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/partials/login.xhtml");
         }
     }
 
@@ -145,7 +129,8 @@ public class LoginAdminManagedBean implements Serializable {
         statusLogin = 3;
         username = "";
         login_password = "";
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        HttpSession session = SessionUltil.getSession();
+        session.invalidate();
         FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.administrator/partials/login.xhtml");
     }
 

@@ -7,10 +7,12 @@ package com.zipmart.mbean.checkout;
 import com.zipmart.dto.Cart;
 import com.zipmart.dto.CartSessionBeanLocal;
 import com.zipmart.ejb.entities.Customers;
+import com.zipmart.ejb.entities.Invoices;
 import com.zipmart.ejb.entities.OrderDetails;
 import com.zipmart.ejb.entities.Orders;
 import com.zipmart.ejb.session_beans.CustomerCardFacadeLocal;
 import com.zipmart.ejb.session_beans.CustomersFacadeLocal;
+import com.zipmart.ejb.session_beans.InvoicesFacadeLocal;
 import com.zipmart.ejb.session_beans.OrderDetailsFacadeLocal;
 import com.zipmart.ejb.session_beans.OrdersFacadeLocal;
 import com.zipmart.ejb.session_beans.ProductsFacadeLocal;
@@ -18,6 +20,7 @@ import com.zipmart.mbean.cart.CartBean;
 import com.zipmart.mbean.login.LoginManagedBean;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -32,6 +35,9 @@ import javax.inject.Inject;
 @Named(value = "checkoutBean")
 @RequestScoped
 public class CheckoutBean {
+
+    @EJB
+    private InvoicesFacadeLocal invoicesFacade;
 
     @EJB
     private ProductsFacadeLocal productsFacade;
@@ -67,6 +73,8 @@ public class CheckoutBean {
     private Integer userID;
     private Orders order = new Orders();
     private OrderDetails od = new OrderDetails();
+    private short selected_payment;
+    private Invoices invoice = new Invoices();
 
     private String message = "";
 
@@ -104,13 +112,25 @@ public class CheckoutBean {
         order.setCustomerID(user);
         order.setNote(note);
         Orders o = order;
-        order.setStatus(0);
+        order.setStatus(1);
+        order.setPaymentMethod(selected_payment);
         ordersFacade.create(order);
         for (Cart item : cartList) {
             OrderDetails orderDetails = new OrderDetails();
             orderDetails.setOrderID(order);
             orderDetails.setQuantity(item.getQuantity());
             orderDetails.setShipAddress(addressShip);
+            orderDetails.setOrderDate(date);
+
+            // Tạo đối tượng `Calendar` cho ngày hiện tại
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+
+// Thêm 3 ngày vào ngày hiện tại
+            calendar.add(Calendar.DATE, 3);
+
+// Lấy ngày mới từ `calendar`
+            date = calendar.getTime();
             orderDetails.setShipDate(date);
             orderDetails.setUnitPrice(item.getUnit_price());
             orderDetails.setProductID(productsFacade.find(item.getId()));
@@ -273,5 +293,29 @@ public class CheckoutBean {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public short getSelected_payment() {
+        return selected_payment;
+    }
+
+    public void setSelected_payment(short selected_payment) {
+        this.selected_payment = selected_payment;
+    }
+
+    public InvoicesFacadeLocal getInvoicesFacade() {
+        return invoicesFacade;
+    }
+
+    public void setInvoicesFacade(InvoicesFacadeLocal invoicesFacade) {
+        this.invoicesFacade = invoicesFacade;
+    }
+
+    public Invoices getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoices invoice) {
+        this.invoice = invoice;
     }
 }

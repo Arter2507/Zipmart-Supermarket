@@ -99,13 +99,13 @@ public class Managers implements Serializable {
 
     @Transient
     private String active;
-    
+
     @Transient
     private String oldPass;
-    
+
     @Transient
     private String newPass;
-    
+
     public Managers() {
     }
 
@@ -257,10 +257,10 @@ public class Managers implements Serializable {
     public String toString() {
         return "com.zipmart.ejb.entities.Managers[ id=" + id + " ]";
     }
-    
+
     public String getActive() {
         return status == null ? "null" : status ? "Enabled" : "Disabled";
-}
+    }
 
     public void setActive(String active) {
         this.active = active;
@@ -281,5 +281,5 @@ public class Managers implements Serializable {
     public void setNewPass(String newPass) {
         this.newPass = newPass;
     }
-    
+
 }

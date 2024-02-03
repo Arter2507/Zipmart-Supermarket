@@ -5,7 +5,35 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
-        <ui:include src="../../resources/includes.configlayouts/includes.client/css.xhtml"/>
+        <meta charset="utf-8"/>
+        <title>Zip Mart | Supermarket System</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <meta content="" name="keywords"/>
+        <meta content="" name="Client Zipmart Supermarket System"/>
+
+        <!-- Shortcut Icon-->
+        <link rel="shortcut icon" type="image/png" href="#{request.contextPath}/resources/images/logo/zmicon.png" />
+        <link rel="icon" type="image/x-icon" href="#{request.contextPath}/resources/images/logo/zmicon.ico"></link>
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600" rel="stylesheet"></link>
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600;800" rel="stylesheet"></link>
+
+        <!-- Icon Font Stylesheet -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <!-- Libraries Stylesheet -->
+        <h:outputStylesheet name="otherpackages/op.client/lightbox/css/lightbox.min.css"/>
+        <h:outputStylesheet name="otherpackages/op.client/owlcarousel/assets/owl.carousel.min.css" />
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <h:outputStylesheet name="css/css.client/bootstrap/bootstrap.min.css"/>
+
+        <!-- Template Stylesheet -->
+        <h:outputStylesheet name="css/css.client/style.css"/>
+        <h:outputStylesheet name="css/css.client/blog.css"/>
     </h:head>
     <h:body>
         <!-- Spinner Start -->
@@ -46,7 +74,6 @@
                             <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
                             <h:link outcome="/webapp/webapp.client/cart.xhtml" class="position-relative me-4 my-auto">
                                 <i class="fa fa-shopping-bag fa-2x"></i>
-                                <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                             </h:link>
                             <c:if test="#{loginManagedBean.status_login == 4}">
                                 <h:link outcome="/webapp/webapp.client/login.xhtml" class="my-auto">
@@ -57,13 +84,13 @@
                                 <h:form enctype="multipart/form-data">
                                     <div class="dropdown my-auto">
                                         <a class="btn btn-outline-secondary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fas fa-user text-primary"></i> <span class="text-primary">Profile</span>
+                                            <i class="fas fa-user text-primary"></i> <span class="text-primary">#{loginManagedBean.username}</span>
                                         </a>
 
                                         <ul class="dropdown-menu">
                                             <li><h:commandLink class="dropdown-item" action="#{customerMB.showUpdateUsers(loginManagedBean.customer.username)}"><i class="fas fa-user text-primary"></i> Edit Profile</h:commandLink></li>
                                             <li><h:link class="dropdown-item" outcome="/webapp/webapp.client/pages-misc-under-maintenance.xhtml"><i class="fas fa-receipt text-primary"></i> Order History</h:link></li>
-                                            <li><h:link class="dropdown-item" outcome="/webapp/webapp.client/pages-misc-under-maintenance.xhtml"><i class="fas fa-lock text-primary"></i> Change Password</h:link></li>
+                                            <li><h:link class="dropdown-item" outcome="/webapp/webapp.client/changePass.xhtml"><i class="fas fa-lock text-primary"></i> Change Password</h:link></li>
                                             <li><h:commandLink class="dropdown-item" action="#{loginManagedBean.logout()}" ><i class="fas fa-gear text-primary"></i> Log Out</h:commandLink></li>
                                         </ul>
                                     </div>
@@ -194,23 +221,22 @@
         <!-- Back to Top -->
         <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a> 
 
-        <ui:include src="../../resources/includes.configlayouts/includes.client/js.xhtml"/>  
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <h:outputScript name="otherpackages/op.client/easing/easing.min.js"/>
+        <h:outputScript name="otherpackages/op.client/waypoints/waypoints.min.js"></h:outputScript>
+        <h:outputScript name="otherpackages/op.client/owlcarousel/owl.carousel.min.js"></h:outputScript>
+
+        <!-- Font Icon Javascript -->
+        <h:outputScript name="js/js.client/fontawesome/conflict-detection.min.js"></h:outputScript>
+
+        <!-- Template Javascript -->
+        <h:outputScript name="js/js.client/main.js"></h:outputScript>
+        <h:outputScript name="js/js.client/blogfilter.js"></h:outputScript>
+        <h:outputScript name="js/viewmore.js"></h:outputScript>
+        <h:outputScript name="js/search.js"></h:outputScript> 
         <script>
             $(document).ready(function () {
-                // Sử dụng .on() để gắn trình nghe sự kiện 'change' cho phần tử input file
-                $("#formUpdate\\:upload").on("change", function () {
-                    if (this.files.length > 0) { // Kiểm tra xem có file được chọn không
-                        var reader = new FileReader();
-                        reader.onload = function (e) {
-                            $("#formUpdate\\:uploadedAvatar").attr("src", e.target.result);
-                        };
-                        reader.readAsDataURL(this.files[0]); // Truyền file đầu tiên
-                    }
-                });
-
-                // Ẩn input file nếu cần
-                $("#formUpdate\\:upload").hide();
-
                 // Sử dụng .on() để gắn trình nghe sự kiện 'change' cho phần tử input file
                 $("#formAccountSettings\\:upload").on("change", function () {
                     if (this.files.length > 0) { // Kiểm tra xem có file được chọn không
@@ -224,6 +250,7 @@
 
                 // Ẩn input file nếu cần
                 $("#formAccountSettings\\:upload").hide();
+                $("#formAccountSettings\\:birthday").prop("type", "date");
             });
         </script>
     </h:body>

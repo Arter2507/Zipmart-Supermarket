@@ -28,17 +28,11 @@ public interface EmployeesFacadeLocal {
     List<Employees> findRange(int[] range);
 
     int count();
-    
-    public long getUserNameEx(String username, boolean status);
-    
-    public long findByUsername(String username);
-    
-     public boolean checkLoginEmployee(String username, String password);
-   
 
-    List<Employees> findByUsername1(String username);
-    
-    long getCountByUsernamePassword(String username, String password);
-    
-    Employees loadByUsername(String username, String password);
+    public long findByUsername(String username);
+
+    boolean validate(String username, String password);
+
+    Employees getFindByUsername(String username);
+
 }

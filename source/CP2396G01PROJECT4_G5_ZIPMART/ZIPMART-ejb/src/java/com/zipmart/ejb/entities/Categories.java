@@ -37,8 +37,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Categories.findByCategoryName", query = "SELECT c FROM Categories c WHERE c.categoryName = :categoryName"),
     @NamedQuery(name = "Categories.findByRestockThreshold", query = "SELECT c FROM Categories c WHERE c.restockThreshold = :restockThreshold"),
     @NamedQuery(name = "Categories.findByNewAdjustment", query = "SELECT c FROM Categories c WHERE c.newAdjustment = :newAdjustment"),
-    @NamedQuery(name = "Categories.findByDescription", query = "SELECT c FROM Categories c WHERE c.description = :description")})
-public class Categories implements Serializable {   
+    @NamedQuery(name = "Categories.findByDescription", query = "SELECT c FROM Categories c WHERE c.description = :description"),
+    @NamedQuery(name = "Categories.findByCreatedate", query = "SELECT c FROM Categories c WHERE c.createdate = :createdate"),
+    @NamedQuery(name = "Categories.findByModifiedate", query = "SELECT c FROM Categories c WHERE c.modifiedate = :modifiedate"),
+    @NamedQuery(name = "Categories.findByCreateby", query = "SELECT c FROM Categories c WHERE c.createby = :createby"),
+    @NamedQuery(name = "Categories.findByModifieby", query = "SELECT c FROM Categories c WHERE c.modifieby = :modifieby")})
+public class Categories implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -62,10 +66,10 @@ public class Categories implements Serializable {
     @Column(name = "modifiedate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedate;
-    @Size(max = 80)
+    @Size(max = 255)
     @Column(name = "createby")
     private String createby;
-    @Size(max = 80)
+    @Size(max = 255)
     @Column(name = "modifieby")
     private String modifieby;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryID")
@@ -120,6 +124,38 @@ public class Categories implements Serializable {
         this.description = description;
     }
 
+    public Date getCreatedate() {
+        return createdate;
+    }
+
+    public void setCreatedate(Date createdate) {
+        this.createdate = createdate;
+    }
+
+    public Date getModifiedate() {
+        return modifiedate;
+    }
+
+    public void setModifiedate(Date modifiedate) {
+        this.modifiedate = modifiedate;
+    }
+
+    public String getCreateby() {
+        return createby;
+    }
+
+    public void setCreateby(String createby) {
+        this.createby = createby;
+    }
+
+    public String getModifieby() {
+        return modifieby;
+    }
+
+    public void setModifieby(String modifieby) {
+        this.modifieby = modifieby;
+    }
+
     @XmlTransient
     public Collection<Products> getProductsCollection() {
         return productsCollection;
@@ -161,38 +197,6 @@ public class Categories implements Serializable {
     @Override
     public String toString() {
         return "com.zipmart.ejb.entities.Categories[ id=" + id + " ]";
-    }
-
-    public Date getCreatedate() {
-        return createdate;
-    }
-
-    public void setCreatedate(Date createdate) {
-        this.createdate = createdate;
-    }
-
-    public Date getModifiedate() {
-        return modifiedate;
-    }
-
-    public void setModifiedate(Date modifiedate) {
-        this.modifiedate = modifiedate;
-    }
-
-    public String getCreateby() {
-        return createby;
-    }
-
-    public void setCreateby(String createby) {
-        this.createby = createby;
-    }
-
-    public String getModifieby() {
-        return modifieby;
-    }
-
-    public void setModifieby(String modifieby) {
-        this.modifieby = modifieby;
     }
     
 }

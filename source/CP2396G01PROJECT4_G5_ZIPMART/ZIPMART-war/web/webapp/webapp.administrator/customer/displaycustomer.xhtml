@@ -34,6 +34,7 @@
                                             <th class="text-center">Birth Date</th>
                                             <th class="text-center">Create By</th>
                                             <th class="text-center">Create Date</th>
+                                            <th class="text-center">Active</th>
                                             <th class="text-center">Update</th>
                                             <th class="text-center">Delete</th>
                                         </tr>
@@ -54,6 +55,9 @@
                                                 <td><h:outputText value="#{cus.createdate}">
                                                         <f:convertDateTime pattern="MM/dd/yyyy" />
                                                     </h:outputText>
+                                                </td>
+                                                <td>
+                                                    <h:outputText title="Active" value="#{cus.active}" styleClass="#{cus.status == null ? 'badge badge-warning' : cus.status ? 'badge badge-info' : 'badge badge-danger'}"/>
                                                 </td>
                                                 <td>
                                                     <h:commandLink title="Edit" class="btn btn-outline-info btn-sm" action="#{customerMB.showDetailCustomerU(cus.id)}">

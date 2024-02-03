@@ -5,10 +5,8 @@
 package com.zipmart.ejb.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,14 +16,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -100,17 +96,17 @@ public class Employees implements Serializable {
     @Column(name = "modifieby")
     private String modifieby;
     @Column(name = "status")
-    private Boolean status;   
+    private Boolean status;
     @JoinColumn(name = "employee_group", referencedColumnName = "ID")
     @ManyToOne
     private Permissions employeeGroup;
 
     @Transient
     private String active;
-    
+
     @Transient
     private String oldPass;
-    
+
     @Transient
     private String newPass;
 
@@ -273,10 +269,10 @@ public class Employees implements Serializable {
     public String toString() {
         return "com.zipmart.ejb.entities.Employees[ id=" + id + " ]";
     }
-    
+
     public String getActive() {
         return status == null ? "null" : status ? "Enabled" : "Disabled";
-}
+    }
 
     public void setActive(String active) {
         this.active = active;

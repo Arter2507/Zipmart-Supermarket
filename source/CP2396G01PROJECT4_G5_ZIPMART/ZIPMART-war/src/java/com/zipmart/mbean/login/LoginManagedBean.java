@@ -9,13 +9,17 @@ import com.zipmart.ejb.entities.Permissions;
 import com.zipmart.ejb.session_beans.CustomersFacadeLocal;
 import com.zipmart.ejb.session_beans.PermissionsFacadeLocal;
 import com.zipmart.util.CryptUltil;
+import com.zipmart.util.SessionUltil;
 import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -53,43 +57,76 @@ public class LoginManagedBean implements Serializable {
     }
 
     public String processSignup() {
-        Customers cus = customer;
-        Permissions per = permissionsFacade.find(id_group);
-        if (confirm_password.equals(password)) {
-            hash_password = CryptUltil.getCrypt().enCodePass(confirm_password);
-            cus.setPassword(hash_password);
-            status_login = 2;
-        } else {
-            System.out.println("Password and Confirm Password are not same");
-        }
-        cus.setFullname(username);
-        cus.setUsername(username);
-        cus.setCustomerGroup(per);
-        cus.setStatus(Boolean.TRUE);
-        customersFacade.create(cus);
-        return "login";
+            Customers cus = customer;
+            Permissions per = permissionsFacade.find(id_group);
+            if (confirm_password.equals(password)) {
+                hash_password = CryptUltil.getCrypt().enCodePass(confirm_password);
+                cus.setPassword(hash_password);
+                status_login = 2;
+            } else {
+                System.out.println("Password and Confirm Password are not same");
+            }
+            cus.setFullname(username);
+            cus.setUsername(username);
+            cus.setCustomerGroup(per);
+            cus.setStatus(Boolean.TRUE);
+            cus.setCreatedate(new Date(System.currentTimeMillis()));
+            cus.setCreateby(cus.getFullname());
+            customersFacade.create(cus);
+            return "login";
     }
 
     public String processLogin() throws IOException {
         customer = customersFacade.getFindByUsername(username);
-        Customers cus_login = customer;       
+        Customers cus_login = customer;
         confirm_password = cus_login.getPassword();
         hash_password = CryptUltil.getCrypt().enCodePass(password);
-        if(hash_password.equals(confirm_password)){
-        status_login = 1;
-        FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.client/index.xhtml");
-        }      
+        if (hash_password.equals(confirm_password)) {
+            status_login = 1;
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("statuslogin", status_login);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.client/index.xhtml");
+        }
         return null;
+    }
+
+    public String login() {
+        hash_password = CryptUltil.getCrypt().enCodePass(password);
+        boolean valid = customersFacade.validate(username, hash_password);
+        if (valid) {
+            customer = customersFacade.getFindByUsername(username);
+            if (customer.getStatus()) {
+                HttpSession session = SessionUltil.getSession();
+                session.setAttribute("username", username);
+                session.setAttribute("id", customer.getId());
+                status_login = 1;
+                return "index";
+            } else {
+                FacesContext.getCurrentInstance().addMessage(
+                        "messege",
+                        new FacesMessage(FacesMessage.SEVERITY_WARN,
+                                "Your Account is Block",
+                                "Please enter correct username and Password"));
+                return "login";
+            }
+        } else {
+            FacesContext.getCurrentInstance().addMessage(
+                    "messege",
+                    new FacesMessage(FacesMessage.SEVERITY_WARN,
+                            "Incorrect Username and Passowrd",
+                            "Please enter correct username and Password"));
+            return "login";
+        }
     }
 
     public void logout() throws IOException {
         status_login = 3;
         username = "";
         password = "";
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        HttpSession session = SessionUltil.getSession();
+        session.invalidate();
         FacesContext.getCurrentInstance().getExternalContext().redirect("/ZIPMART-war/faces/webapp/webapp.client/login.xhtml");
     }
-    
+
     public CustomersFacadeLocal getCustomersFacade() {
         return customersFacade;
     }

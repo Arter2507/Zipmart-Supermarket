@@ -28,9 +28,10 @@
                                 <div class="row g-4">
                                     <div class="col-xl-3">
                                         <div class="input-group w-100 mx-auto d-flex">
-                                            <h:form id="search">
-                                                <h:commandLink action="#{productBean.searchPro()}" id="search-icon-1" class="input-group-text p-3"><h:inputText class="form-control p-3" a:placeholder="search..."  value="#{productBean.productName}"/><i class="fa fa-search"></i></h:commandLink>
-                                            </h:form>
+                                            <input type="search" class="form-control p-3 live-search-box" placeholder="keywords"
+                                                   aria-describedby="search-icon-1"/>
+                                                <span id="search-icon-1" class="input-group-text p-3"><i
+                                                        class="fa fa-search"></i></span>
                                         </div>
                                     </div>
                                     <div class="col-6"></div>
@@ -53,15 +54,14 @@
                                                 <div class="mb-3">
                                                     <h4>Categories</h4> <!-- Category -->
                                                     <ul class="list-unstyled fruite-categorie">
-                                                        <ui:repeat value="#{categoryBean.showAllCate()}" var="itemCate">
-                                                            <div class="d-flex justify-content-between fruite-name">
-                                                                <h:selectBooleanCheckbox id="cate" styleClass="custom-control-input">
-                                                                    <f:ajax render="productList" listener="#{productBean.updateSelected}" />
-                                                                    <!-- Truyền giá trị của itemCate.categoryName cho phương thức updateSelected -->
-                                                                    <f:param name="selectedCategory" value="#{itemCate.id}" />
-                                                                </h:selectBooleanCheckbox>
-                                                                <h:link class="custom-control-label"><h:outputText value="#{itemCate.categoryName}"/><i class="fa-solid fa-bag-shopping"></i></h:link>
-                                                            </div>                                         
+                                                        <ui:repeat var="cate" value="#{productBean.showAllCate()}">
+                                                            <li>
+                                                                <div class="d-flex justify-content-between fruite-name">
+                                                                    <a href="#">
+                                                                        <i class="fa-solid fa-bag-shopping"></i>#{cate.categoryName}
+                                                                    </a>
+                                                                </div>
+                                                            </li>
                                                         </ui:repeat>
                                                     </ul>
                                                 </div>
@@ -136,7 +136,11 @@
                                                                     <h:outputText value="$#{pro.price_discout > 0 ? pro.price_discout : pro.unitPrice}/#{pro.unit}" class="text-dark fs-5 fw-bold mb-0">
                                                                         <f:convertNumber type="currency" currencySymbol="$" locale="en_US"/>
                                                                     </h:outputText>
-                                                                    <h:commandLink action="#{productBean.showDetailsPro(pro.id)}" class="btn border border-secondary rounded-pill px-2 text-primary"><i class="fa fa-shopping-bag me-1 text-primary"></i> View Details</h:commandLink>
+
+                                                                    <h:commandLink action="#{productBean.showDetailsPro(pro.id)}" class="btn border border-secondary rounded-pill px-2 text-primary">
+                                                                        <i class="fa fa-shopping-bag me-1 text-primary"></i> View Details
+                                                                    </h:commandLink>
+
                                                                 </div>
                                                             </div>
                                                         </div>

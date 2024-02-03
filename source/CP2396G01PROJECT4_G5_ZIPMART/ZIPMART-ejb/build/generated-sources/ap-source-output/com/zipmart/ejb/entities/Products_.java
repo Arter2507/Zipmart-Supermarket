@@ -2,6 +2,8 @@ package com.zipmart.ejb.entities;
 
 import com.zipmart.ejb.entities.Brand;
 import com.zipmart.ejb.entities.Categories;
+import com.zipmart.ejb.entities.FeedbacksPro;
+import com.zipmart.ejb.entities.ImportOrder;
 import com.zipmart.ejb.entities.InventoryStatus;
 import com.zipmart.ejb.entities.OrderDetails;
 import com.zipmart.ejb.entities.Suppliers;
@@ -11,10 +13,11 @@ import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2024-01-30T17:34:12")
+@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2024-02-02T08:47:42")
 @StaticMetamodel(Products.class)
 public class Products_ { 
 
+    public static volatile CollectionAttribute<Products, FeedbacksPro> feedbacksProCollection;
     public static volatile CollectionAttribute<Products, OrderDetails> orderDetailsCollection;
     public static volatile SingularAttribute<Products, String> description;
     public static volatile SingularAttribute<Products, Integer> discount;
@@ -37,6 +40,7 @@ public class Products_ {
     public static volatile SingularAttribute<Products, Suppliers> supplierID;
     public static volatile SingularAttribute<Products, InventoryStatus> inventoryStatus;
     public static volatile SingularAttribute<Products, String> weight;
+    public static volatile CollectionAttribute<Products, ImportOrder> importOrderCollection;
     public static volatile SingularAttribute<Products, String> unit;
     public static volatile SingularAttribute<Products, String> usageNotes;
     public static volatile SingularAttribute<Products, String> storageInstruction;

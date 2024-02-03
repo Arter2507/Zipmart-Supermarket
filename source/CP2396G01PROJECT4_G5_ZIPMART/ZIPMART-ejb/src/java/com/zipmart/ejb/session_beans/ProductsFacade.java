@@ -6,8 +6,6 @@ package com.zipmart.ejb.session_beans;
 
 import com.zipmart.ejb.entities.Categories;
 import com.zipmart.ejb.entities.Products;
-import com.zipmart.ejb.entities.Products_;
-import com.zipmart.ejb.entities.Categories_;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -70,28 +68,16 @@ public class ProductsFacade extends AbstractFacade<Products> implements Products
 
         Subquery<Long> subquery = cq.subquery(Long.class);
         Root<Products> subRoot = subquery.from(Products.class);
-        subquery.select(subRoot.get(Products_.categoryID).get(Categories_.id).as(Long.class));
-        subquery.where(cb.equal(subRoot.get(Products_.id), id));
+        subquery.select(subRoot.get("categoryID").get("id").as(Long.class));
+        subquery.where(cb.equal(subRoot.get("id"), id));
 
-        Predicate condition = root.get(Products_.categoryID).get(Categories_.id).in(subquery);
+        Predicate condition = root.get("categoryID").get("id").in(subquery);
         cq.where(condition);
 
         Query query = em.createQuery(cq);
         return query.getResultList();
 //        return null;
-    }
-
-    @Override
-    public List<Products> getFeaturedProductDetails() {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Products> cq = cb.createQuery(Products.class);
-        Root<Products> root = cq.from(Products.class);
-        cq.select(root);
-        cq.orderBy(cb.desc(root.get("discount")));
-        TypedQuery<Products> query = em.createQuery(cq);
-        List<Products> results = query.getResultList();
-        return results;
-    }
+    }   
 
     @Override
     public List<Products> getProductBest() {
@@ -107,48 +93,12 @@ public class ProductsFacade extends AbstractFacade<Products> implements Products
     }
 
     @Override
-    public List<Products> getProductsByCategories(List<Long> categoryID) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Products> cq = cb.createQuery(Products.class);
-        Root<Products> root = cq.from(Products.class);
-
-        // Tạo một join với bảng Category
-        Join<Products, Categories> categoryJoin = root.join("Categories");
-
-        // Tạo danh sách các điều kiện
-        Predicate[] predicates = new Predicate[categoryID.size()];
-        for (int i = 0; i < categoryID.size(); i++) {
-            predicates[i] = cb.equal(categoryJoin.get("id"), categoryID.get(i));
-        }
-        // Tạo điều kiện OR giữa các điều kiện
-        Predicate orPredicate = cb.or(predicates);
-        cq.where(orPredicate);
-
-        cq.where(predicates);
-        TypedQuery<Products> query = em.createQuery(cq);
-        return query.getResultList();
-    }
-
-    @Override
-    public List<Products> topPro6() {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Products> cq = cb.createQuery(Products.class);
-        Root<Products> root = cq.from(Products.class);
-
-        cq.select(root);
-        cq.orderBy(cb.desc(root.get("unitPrice")));
-        TypedQuery<Products> query = em.createQuery(cq);
-        query.setMaxResults(6);
-        return query.getResultList();
-    }
-
-    @Override
     public List<Products> findByName(String name) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Products> cq = cb.createQuery(Products.class);
         Root<Products> root = cq.from(Products.class);
         cq.select(root);
-        cq.where(cb.like(root.get(Products_.productName), "%" + name + "%"));
+        cq.where(cb.like(cb.lower(root.get("productName").as(String.class)), "%" + name + "%"));
         TypedQuery<Products> query = em.createQuery(cq);
         return query.getResultList();
     }

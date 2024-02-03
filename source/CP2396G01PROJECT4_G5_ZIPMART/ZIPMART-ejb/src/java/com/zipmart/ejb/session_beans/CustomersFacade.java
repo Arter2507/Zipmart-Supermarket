@@ -32,7 +32,7 @@ public class CustomersFacade extends AbstractFacade<Customers> implements Custom
     public CustomersFacade() {
         super(Customers.class);
     }
-    
+
     @Override
     public long findByUsername(String username) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -42,7 +42,7 @@ public class CustomersFacade extends AbstractFacade<Customers> implements Custom
         cq.where(cb.and(cb.equal(root.get(Customers_.username), username)));
         Query query = em.createQuery(cq);
         return (long) query.getSingleResult();
-}
+    }
 
     @Override
     public Customers getFindByUsername(String username) {
@@ -50,9 +50,25 @@ public class CustomersFacade extends AbstractFacade<Customers> implements Custom
         CriteriaQuery cq = cb.createQuery();
         Root r = cq.from(Customers.class);
         cq.select(r);
-        cq.where(cb.equal(r.get(Customers_.username), username));
+        cq.where(cb.equal(r.get("username"), username));
         Query query = em.createQuery(cq);
         return (Customers) query.getSingleResult();
+    }
+
+    @Override
+    public boolean validate(String username, String password) {
+        boolean flag = false;
+        try {
+            Query query = em.createQuery("SELECT c FROM Customers c WHERE c.username =:uname and c.password = :pword");
+            query.setParameter("uname", username);
+            query.setParameter("pword", password);
+            query.getSingleResult();
+            flag = true;
+        } catch (Exception e) {
+            System.out.println("error->>>>>> " + e.getMessage());
+            flag = false;
+        }
+        return flag;
     }
 
 }

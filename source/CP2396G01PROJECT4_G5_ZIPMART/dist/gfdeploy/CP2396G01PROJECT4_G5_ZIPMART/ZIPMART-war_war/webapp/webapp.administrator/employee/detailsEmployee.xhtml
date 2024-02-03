@@ -13,14 +13,15 @@
                     <p class="mb-4">The <a href="javascript:void(0);">"Software Employee Management"</a> is a robust software solution meticulously crafted to streamline and automate the intricacies of employee-related processes within an organization.</p>
 
                     <div class="row">
+                        <h5 style="color: #1cc88a">#{employeeBean.mess}</h5>
                         <div class="col-md-12">
                             <div class="card mb-4">
                                 <!-- Add Form -->
                                 <h:form id="formAccountSettings" enctype="multipart/form-data">
-                                    <h:inputHidden value="#{employeeBean.employee.id}"/>
+                                    <h:inputHidden value="#{loginAdminManagedBean.employee.id}"/>
                                     <div class="card-body">
                                         <div class="d-flex align-items-start align-items-sm-center gap-4">
-                                            <h:graphicImage value="#{resource[employeeBean.employee.imageURL]}" alt="user-avatar" styleClass="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar" height="200px" width="200px"  />                                          
+                                            <h:graphicImage value="#{resource[loginAdminManagedBean.employee.imageURL]}" alt="user-avatar" styleClass="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar" height="200px" width="200px"  />                                          
                                         </div>
                                     </div>                                   
 
@@ -28,37 +29,37 @@
                                         <div class="row mt-2 gy-4">
                                             <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:outputText class="form-control" id="fullname" value="#{employeeBean.employee.fullname}"/>  
+                                                    <h:outputText class="form-control" id="fullname" value="#{loginAdminManagedBean.employee.fullname}"/>  
                                                     <h:outputLabel for="fullname">Full Name</h:outputLabel>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:outputText class="form-control" id="gender" value="#{employeeBean.genderLabel}"/>  
+                                                    <h:outputText class="form-control" id="gender" value="#{loginAdminManagedBean.employee.employeeGender == 1 ? 'Male' : loginAdminManagedBean.employee.employeeGender == 2 ? 'Female' : 'Other'}"/>  
                                                     <h:outputLabel for="gender">Gender</h:outputLabel>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:outputText class="form-control" id="email" value="#{employeeBean.employee.email}"/>
+                                                    <h:outputText class="form-control" id="email" value="#{loginAdminManagedBean.employee.email}"/>
                                                     <h:outputLabel for="email">Email</h:outputLabel>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:outputText styleClass="form-control" id="phone" value="#{employeeBean.employee.phone}"/>
+                                                    <h:outputText styleClass="form-control" id="phone" value="#{loginAdminManagedBean.employee.phone}"/>
                                                     <h:outputLabel for="phone">Number Phone</h:outputLabel>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:outputText class="form-control" id="address" value="#{employeeBean.employee.address}"/>
+                                                    <h:outputText class="form-control" id="address" value="#{loginAdminManagedBean.employee.address}"/>
                                                     <h:outputLabel for="address">Address</h:outputLabel>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:outputText a:type="date" class="form-control" id="birthday" value="#{employeeBean.employee.birthDate}">
+                                                    <h:outputText a:type="date" class="form-control" id="birthday" value="#{loginAdminManagedBean.employee.birthDate}">
                                                         <f:convertDateTime pattern="MM/dd/yyyy" />
                                                     </h:outputText>
                                                     <h:outputLabel for="birthday">Birthday</h:outputLabel>
@@ -66,21 +67,21 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-                                                    <h:outputText a:type="username" class="form-control" id="username" value="#{employeeBean.employee.username}"/>
+                                                    <h:outputText a:type="username" class="form-control" id="username" value="#{loginAdminManagedBean.employee.username}"/>
                                                     <h:outputLabel for="username">Username</h:outputLabel>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating form-floating-outline">
-<!--                                                    <h:inputText a:type="password"  id="password" value="#{employeeBean.employee.password}"/>-->
+<!--                                                    <h:inputText a:type="password"  id="password" value="#{loginAdminManagedBean.employee.password}"/>-->
                                                     <h:outputText value="************" class="form-control"/>
                                                     <h:outputLabel for="password">Password</h:outputLabel>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="mt-4">
-                                            <h:commandButton styleClass="btn btn-primary me-2 text-white" value="Edit" action="#{employeeBean.showListID(employeeBean.employee.id)}"/>
-                                            <h:link value="Back" outcome="/webapp/webapp.administrator/employee/employee.xhtml" class="btn btn-outline-secondary"/>
+                                            <h:commandButton styleClass="btn btn-primary me-2 text-white" value="Edit" action="#{employeeBean.showListID(loginAdminManagedBean.employee.id)}"/>
+                                            <h:link value="Back" outcome="/webapp/webapp.administrator/partials/index.xhtml" class="btn btn-outline-secondary"/>
                                         </div>
                                     </div>
                                 </h:form>

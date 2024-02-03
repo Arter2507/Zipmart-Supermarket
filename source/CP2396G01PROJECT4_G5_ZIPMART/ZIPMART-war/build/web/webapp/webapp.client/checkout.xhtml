@@ -33,7 +33,7 @@
                                     </div>
                                     <div class="form-item">
                                         <label class="form-label my-3">Address <sup>*</sup></label>
-                                        <h:inputText class="form-control" value="#{checkoutBean.od.shipAddress}"/>
+                                        <h:inputText class="form-control" value="#{checkoutBean.addressShip}"/>
                                     </div>
                                     <div class="form-item">
                                         <label class="form-label my-3">Email<sup>*</sup></label>
@@ -62,17 +62,17 @@
                                             </thead>
                                             <tbody>
                                                 <ui:repeat value="#{cartBean.showCart()}" var="itemCart" >
-                                                <tr>
-                                                    <th scope="row">
-                                                        <div class="d-flex align-items-center mt-2">
-                                                            <img src="#{resource[itemCart.image_url]}" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt=""/>
-                                                        </div>
-                                                    </th>
-                                                    <td class="py-5">#{itemCart.pro_name}</td>
-                                                    <td class="py-5">$#{itemCart.unit_price}</td>
-                                                    <td class="py-5">#{itemCart.quantity}</td>
-                                                    <td class="py-5">$#{itemCart.total_price}</td>
-                                                </tr>
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <div class="d-flex align-items-center mt-2">
+                                                                <img src="#{resource[itemCart.image_url]}" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt=""/>
+                                                            </div>
+                                                        </th>
+                                                        <td class="py-5">#{itemCart.pro_name}</td>
+                                                        <td class="py-5">$#{itemCart.unit_price}</td>
+                                                        <td class="py-5">#{itemCart.quantity}</td>
+                                                        <td class="py-5">$#{itemCart.total_price}</td>
+                                                    </tr>
                                                 </ui:repeat>
                                                 <tr>
                                                     <th scope="row">
@@ -119,42 +119,17 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
-                                        <div class="col-12">
-                                            <div class="form-check text-start my-3">
-                                                <input type="checkbox" class="form-check-input bg-primary border-0" id="Transfer-1" name="Transfer" value="Transfer"/>
-                                                <label class="form-check-label" for="Transfer-1">Direct Bank Transfer</label>
-                                            </div>
-                                            <p class="text-start text-dark">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
+                                    <h:selectOneMenu styleClass="row g-4 text-center align-items-center justify-content-center border-bottom py-3" value="#{checkoutBean.selected_payment}">
+                                        <div class="form-check text-start my-3">
+                                            <f:selectItem itemValue="1" itemLabel="Direct Bank Transfer" class="form-check-input bg-primary border-0 form-check-label"/>
+                                            <f:selectItem itemValue="2" itemLabel="Check Payments" class="form-check-input bg-primary border-0 form-check-label"/>
+                                            <f:selectItem itemValue="3" itemLabel="Cash On Delivery" class="form-check-input bg-primary border-0 form-check-label"/>
+                                            <f:selectItem itemValue="4" itemLabel="Paypal" class="form-check-input bg-primary border-0 form-check-label"/>
                                         </div>
-                                    </div>
-                                    <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
-                                        <div class="col-12">
-                                            <div class="form-check text-start my-3">
-                                                <input type="checkbox" class="form-check-input bg-primary border-0" id="Payments-1" name="Payments" value="Payments"/>
-                                                <label class="form-check-label" for="Payments-1">Check Payments</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
-                                        <div class="col-12">
-                                            <div class="form-check text-start my-3">
-                                                <input type="checkbox" class="form-check-input bg-primary border-0" id="Delivery-1" name="Delivery" value="Delivery"/>
-                                                <label class="form-check-label" for="Delivery-1">Cash On Delivery</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
-                                        <div class="col-12">
-                                            <div class="form-check text-start my-3">
-                                                <input type="checkbox" class="form-check-input bg-primary border-0" id="Paypal-1" name="Paypal" value="Paypal"/>
-                                                <label class="form-check-label" for="Paypal-1">Paypal</label>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </h:selectOneMenu>
                                     <div class="row g-4 text-center align-items-center justify-content-center pt-4">
                                         <h:commandButton action="#{checkoutBean.insertBillInfor()}" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary" value="Place Order"></h:commandButton>
-                                    <h5 style="color: #090;">#{checkoutBean.message}</h5>
+                                        <h5 style="color: #090;">#{checkoutBean.message}</h5>
                                     </div>
                                 </div>
                             </div>

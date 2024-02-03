@@ -18,9 +18,11 @@ import com.zipmart.util.FileUltil;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.servlet.http.Part;
 
 @Named(value = "productAdminBean")
@@ -63,6 +65,8 @@ public class ProductAdminBean {
     private Long selected_supplier;
     private Long selected_category;
     private Long selected_inventorystatus;
+    private Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+    private String username = (String) sessionMap.get("username");
 
     public List<Brand> showAllBrand() {
         return brandFacade.findAll();
@@ -92,7 +96,6 @@ public class ProductAdminBean {
 
     public String addNewProduct() {
         image_url = FileUltil.getInstance().uploadFile(file);
-
         product.setProductName(product_name);
         product.setUnitPrice(unit_price);
         product.setDiscount(discount);
@@ -119,7 +122,8 @@ public class ProductAdminBean {
         } else {
             selected_inventorystatus = 1L;
         }
-
+        product.setCreatedate(new Date());
+        product.setCreateby(username);
         product.setInventoryStatus(inventoryStatusFacade.find(selected_inventorystatus));
         productsFacade.create(product);
         return "product";
@@ -159,7 +163,9 @@ public class ProductAdminBean {
             System.out.println("------------->" + pro.getImageURL());
         }
         pro.setCreatedate(p.getCreatedate());
-        pro.setModifiedate(new Date(System.currentTimeMillis()));
+        pro.setCreateby(p.getCreateby());
+        pro.setModifiedate(new Date());
+        pro.setModifieby(username);
         pro.setBrandID(selected_brand == null ? p.getBrandID() : brandFacade.find(selected_brand));
         pro.setCategoryID(selected_category == null ? p.getCategoryID() : categoriesFacade.find(selected_category));
         pro.setSupplierID(selected_supplier == null ? p.getSupplierID() : suppliersFacade.find(selected_supplier));
@@ -386,5 +392,13 @@ public class ProductAdminBean {
 
     public void setInventory(InventoryStatus inventory) {
         this.inventory = inventory;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

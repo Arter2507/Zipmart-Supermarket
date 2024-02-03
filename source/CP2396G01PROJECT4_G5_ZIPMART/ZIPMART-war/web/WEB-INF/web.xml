@@ -19,7 +19,7 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>faces/webapp/webapp.administrator/partials/login.xhtml</welcome-file>
+        <welcome-file>faces/webapp/webapp.client/index.xhtml</welcome-file>
     </welcome-file-list>
     <mime-mapping>
         <extension>xhtml</extension>
